@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="text-[10px] text-red-300 font-medium mt-6 md:mt-0 relative z-10">
-                    Sistem Database Anggota Ranting Terintegrasi v1.3
+                    Sistem Database Anggota Ranting Terintegrasi v1.4
                 </div>
             </div>
 
@@ -91,14 +91,14 @@
 
                 <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
                     <div>
-                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Username Ranting</label>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Username Akses</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
                                 <i class="fa-solid fa-user-gear"></i>
                             </span>
                             <input type="text" id="username" required
                                 class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-all text-sm font-medium"
-                                placeholder="Contoh: rantingpgrisamarang">
+                                placeholder="Contoh: rantingsamarang / admincabang">
                         </div>
                     </div>
 
@@ -181,7 +181,34 @@
                 </div>
             </div>
 
-            <!-- INTERACTIVE STATISTIC CARDS (9 RANTING SUPPORT) -->
+            <!-- JALUR FILTER KHUSUS ADMIN CABANG (TAMPIL HANYA JIKA LOGIN SEBAGAI CABANG) -->
+            <div id="admin-branch-filter-container" class="hidden bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg bg-red-50 text-red-600 flex items-center justify-center text-sm">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-xs text-slate-800">Panel Kontrol Cabang</h4>
+                        <p class="text-[10px] text-slate-400">Filter cepat cakupan Ranting se-Kecamatan</p>
+                    </div>
+                </div>
+                <div class="w-full sm:w-64">
+                    <select id="admin-ranting-selector" onchange="changeAdminRantingFilter()" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option value="Semua Ranting">Semua Ranting (Se-Kecamatan)</option>
+                        <option value="Ranting Samarang">Ranting Samarang</option>
+                        <option value="Ranting Parakan">Ranting Parakan</option>
+                        <option value="Ranting Sukarasa">Ranting Sukarasa</option>
+                        <option value="Ranting Cintarakyat">Ranting Cintarakyat</option>
+                        <option value="Ranting SMPN 1 Samarang">Ranting SMPN 1 Samarang</option>
+                        <option value="Ranting SMPN 2 Samarang">Ranting SMPN 2 Samarang</option>
+                        <option value="Ranting SMP Muslimin">Ranting SMP Muslimin</option>
+                        <option value="Ranting TK">Ranting TK</option>
+                        <option value="Ranting SMA">Ranting SMA</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE STATISTIC CARDS (7 PREMIUM PRO-COMPACT VERTICAL TILES) -->
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-1.5">
@@ -246,7 +273,7 @@
                         <span class="text-[8px] text-indigo-600 font-bold bg-indigo-50 px-1.5 py-0.5 rounded-md">Paruh Waktu</span>
                     </div>
 
-                    <!-- Card 5: Honorer/GTY/GTT (AKUMULATIF DI STATISTIK) -->
+                    <!-- Card 5: Honorer/GTY/GTT -->
                     <div id="card-honorer" onclick="setFilter('status_Honorer/GTY/GTT')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-slate-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
                         <div class="text-slate-600 bg-slate-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-graduation-cap"></i>
@@ -328,7 +355,7 @@
                             <h3 class="font-extrabold text-slate-800 text-base tracking-tight">Daftar Anggota PGRI</h3>
                             <span id="active-filter-badge" class="hidden text-[9px] font-bold bg-red-100 text-red-700 px-2 py-0.5 rounded-md uppercase tracking-wider"></span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mt-0.5">Daftar guru terverifikasi pada ranting Anda. Klik <i class="fa-solid fa-circle-info mx-0.5 text-red-500"></i> pada mobile untuk data lengkap.</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Daftar guru terverifikasi pada Ranting terpilih.</p>
                     </div>
 
                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
@@ -338,9 +365,15 @@
                                 <i class="fa-solid fa-magnifying-glass text-xs"></i>
                             </span>
                             <input type="text" id="table-search" oninput="filterTable()"
-                                class="w-full sm:w-56 pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white text-xs"
+                                class="w-full sm:w-48 pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white text-xs"
                                 placeholder="Cari Nama / NPA / Unit...">
                         </div>
+
+                        <!-- CRUD: Tombol Tambah Anggota -->
+                        <button onclick="openAddModal()" class="bg-red-600 hover:bg-red-700 text-white font-semibold text-xs px-3.5 py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-sm">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                            <span>Tambah Anggota</span>
+                        </button>
 
                         <!-- Export Button -->
                         <button onclick="exportData()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-3.5 py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-sm">
@@ -352,7 +385,7 @@
 
                 <!-- Table Content -->
                 <div class="overflow-x-auto w-full">
-                    <table class="w-full text-left border-collapse min-w-[750px] md:min-w-full">
+                    <table class="w-full text-left border-collapse min-w-[900px] md:min-w-full">
                         <thead>
                             <tr class="bg-slate-50/50 text-slate-500 text-[9px] font-bold uppercase tracking-widest border-b border-slate-100">
                                 <th class="py-3 px-4 w-12 text-center border-r border-slate-100/50">No</th>
@@ -364,7 +397,7 @@
                                 <th class="py-3 px-4">Status Pegawai</th>
                                 <th class="py-3 px-4 hidden md:table-cell">Jenis Kelamin</th>
                                 <th class="py-3 px-4">Keaktifan</th>
-                                <th class="py-3 px-4 w-12 text-center md:hidden">Detail</th>
+                                <th class="py-3 px-4 w-24 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody id="member-table-body" class="divide-y divide-slate-100 text-xs">
@@ -401,6 +434,134 @@
             </div>
 
         </main>
+    </div>
+
+    <!-- CRUD MODAL: FORM TAMBAH / EDIT ANGGOTA -->
+    <div id="member-form-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-lg shadow-2xl overflow-hidden border border-slate-100 transform transition-all">
+            <div class="bg-gradient-to-r from-red-700 to-rose-600 p-5 text-white flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold text-base" id="form-modal-title">Tambah Anggota Baru</h3>
+                    <p class="text-[11px] text-red-100">Lengkapi data identitas anggota sesuai parameter resmi.</p>
+                </div>
+                <button onclick="closeMemberFormModal()" class="text-white hover:text-red-200 text-xl p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <form id="member-form" onsubmit="saveMember(event)" class="p-6 space-y-4 text-xs">
+                <!-- Hidden Input untuk Deteksi Edit -->
+                <input type="hidden" id="form-orig-npa">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">NPA (Nomor Pokok Anggota) *</label>
+                        <input type="text" id="form-npa" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 font-mono focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Contoh: 10190100001">
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">Nama Lengkap & Gelar *</label>
+                        <input type="text" id="form-nama" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 font-semibold focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Contoh: Ahmad Fauzi, S.Pd.">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">Ranting Cabang *</label>
+                        <select id="form-ranting" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 font-medium focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <!-- Opsi akan disesuaikan otomatis dengan hak akses saat modal dibuka -->
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">Tempat, Tanggal Lahir</label>
+                        <input type="text" id="form-ttl" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Contoh: Garut, 12 Maret 1985">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">Unit Kerja / Sekolah *</label>
+                        <input type="text" id="form-unit" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Contoh: SDN 1 Samarang">
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">Pendidikan Terakhir</label>
+                        <input type="text" id="form-pendidikan" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="Contoh: S1 PGSD">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">Status Kepegawaian *</label>
+                        <select id="form-status" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <option value="PNS">PNS</option>
+                            <option value="PPPK">PPPK</option>
+                            <option value="PPPK Paruh Waktu">PPPK PW</option>
+                            <option value="Honorer">Honorer</option>
+                            <option value="GTY">GTY</option>
+                            <option value="GTT">GTT</option>
+                            <option value="Pensiunan">Pensiunan</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">Jenis Kelamin *</label>
+                        <select id="form-gender" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <option value="L">Laki-laki (L)</option>
+                            <option value="P">Perempuan (P)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">Sertifikasi Guru *</label>
+                        <select id="form-sertifikasi" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500">
+                            <option value="Sudah">Sudah Lulus</option>
+                            <option value="Belum">Belum Lulus</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-slate-500 font-bold mb-1">Status Keaktifan *</label>
+                    <select id="form-aktif" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500">
+                        <option value="Aktif">Aktif</option>
+                        <option value="Tidak Aktif">Tidak Aktif</option>
+                    </select>
+                </div>
+
+                <!-- Banner Informasi Status Session In-Memory -->
+                <div class="p-3 bg-blue-50 border border-blue-100 rounded-2xl text-blue-800 text-[10px] leading-relaxed">
+                    <i class="fa-solid fa-circle-info mr-1"></i> Perubahan data disimpan dalam memori sesi aplikasi ini. Data permanen diatur melalui Google Sheets Anda.
+                </div>
+
+                <div class="pt-2 border-t border-slate-150 flex justify-end gap-2.5">
+                    <button type="button" onclick="closeMemberFormModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2.5 rounded-xl transition-all">Batal</button>
+                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold px-5 py-2.5 rounded-xl transition-all shadow-md shadow-red-100">Simpan Anggota</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- CONFIRMATION MODAL: HAPUS ANGGOTA (PENGGANTI WINDOW.CONFIRM) -->
+    <div id="delete-confirm-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-slate-100 p-6 space-y-4 transform transition-all text-center">
+            <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-lg mx-auto shadow-inner">
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+            <div>
+                <h3 class="font-extrabold text-slate-900 text-base">Hapus Data Anggota?</h3>
+                <p class="text-xs text-slate-500 mt-1">Apakah Anda yakin ingin menghapus <b id="delete-member-name" class="text-slate-800">Nama Anggota</b> dari database? Tindakan ini bersifat permanen pada sesi aktif ini.</p>
+            </div>
+            <input type="hidden" id="delete-member-npa">
+            <div class="flex gap-2.5 justify-center pt-2">
+                <button onclick="closeDeleteConfirmModal()" class="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 rounded-xl transition-all text-xs">Batal</button>
+                <button onclick="executeDeleteMember()" class="w-1/2 bg-red-600 hover:bg-red-700 text-white font-bold py-2.5 rounded-xl transition-all text-xs shadow-md shadow-red-100">Ya, Hapus</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- SUCCESS TOAST POPUP (PENGGANTI WINDOW.ALERT) -->
+    <div id="toast-success" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-800 transform translate-y-10 opacity-0 transition-all duration-300">
+        <div class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <span class="text-xs font-bold" id="toast-message">Operasi berhasil diselesaikan!</span>
     </div>
 
     <!-- MODAL DETAIL UNTUK MOBILE -->
@@ -444,15 +605,21 @@
                     <span class="text-slate-400 font-semibold">Sertifikasi</span>
                     <span class="text-slate-800 font-bold text-right" id="modal-sertifikasi">-</span>
                 </div>
-                <div class="grid grid-cols-2 py-1.5">
+                <div class="grid grid-cols-2 py-1.5 border-b border-slate-50">
                     <span class="text-slate-400 font-semibold">Status Keaktifan</span>
                     <span class="text-slate-800 font-bold text-right" id="modal-aktif">-</span>
                 </div>
-            </div>
-            <div class="bg-slate-50 p-3 text-right">
-                <button onclick="closeDetailModal()" class="bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs px-4 py-2 rounded-xl transition-all">
-                    Tutup Detail
-                </button>
+                <!-- AKSI MOBILE -->
+                <div class="flex gap-2.5 pt-3">
+                    <button id="btn-mobile-edit" class="w-1/2 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-pen-to-square"></i>
+                        <span>Edit Data</span>
+                    </button>
+                    <button id="btn-mobile-delete" class="w-1/2 py-2.5 bg-red-50 hover:bg-red-100 text-red-600 font-bold rounded-xl flex items-center justify-center gap-1.5">
+                        <i class="fa-solid fa-trash-can"></i>
+                        <span>Hapus</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
@@ -461,7 +628,7 @@
     <footer class="bg-slate-950 text-slate-400 py-4 text-center border-t border-slate-900 text-[10px]">
         <div class="max-w-7xl mx-auto px-4">
             <p>© 2026 PGRI Cabang Samarang. Dibuat dengan cinta untuk Bapak/Ibu Guru Indonesia.</p>
-            <p class="mt-0.5 text-slate-600">Aplikasi Web Database Anggota Dinamis v1.3 • Siap Embed di GitHub Pages</p>
+            <p class="mt-0.5 text-slate-600">Aplikasi Web Database Anggota Dinamis v1.4 • Siap Embed di GitHub Pages</p>
         </div>
     </footer>
 
@@ -473,19 +640,34 @@
         let chartGenderInstance = null;
         let currentFilterType = 'all';
         let currentFilterValue = null;
+        let adminSelectedRanting = "Semua Ranting"; // Khusus jika Super Admin login
 
-        // 2. DATA USER DAN KREDENSIAL YANG DISEPAKATI (9 Akun Ranting Lengkap Sesuai Ranting Baru)
+        // 2. DATA USER DAN KREDENSIAL (9 Akun Ranting + 1 Super Admin Cabang)
         const USER_ACCOUNTS = {
+            "admincabang": { password: "pgrisamarang", name: "Admin Cabang Samarang", ranting: "Semua Ranting" },
             "rantingsamarang": { password: "pgrisamarang", name: "Yudi Sopyan, S.Pd.", ranting: "Ranting Samarang" },
             "rantingparakan": { password: "pgrisamarang", name: "Banyu Nusantara, S.Pd.", ranting: "Ranting Parakan" },
             "rantingsukurasa": { password: "pgrisamarang", name: "Muhammad Fajar Sidik, S.Pd.", ranting: "Ranting Sukarasa" },
             "rantingcintarakyat": { password: "pgrisamarang", name: "Ahmad Ropi, S.Pd.I", ranting: "Ranting Cintarakyat" },
-            "rantingsmpn1": { password: "pgrisamarang", name: "Ranting SMPN 1 Samarang.", ranting: "Ranting SMPN 1 Samarang" },
-            "rantingsmpn2": { password: "pgrisamarang", name: "Ranting SMPN 2 Samarang", ranting: "Ranting SMPN 2 Samarang" },
-            "rantingmuslimin": { password: "pgrisamarang", name: "Ranting SMP Muslimin", ranting: "Ranting SMP Muslimin" },
-            "rantingtk": { password: "pgrisamarang", name: "Ranting TK", ranting: "Ranting TK" },
-            "rantingsma": { password: "pgrisamarang", name: "Ranting SMA", ranting: "Ranting SMA" }
+            "rantingsmpn1": { password: "pgrisamarang", name: "Admin Ranting SMPN 1 Samarang", ranting: "Ranting SMPN 1 Samarang" },
+            "rantingsmpn2": { password: "pgrisamarang", name: "Admin Ranting SMPN 2 Samarang", ranting: "Ranting SMPN 2 Samarang" },
+            "rantingmuslimin": { password: "pgrisamarang", name: "Admin Ranting SMP Muslimin", ranting: "Ranting SMP Muslimin" },
+            "rantingtk": { password: "pgrisamarang", name: "Admin Ranting TK", ranting: "Ranting TK" },
+            "rantingsma": { password: "pgrisamarang", name: "Admin Ranting SMA", ranting: "Ranting SMA" }
         };
+
+        // Daftar 9 Ranting Kecamatan Samarang
+        const LIST_ALL_RANTINGS = [
+            "Ranting Samarang",
+            "Ranting Parakan",
+            "Ranting Sukarasa",
+            "Ranting Cintarakyat",
+            "Ranting SMPN 1 Samarang",
+            "Ranting SMPN 2 Samarang",
+            "Ranting SMP Muslimin",
+            "Ranting TK",
+            "Ranting SMA"
+        ];
 
         // 🚨 TARUH LINK CSV GOOGLE SHEETS ANDA DI SINI 🚨
         const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRI1aIw_udN7HeKLvc5RkTrcdZKJkunFBBi6lckqPPzPsV8fqoUhRpCW22V-bZVbZEtHITFaaVBKteh/pub?output=csv";
@@ -546,7 +728,6 @@
                         row[headers[idx]] = cleanCell;
                     });
                     
-                    // Fungsi pembantu pencari data dengan toleransi nama header (Fuzzy Header Matching)
                     const getVal = (keys) => {
                         for (let k of keys) {
                             const cleanK = k.toLowerCase().replace(/ /g, "_");
@@ -555,7 +736,6 @@
                         return "";
                     };
                     
-                    // Tarik data dengan toleransi penulisan kolom spreadsheet
                     const npaVal = getVal(["npa", "no_anggota", "no._anggota", "nomor_anggota"]);
                     const namaVal = getVal(["nama_lengkap", "nama"]);
                     const rantingVal = getVal(["ranting"]);
@@ -567,13 +747,11 @@
                     const sertifikasiVal = getVal(["sertifikasi", "serdik", "sertifikasi_guru"]);
                     const aktifVal = getVal(["status_keaktifan", "keaktifan", "aktif", "status_aktif"]);
 
-                    // NORMALISASI DATA JENIS KELAMIN (L/P)
-                    let normalizedGender = "P"; // default perempuan
+                    // NORMALISASI DATA JENIS GENDER
+                    let normalizedGender = "P";
                     const rawGender = genderVal.trim().toUpperCase();
                     if (rawGender.startsWith("L") || rawGender === "LAKI-LAKI" || rawGender === "LAKI LAKI" || rawGender === "MALE") {
                         normalizedGender = "L";
-                    } else if (rawGender.startsWith("P") || rawGender === "PEREMPUAN" || rawGender === "FEMALE") {
-                        normalizedGender = "P";
                     }
 
                     // NORMALISASI DATA SERTIFIKASI
@@ -599,7 +777,7 @@
                             unit: unitVal,
                             pendidikan: pendidikanVal,
                             status: statusVal,
-                            gender: normalizedGender, // data bersih L / P
+                            gender: normalizedGender,
                             sertifikasi: normalizedSertifikasi,
                             aktif: normalizedAktif
                         });
@@ -609,8 +787,6 @@
                 if (tempArray.length > 0) {
                     MASTER_DATA_ANGGOTA = tempArray;
                     console.log("Database Google Sheets Berhasil Dimuat!", MASTER_DATA_ANGGOTA);
-                    
-                    // Render ulang data jika user sudah berada dalam dashboard
                     if (currentUser) {
                         renderDashboardData();
                     }
@@ -678,6 +854,17 @@
             document.getElementById("welcome-ranting").textContent = user.ranting;
             document.getElementById("badge-ranting").textContent = user.ranting;
 
+            // Atur Visibilitas Kontrol Super Admin Cabang
+            const branchFilter = document.getElementById("admin-branch-filter-container");
+            if (user.username === "admincabang") {
+                branchFilter.classList.remove("hidden");
+                adminSelectedRanting = "Semua Ranting";
+                document.getElementById("admin-ranting-selector").value = "Semua Ranting";
+            } else {
+                branchFilter.classList.add("hidden");
+                adminSelectedRanting = user.ranting;
+            }
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
             currentFilterType = 'all';
@@ -694,25 +881,33 @@
             document.getElementById("login-container").classList.remove("hidden");
         }
 
+        // Khusus Super Admin: Berubah Ranting yang Disorot
+        function changeAdminRantingFilter() {
+            adminSelectedRanting = document.getElementById("admin-ranting-selector").value;
+            currentFilterType = 'all';
+            currentFilterValue = null;
+            renderDashboardData();
+        }
+
         function renderDashboardData() {
             if (!currentUser) return;
 
-            const myRanting = currentUser.ranting;
-            const myRantingData = MASTER_DATA_ANGGOTA.filter(item => item.ranting === myRanting);
+            // Dapatkan scope data berdasarkan hak akses login atau seleksi Super Admin
+            const activeData = getScopedData();
 
-            const total = myRantingData.length;
-            const totalL = myRantingData.filter(item => item.gender === "L").length;
-            const totalP = myRantingData.filter(item => item.gender === "P").length;
+            const total = activeData.length;
+            const totalL = activeData.filter(item => item.gender === "L").length;
+            const totalP = activeData.filter(item => item.gender === "P").length;
             
-            const totalPNS = myRantingData.filter(item => item.status === "PNS").length;
-            const totalPPPK = myRantingData.filter(item => item.status === "PPPK").length;
-            const totalPPPKPW = myRantingData.filter(item => item.status === "PPPK Paruh Waktu").length;
+            const totalPNS = activeData.filter(item => item.status === "PNS").length;
+            const totalPPPK = activeData.filter(item => item.status === "PPPK").length;
+            const totalPPPKPW = activeData.filter(item => item.status === "PPPK Paruh Waktu").length;
             
             // Logika: Gabungkan hitungan Honorer, GTY, dan GTT untuk Statistik Utama
-            const totalHonorerGroup = myRantingData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status)).length;
+            const totalHonorerGroup = activeData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status)).length;
             
-            const totalPensiun = myRantingData.filter(item => item.status === "Pensiunan").length;
-            const totalSertifikasi = myRantingData.filter(item => item.sertifikasi === "Sudah").length;
+            const totalPensiun = activeData.filter(item => item.status === "Pensiunan").length;
+            const totalSertifikasi = activeData.filter(item => item.sertifikasi === "Sudah").length;
 
             document.getElementById("stat-total").textContent = total;
             document.getElementById("stat-total-l").textContent = totalL;
@@ -730,6 +925,19 @@
             renderGenderChart(totalL, totalP);
 
             applyFiltersAndRenderTable();
+        }
+
+        // Pembantu untuk mendapatkan data sesuai scope login aktif
+        function getScopedData() {
+            if (currentUser.username === "admincabang") {
+                if (adminSelectedRanting === "Semua Ranting") {
+                    return MASTER_DATA_ANGGOTA;
+                } else {
+                    return MASTER_DATA_ANGGOTA.filter(item => item.ranting === adminSelectedRanting);
+                }
+            } else {
+                return MASTER_DATA_ANGGOTA.filter(item => item.ranting === currentUser.ranting);
+            }
         }
 
         function setFilter(filterCode) {
@@ -824,8 +1032,7 @@
         function applyFiltersAndRenderTable() {
             if (!currentUser) return;
 
-            const myRanting = currentUser.ranting;
-            let finalData = MASTER_DATA_ANGGOTA.filter(item => item.ranting === myRanting);
+            let finalData = getScopedData();
 
             if (currentFilterType === 'status') {
                 if (currentFilterValue === 'Honorer/GTY/GTT') {
@@ -846,9 +1053,8 @@
             if (!currentUser) return;
 
             const query = document.getElementById("table-search").value.trim().toLowerCase();
-            const myRanting = currentUser.ranting;
+            let baseData = getScopedData();
 
-            let baseData = MASTER_DATA_ANGGOTA.filter(item => item.ranting === myRanting);
             if (currentFilterType === 'status') {
                 if (currentFilterValue === 'Honorer/GTY/GTT') {
                     baseData = baseData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status));
@@ -881,7 +1087,7 @@
             showingCountSpan.textContent = data.length;
 
             if (currentUser) {
-                totalCountSpan.textContent = MASTER_DATA_ANGGOTA.filter(item => item.ranting === currentUser.ranting).length;
+                totalCountSpan.textContent = getScopedData().length;
             }
 
             if (data.length === 0) {
@@ -946,10 +1152,17 @@
                     <td class="py-2.5 px-4">${statusBadge}</td>
                     <td class="py-2.5 px-4 hidden md:table-cell">${genderBadge}</td>
                     <td class="py-2.5 px-4">${activeBadge}</td>
-                    <td class="py-2.5 px-4 text-center md:hidden">
-                        <button onclick="openDetailModal('${memberEscaped}')" class="text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 w-7 h-7 rounded-lg inline-flex items-center justify-center transition-all">
-                            <i class="fa-solid fa-circle-info text-base"></i>
-                        </button>
+                    <td class="py-2.5 px-4 text-center">
+                        <div class="flex items-center justify-center gap-1.5">
+                            <!-- Edit Button -->
+                            <button onclick="openEditModal('${member.npa}')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 p-1.5 rounded-lg transition-all" title="Edit Data">
+                                <i class="fa-solid fa-pen-to-square text-xs"></i>
+                            </button>
+                            <!-- Delete Button -->
+                            <button onclick="triggerDeleteMember('${member.npa}', '${member.nama.replace(/'/g, "\\'")}')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 p-1.5 rounded-lg transition-all" title="Hapus Data">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(tr);
@@ -976,6 +1189,10 @@
             document.getElementById("modal-sertifikasi").textContent = member.sertifikasi === "Sudah" ? "Sertifikasi Aktif" : "Belum Sertifikasi";
             document.getElementById("modal-aktif").textContent = member.aktif;
 
+            // Tombol Aksi Mobile
+            document.getElementById("btn-mobile-edit").setAttribute("onclick", `closeDetailModal(); openEditModal('${member.npa}')`);
+            document.getElementById("btn-mobile-delete").setAttribute("onclick", `closeDetailModal(); triggerDeleteMember('${member.npa}', '${member.nama.replace(/'/g, "\\'")}')`);
+
             const modal = document.getElementById("mobile-detail-modal");
             modal.classList.remove("hidden");
             modal.classList.add("flex");
@@ -989,7 +1206,179 @@
             document.body.style.overflow = "auto";
         }
 
-        // CHART RENDERING FUNCTIONS (MENDUKUNG GRUP KUMULATIF)
+        // ==========================================
+        // 🛠️ CRUD OPERATIONS LOGIC (IN-MEMORY STATE)
+        // ==========================================
+
+        function showToast(message) {
+            const toast = document.getElementById("toast-success");
+            const toastMsg = document.getElementById("toast-message");
+            toastMsg.textContent = message;
+
+            toast.classList.remove("hidden");
+            setTimeout(() => {
+                toast.classList.remove("translate-y-10", "opacity-0");
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add("translate-y-10", "opacity-0");
+                setTimeout(() => {
+                    toast.classList.add("hidden");
+                }, 300);
+            }, 3000);
+        }
+
+        function openAddModal() {
+            document.getElementById("form-modal-title").textContent = "Tambah Anggota Baru";
+            document.getElementById("member-form").reset();
+            document.getElementById("form-orig-npa").value = "";
+            document.getElementById("form-npa").disabled = false;
+
+            populateFormRantingOptions();
+
+            const modal = document.getElementById("member-form-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            document.body.style.overflow = "hidden";
+        }
+
+        function openEditModal(npa) {
+            const member = MASTER_DATA_ANGGOTA.find(m => m.npa === npa);
+            if (!member) return;
+
+            document.getElementById("form-modal-title").textContent = "Edit Data Anggota";
+            document.getElementById("form-orig-npa").value = member.npa;
+            
+            document.getElementById("form-npa").value = member.npa;
+            document.getElementById("form-nama").value = member.nama;
+            document.getElementById("form-ttl").value = member.ttl;
+            document.getElementById("form-unit").value = member.unit;
+            document.getElementById("form-pendidikan").value = member.pendidikan;
+            document.getElementById("form-status").value = member.status;
+            document.getElementById("form-gender").value = member.gender;
+            document.getElementById("form-sertifikasi").value = member.sertifikasi;
+            document.getElementById("form-aktif").value = member.aktif;
+
+            populateFormRantingOptions(member.ranting);
+
+            // Supaya tidak merusak sinkronisasi NPA jika di-lock
+            document.getElementById("form-npa").disabled = false;
+
+            const modal = document.getElementById("member-form-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeMemberFormModal() {
+            const modal = document.getElementById("member-form-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            document.body.style.overflow = "auto";
+        }
+
+        function populateFormRantingOptions(selectedRanting = "") {
+            const selector = document.getElementById("form-ranting");
+            selector.innerHTML = "";
+
+            if (currentUser.username === "admincabang") {
+                // Cabang bisa mendaftarkan guru ke ranting mana saja
+                LIST_ALL_RANTINGS.forEach(ranting => {
+                    const opt = document.createElement("option");
+                    opt.value = ranting;
+                    opt.textContent = ranting;
+                    if (ranting === selectedRanting) opt.selected = true;
+                    selector.appendChild(opt);
+                });
+                selector.disabled = false;
+            } else {
+                // Ranting biasa hanya dikunci pada Ranting mereka sendiri
+                const opt = document.createElement("option");
+                opt.value = currentUser.ranting;
+                opt.textContent = currentUser.ranting;
+                opt.selected = true;
+                selector.appendChild(opt);
+                selector.disabled = true; // Lock agar tidak bisa ganti ranting lain
+            }
+        }
+
+        function saveMember(event) {
+            event.preventDefault();
+
+            const origNpa = document.getElementById("form-orig-npa").value;
+            const newNpa = document.getElementById("form-npa").value.trim();
+            const nama = document.getElementById("form-nama").value.trim();
+            const ranting = document.getElementById("form-ranting").value;
+            const ttl = document.getElementById("form-ttl").value.trim();
+            const unit = document.getElementById("form-unit").value.trim();
+            const pendidikan = document.getElementById("form-pendidikan").value.trim();
+            const status = document.getElementById("form-status").value;
+            const gender = document.getElementById("form-gender").value;
+            const sertifikasi = document.getElementById("form-sertifikasi").value;
+            const aktif = document.getElementById("form-aktif").value;
+
+            // Cek Duplikasi NPA jika mendaftarkan baru atau ganti NPA lama
+            if (origNpa !== newNpa) {
+                const isDuplicate = MASTER_DATA_ANGGOTA.some(m => m.npa === newNpa);
+                if (isDuplicate) {
+                    showToast("Error: NPA " + newNpa + " sudah terdaftar di database!");
+                    return;
+                }
+            }
+
+            const memberObj = { npa: newNpa, nama, ranting, ttl, unit, pendidikan, status, gender, sertifikasi, aktif };
+
+            if (origNpa) {
+                // Aksi EDIT
+                const idx = MASTER_DATA_ANGGOTA.findIndex(m => m.npa === origNpa);
+                if (idx !== -1) {
+                    MASTER_DATA_ANGGOTA[idx] = memberObj;
+                    showToast("Sukses: Data " + nama + " berhasil diperbarui!");
+                }
+            } else {
+                // Aksi TAMBAH
+                MASTER_DATA_ANGGOTA.unshift(memberObj);
+                showToast("Sukses: " + nama + " berhasil ditambahkan!");
+            }
+
+            closeMemberFormModal();
+            renderDashboardData();
+        }
+
+        function triggerDeleteMember(npa, nama) {
+            document.getElementById("delete-member-name").textContent = nama;
+            document.getElementById("delete-member-npa").value = npa;
+
+            const modal = document.getElementById("delete-confirm-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeDeleteConfirmModal() {
+            const modal = document.getElementById("delete-confirm-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            document.body.style.overflow = "auto";
+        }
+
+        function executeDeleteMember() {
+            const npa = document.getElementById("delete-member-npa").value;
+            const idx = MASTER_DATA_ANGGOTA.findIndex(m => m.npa === npa);
+            if (idx !== -1) {
+                const deletedName = MASTER_DATA_ANGGOTA[idx].nama;
+                MASTER_DATA_ANGGOTA.splice(idx, 1);
+                showToast("Sukses: Data " + deletedName + " berhasil dihapus!");
+            }
+
+            closeDeleteConfirmModal();
+            renderDashboardData();
+        }
+
+        // ==========================================
+        // END OF CRUD OPERATIONS LOGIC
+        // ==========================================
+
         function renderKepegawaianChart(pns, pppk, pppk_pw, honorerGroup, pensiun) {
             const ctx = document.getElementById('chartKepegawaian').getContext('2d');
             
@@ -1129,10 +1518,10 @@
         // EKSPOR DATA KE CSV (MENGEKSPOR STATUS ASLI: Honorer, GTY, GTT)
         function exportData() {
             if (!currentUser) return;
-            const rantingAktif = currentUser.ranting;
+            const rantingAktif = currentUser.username === "admincabang" ? adminSelectedRanting : currentUser.ranting;
             
             const query = document.getElementById("table-search").value.trim().toLowerCase();
-            let baseData = MASTER_DATA_ANGGOTA.filter(item => item.ranting === rantingAktif);
+            let baseData = getScopedData();
             
             if (currentFilterType === 'status') {
                 if (currentFilterValue === 'Honorer/GTY/GTT') {
@@ -1181,9 +1570,9 @@
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
             
-            let filename = `Rekap_Anggota_PGRI_${rantingAktif.replace(" ", "_")}`;
+            let filename = `Rekap_Anggota_PGRI_${rantingAktif.replace(/ /g, "_")}`;
             if (currentFilterType !== 'all') {
-                filename += `_Filter_${currentFilterValue.replace("/", "_").replace(" ", "_")}`;
+                filename += `_Filter_${currentFilterValue.replace("/", "_").replace(/ /g, "_")}`;
             }
             link.setAttribute("download", `${filename}.csv`);
             document.body.appendChild(link);
