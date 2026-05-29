@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Database Anggota PGRI Cabang Samarang</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Menggunakan Google Font "Inter" untuk kesan yang formal, elegan, dan profesional */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            letter-spacing: -0.011em; /* Optimasi kerning halus khas aplikasi SaaS profesional */
+        }
+        .smooth-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-[#f8fafc] min-h-screen flex flex-col justify-between text-slate-800">
+
+    <!-- LOGIN SCREEN WITH HERO SPLIT LAYOUT -->
+    <div id="login-container" class="flex-grow flex items-center justify-center p-4 md:p-8">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl border border-slate-100 overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[580px] transition-all duration-300">
+            
+            <!-- SISI KIRI: PANEL KETUA & BRANDING PGRI (5 Kolom di Desktop) -->
+            <div class="md:col-span-5 bg-gradient-to-br from-red-700 via-red-800 to-slate-900 p-8 text-white flex flex-col justify-between relative overflow-hidden text-center md:text-left">
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
+                
+                <!-- Header Logo di Panel Kiri -->
+                <div class="flex items-center justify-center md:justify-start gap-3 mb-6 md:mb-0 relative z-10">
+                    <div class="w-11 h-11 bg-white p-1.5 rounded-xl flex items-center justify-center shadow-md shrink-0">
+                        <img src="https://lh3.googleusercontent.com/d/1zNxI6_AaCnTciFkXLJnBj5TmTzwYsrcQ" 
+                             alt="Logo PGRI" 
+                             class="w-full h-full object-contain"
+                             onerror="this.src='https://api.dicebear.com/7.x/identicon/svg?seed=pgri'">
+                    </div>
+                    <div class="text-left">
+                        <span class="font-extrabold text-white block text-sm tracking-wider uppercase">PGRI SAMARANG</span>
+                        <span class="text-[10px] text-red-200 block font-medium">Kecamatan Samarang, Kabupaten Garut</span>
+                    </div>
+                </div>
+
+                <!-- Foto Ketua & Tagline Transformasi Digital -->
+                <div class="my-auto space-y-6 relative z-10 py-4">
+                    <div class="relative w-44 h-44 mx-auto md:ml-0 rounded-2xl overflow-hidden border-4 border-white/20 shadow-xl bg-slate-800/50 group/photo">
+                        <img id="ketua-photo" 
+                             src="https://lh3.googleusercontent.com/d/1MkSv3R3WWZQtOSbHnYszXGtCX9d13i6d?auto=format&fit=crop&q=200&w=500" 
+                             alt="Ketua Cabang PGRI Samarang" 
+                             class="w-full h-full object-cover object-center scale-105 group-hover/photo:scale-115 transition-transform duration-500"
+                             onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=pgri'">
+                        <span class="absolute bottom-0 inset-x-0 bg-red-600/90 text-[10px] font-bold py-1.5 uppercase tracking-wider text-center block">Ketua Cabang</span>
+                    </div>
+
+                    <div class="space-y-1">
+                        <h3 class="font-extrabold text-base tracking-wide text-white">Arief Fauzi Mansur, S.Pd.</h3>
+                        <p class="text-xs text-red-200 font-medium">Ketua PGRI Cabang Samarang</p>
+                    </div>
+
+                    <div class="w-16 h-1 bg-red-400 mx-auto md:ml-0 rounded-full"></div>
+
+                    <div class="bg-black/15 p-4 rounded-xl border border-white/10 text-left">
+                        <p class="text-xs italic text-red-50 leading-relaxed font-medium">
+                            "Transformasi Digital Guru Samarang: Bersatu, Berinovasi, dan Berbagi untuk Mewujudkan Ekosistem Pendidikan yang Cerdas, Kreatif, dan Berkemajuan di Era Modern."
+                        </p>
+                    </div>
+                </div>
+
+                <div class="text-[10px] text-red-300 font-medium mt-6 md:mt-0 relative z-10">
+                    Sistem Database Anggota Ranting Terintegrasi v1.3
+                </div>
+            </div>
+
+            <!-- SISI KANAN: PORTAL LOGIN (7 Kolom di Desktop) -->
+            <div class="md:col-span-7 p-8 sm:p-12 flex flex-col justify-center">
+                <div class="mb-6">
+                    <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Portal Akses Ranting</h2>
+                    <p class="text-slate-500 text-sm mt-1">Silakan masuk menggunakan kredensial koordinasi ranting Anda.</p>
+                </div>
+
+                <div id="login-error" class="hidden mb-5 p-3.5 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm flex items-center gap-2.5">
+                    <i class="fa-solid fa-circle-exclamation text-base"></i>
+                    <span id="error-text">Username atau password salah!</span>
+                </div>
+
+                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Username Ranting</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                                <i class="fa-solid fa-user-gear"></i>
+                            </span>
+                            <input type="text" id="username" required
+                                class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-all text-sm font-medium"
+                                placeholder="Contoh: rantingpgrisamarang">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Password Akses</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
+                                <i class="fa-solid fa-key"></i>
+                            </span>
+                            <input type="password" id="password" required
+                                class="w-full pl-11 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-all text-sm font-medium"
+                                placeholder="••••••••">
+                            <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                                <i id="password-toggle-icon" class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3.5 px-4 rounded-xl shadow-lg shadow-red-200 hover:shadow-none hover:translate-y-0.5 transition-all duration-200 flex items-center justify-center gap-2">
+                        <span>Masuk ke Dashboard</span>
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                    </button>
+                </form>
+
+                <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 font-medium">
+                    <span>Butuh bantuan akses?</span>
+                    <a href="#" class="text-red-600 hover:underline">Hubungi Admin Cabang</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MAIN DASHBOARD SCREEN (Hidden on Load) -->
+    <div id="dashboard-container" class="hidden flex-grow flex flex-col">
+        <!-- HEADER / NAVIGATION -->
+        <header class="bg-white/80 border-b border-slate-100 sticky top-0 z-50 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-14">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-9 h-9 bg-white p-1 rounded-lg flex items-center justify-center shadow-md shadow-red-100 shrink-0 border border-slate-100">
+                            <img src="https://lh3.googleusercontent.com/d/1zNxI6_AaCnTciFkXLJnBj5TmTzwYsrcQ" 
+                                 alt="Logo PGRI" 
+                                 class="w-full h-full object-contain"
+                                 onerror="this.src='https://api.dicebear.com/7.x/identicon/svg?seed=pgri'">
+                        </div>
+                        <div>
+                            <span class="font-extrabold text-slate-900 block leading-tight text-xs sm:text-sm tracking-wide">PGRI SAMARANG</span>
+                            <span class="text-[9px] text-slate-400 block font-semibold uppercase tracking-wider">Sistem Informasi Anggota</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <div class="hidden md:block text-right">
+                            <p class="text-[10px] text-slate-400 font-medium">Selamat datang,</p>
+                            <p id="user-display-name" class="text-xs font-bold text-slate-800">Nama Admin</p>
+                        </div>
+                        <div class="h-6 w-px bg-slate-200 hidden md:block"></div>
+                        <button onclick="handleLogout()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded-lg transition-all font-semibold border border-transparent hover:border-red-100">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            <span class="hidden sm:inline">Keluar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD CONTENT -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex-grow w-full space-y-5">
+            
+            <!-- PREMIUM WELCOME BANNER -->
+            <div class="bg-gradient-to-r from-red-700 via-rose-600 to-slate-900 rounded-2xl p-5 text-white shadow-md relative overflow-hidden">
+                <div class="absolute right-0 top-0 w-60 h-60 bg-white/5 rounded-full blur-3xl transform translate-x-20 -translate-y-20"></div>
+                
+                <div class="relative z-10 space-y-1.5">
+                    <span id="badge-ranting" class="bg-white/20 text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-widest mb-1 inline-block backdrop-blur-md">Ranting Aktif</span>
+                    <h2 class="text-lg sm:text-xl font-extrabold tracking-tight">Selamat Datang kembali, <span id="welcome-name" class="text-yellow-300">Nama Admin</span>!</h2>
+                    <p class="text-red-100 text-xs max-w-3xl leading-relaxed">Kelola data resmi <b id="welcome-ranting" class="underline decoration-yellow-400 decoration-2">Ranting X</b>. Klik kartu statistik di bawah ini untuk filter instan.</p>
+                </div>
+            </div>
+
+            <!-- INTERACTIVE STATISTIC CARDS (9 RANTING SUPPORT) -->
+            <div class="space-y-3">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-1 h-3 bg-red-600 rounded-full"></span>
+                        <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Kategori Statistik (Klik untuk Filter)</h3>
+                    </div>
+                    <button id="btn-reset-filter" onclick="clearFilters()" class="hidden text-[11px] font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 border border-red-100 shadow-sm">
+                        <i class="fa-solid fa-filter-circle-xmark"></i>
+                        <span>Reset</span>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 max-w-6xl mx-auto">
+                    <!-- Card 1: Total Anggota -->
+                    <div id="card-total" onclick="setFilter('all')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-rose-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
+                        <div class="text-rose-600 bg-rose-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-users"></i>
+                        </div>
+                        <div class="my-1.5">
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Total Anggota</span>
+                            <span id="stat-total" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                        </div>
+                        <div class="flex gap-1 text-[8px] font-bold text-slate-500 w-full justify-center">
+                            <span onclick="event.stopPropagation(); setFilter('gender_L');" class="hover:text-sky-600 transition-colors bg-sky-50 px-1 py-0.5 rounded">L: <b id="stat-total-l">0</b></span>
+                            <span onclick="event.stopPropagation(); setFilter('gender_P');" class="hover:text-pink-600 transition-colors bg-pink-50 px-1 py-0.5 rounded">P: <b id="stat-total-p">0</b></span>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: PNS -->
+                    <div id="card-pns" onclick="setFilter('status_PNS')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-amber-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
+                        <div class="text-amber-600 bg-amber-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-id-card"></i>
+                        </div>
+                        <div class="my-1.5">
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">PNS</span>
+                            <span id="stat-pns" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                        </div>
+                        <span class="text-[8px] text-amber-600 font-bold bg-amber-50 px-1.5 py-0.5 rounded-md">Negeri</span>
+                    </div>
+
+                    <!-- Card 3: PPPK -->
+                    <div id="card-pppk" onclick="setFilter('status_PPPK')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-blue-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
+                        <div class="text-blue-600 bg-blue-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <div class="my-1.5">
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">PPPK</span>
+                            <span id="stat-pppk" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                        </div>
+                        <span class="text-[8px] text-blue-600 font-bold bg-blue-50 px-1.5 py-0.5 rounded-md">Full Time</span>
+                    </div>
+
+                    <!-- Card 4: PPPK Paruh Waktu -->
+                    <div id="card-pppk-pw" onclick="setFilter('status_PPPK Paruh Waktu')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-indigo-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
+                        <div class="text-indigo-600 bg-indigo-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-user-clock"></i>
+                        </div>
+                        <div class="my-1.5">
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">PPPK PW</span>
+                            <span id="stat-pppk-pw" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                        </div>
+                        <span class="text-[8px] text-indigo-600 font-bold bg-indigo-50 px-1.5 py-0.5 rounded-md">Paruh Waktu</span>
+                    </div>
+
+                    <!-- Card 5: Honorer/GTY/GTT (AKUMULATIF DI STATISTIK) -->
+                    <div id="card-honorer" onclick="setFilter('status_Honorer/GTY/GTT')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-slate-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
+                        <div class="text-slate-600 bg-slate-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div class="my-1.5">
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Honorer/GTT/GTY</span>
+                            <span id="stat-honorer" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                        </div>
+                        <span class="text-[8px] text-slate-600 font-bold bg-slate-50 px-1.5 py-0.5 rounded-md">Gabungan</span>
+                    </div>
+
+                    <!-- Card 6: Pensiunan -->
+                    <div id="card-pensiun" onclick="setFilter('status_Pensiunan')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-emerald-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
+                        <div class="text-emerald-600 bg-emerald-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-user-shield"></i>
+                        </div>
+                        <div class="my-1.5">
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Pensiun</span>
+                            <span id="stat-pensiun" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                        </div>
+                        <span class="text-[8px] text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.5 rounded-md">Purna Bakti</span>
+                    </div>
+
+                    <!-- Card 7: Sertifikasi -->
+                    <div id="card-sertifikasi" onclick="setFilter('sertifikasi_Sudah')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-teal-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
+                        <div class="text-teal-600 bg-teal-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div class="my-1.5">
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Sertifikasi</span>
+                            <span id="stat-sertifikasi" class="text-xl font-extrabold text-teal-600 block mt-0.5 leading-none">0</span>
+                        </div>
+                        <span class="text-[8px] text-teal-600 font-bold bg-teal-50 px-1.5 py-0.5 rounded-md">Serdik</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRAPHICS / INFOGRAPHICS SECTION -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+                <!-- Grafik Status Pegawai -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm col-span-1 lg:col-span-2 space-y-3 relative">
+                    <div class="absolute top-4 right-5 flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-red-400 inline-block"></span>
+                        <span class="w-2 h-2 rounded-full bg-yellow-400 inline-block"></span>
+                        <span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-1 h-3.5 bg-amber-500 rounded-full"></span>
+                        <h3 class="font-bold text-slate-850 text-xs sm:text-sm">Grafik Distribusi Status Pegawai</h3>
+                    </div>
+                    <div class="relative h-52 pt-1">
+                        <canvas id="chartKepegawaian"></canvas>
+                    </div>
+                </div>
+
+                <!-- Grafik Komposisi Gender -->
+                <div class="bg-white p-5 rounded-2xl border border-slate-100 shadow-sm space-y-3 relative">
+                    <div class="absolute top-4 right-5 flex items-center gap-1">
+                        <span class="w-2 h-2 rounded-full bg-red-400 inline-block"></span>
+                        <span class="w-2 h-2 rounded-full bg-yellow-400 inline-block"></span>
+                        <span class="w-2 h-2 rounded-full bg-green-400 inline-block"></span>
+                    </div>
+                    <div class="flex items-center gap-1.5">
+                        <span class="w-1 h-3.5 bg-sky-500 rounded-full"></span>
+                        <h3 class="font-bold text-slate-850 text-xs sm:text-sm">Rasio Gender</h3>
+                    </div>
+                    <div class="relative h-52 flex items-center justify-center pt-1">
+                        <canvas id="chartGender"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DATA TABLE -->
+            <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden space-y-3">
+                <!-- Table Header & Filters -->
+                <div class="p-5 pb-1 border-b border-slate-100 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+                    <div>
+                        <div class="flex items-center gap-1.5">
+                            <h3 class="font-extrabold text-slate-800 text-base tracking-tight">Daftar Anggota PGRI</h3>
+                            <span id="active-filter-badge" class="hidden text-[9px] font-bold bg-red-100 text-red-700 px-2 py-0.5 rounded-md uppercase tracking-wider"></span>
+                        </div>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Daftar guru terverifikasi pada ranting Anda. Klik <i class="fa-solid fa-circle-info mx-0.5 text-red-500"></i> pada mobile untuk data lengkap.</p>
+                    </div>
+
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                        <!-- Search -->
+                        <div class="relative flex-grow">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+                                <i class="fa-solid fa-magnifying-glass text-xs"></i>
+                            </span>
+                            <input type="text" id="table-search" oninput="filterTable()"
+                                class="w-full sm:w-56 pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:bg-white text-xs"
+                                placeholder="Cari Nama / NPA / Unit...">
+                        </div>
+
+                        <!-- Export Button -->
+                        <button onclick="exportData()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-3.5 py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-sm">
+                            <i class="fa-solid fa-file-excel text-xs"></i>
+                            <span>Ekspor</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Table Content -->
+                <div class="overflow-x-auto w-full">
+                    <table class="w-full text-left border-collapse min-w-[750px] md:min-w-full">
+                        <thead>
+                            <tr class="bg-slate-50/50 text-slate-500 text-[9px] font-bold uppercase tracking-widest border-b border-slate-100">
+                                <th class="py-3 px-4 w-12 text-center border-r border-slate-100/50">No</th>
+                                <th class="py-3 px-4 w-32">NPA</th>
+                                <th class="py-3 px-4">Nama Lengkap</th>
+                                <th class="py-3 px-4 hidden md:table-cell">Tempat Tanggal Lahir</th>
+                                <th class="py-3 px-4">Unit Kerja / Sekolah</th>
+                                <th class="py-3 px-4 hidden lg:table-cell">Pendidikan</th>
+                                <th class="py-3 px-4">Status Pegawai</th>
+                                <th class="py-3 px-4 hidden md:table-cell">Jenis Kelamin</th>
+                                <th class="py-3 px-4">Keaktifan</th>
+                                <th class="py-3 px-4 w-12 text-center md:hidden">Detail</th>
+                            </tr>
+                        </thead>
+                        <tbody id="member-table-body" class="divide-y divide-slate-100 text-xs">
+                            <!-- Rows will be injected here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Empty State -->
+                <div id="table-empty-state" class="hidden p-12 text-center">
+                    <div class="text-slate-300 text-5xl mb-3">
+                        <i class="fa-regular fa-folder-open"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-700">Data tidak ditemukan</h4>
+                    <p class="text-xs text-slate-400 mt-0.5 max-w-sm mx-auto">Anggota dengan kriteria ini tidak tersedia.</p>
+                </div>
+
+                <!-- Table Footer -->
+                <div class="p-3.5 bg-slate-50/50 border-t border-slate-100 text-[11px] text-slate-400 flex flex-col sm:flex-row justify-between items-center gap-1.5">
+                    <div>Menampilkan <span id="table-showing" class="font-bold text-slate-700">0</span> dari <span id="table-total" class="font-bold text-slate-700">0</span> anggota.</div>
+                    <div class="font-semibold">PGRI Cabang Samarang</div>
+                </div>
+            </div>
+
+            <!-- INFORMASI CATATAN KAKI (FOOTER NOTE) DENGAN TATA LETAK PROFESIONAL -->
+            <div class="bg-[#fef2f2] border border-[#fee2e2] rounded-2xl p-4 flex items-start sm:items-center gap-3.5 text-slate-700 text-xs smooth-transition hover:border-red-200 shadow-sm">
+                <div class="w-9 h-9 rounded-xl bg-red-100 text-red-700 flex items-center justify-center text-sm shrink-0 shadow-inner">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="flex-grow">
+                    <h4 class="font-bold text-slate-900 tracking-tight text-xs sm:text-sm">Verifikasi & Penyelarasan Data</h4>
+                    <p class="text-slate-500 mt-0.5 text-[11px] sm:text-xs">Jika terdapat ketidaksesuaian pada data di atas, silakan hubungi tim administrator <span class="font-bold text-red-700">Cabang Kecamatan</span> untuk proses pemutakhiran data secara terpusat.</p>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- MODAL DETAIL UNTUK MOBILE -->
+    <div id="mobile-detail-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-slate-100 transform transition-all">
+            <div class="bg-gradient-to-r from-red-700 to-rose-600 p-4 text-white flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold text-sm" id="modal-nama">Nama Lengkap</h3>
+                    <p class="text-[10px] text-red-100" id="modal-npa">NPA: -</p>
+                </div>
+                <button onclick="closeDetailModal()" class="text-white hover:text-red-200 text-lg p-1">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </button>
+            </div>
+            <div class="p-5 space-y-4 text-xs">
+                <div class="grid grid-cols-2 py-1.5 border-b border-slate-50">
+                    <span class="text-slate-400 font-semibold">Ranting</span>
+                    <span class="text-slate-800 font-bold text-right" id="modal-ranting">-</span>
+                </div>
+                <div class="grid grid-cols-2 py-1.5 border-b border-slate-50">
+                    <span class="text-slate-400 font-semibold">Tempat, Tgl Lahir</span>
+                    <span class="text-slate-800 font-bold text-right" id="modal-ttl">-</span>
+                </div>
+                <div class="grid grid-cols-2 py-1.5 border-b border-slate-50">
+                    <span class="text-slate-400 font-semibold">Unit Kerja</span>
+                    <span class="text-slate-800 font-bold text-right" id="modal-unit">-</span>
+                </div>
+                <div class="grid grid-cols-2 py-1.5 border-b border-slate-50">
+                    <span class="text-slate-400 font-semibold">Pendidikan Terakhir</span>
+                    <span class="text-slate-800 font-bold text-right" id="modal-pendidikan">-</span>
+                </div>
+                <div class="grid grid-cols-2 py-1.5 border-b border-slate-50">
+                    <span class="text-slate-400 font-semibold">Status Pegawai</span>
+                    <span class="text-slate-800 font-bold text-right" id="modal-status">-</span>
+                </div>
+                <div class="grid grid-cols-2 py-1.5 border-b border-slate-50">
+                    <span class="text-slate-400 font-semibold">Jenis Kelamin</span>
+                    <span class="text-slate-800 font-bold text-right" id="modal-gender">-</span>
+                </div>
+                <div class="grid grid-cols-2 py-1.5 border-b border-slate-50">
+                    <span class="text-slate-400 font-semibold">Sertifikasi</span>
+                    <span class="text-slate-800 font-bold text-right" id="modal-sertifikasi">-</span>
+                </div>
+                <div class="grid grid-cols-2 py-1.5">
+                    <span class="text-slate-400 font-semibold">Status Keaktifan</span>
+                    <span class="text-slate-800 font-bold text-right" id="modal-aktif">-</span>
+                </div>
+            </div>
+            <div class="bg-slate-50 p-3 text-right">
+                <button onclick="closeDetailModal()" class="bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs px-4 py-2 rounded-xl transition-all">
+                    Tutup Detail
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-950 text-slate-400 py-4 text-center border-t border-slate-900 text-[10px]">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>© 2026 PGRI Cabang Samarang. Dibuat dengan cinta untuk Bapak/Ibu Guru Indonesia.</p>
+            <p class="mt-0.5 text-slate-600">Aplikasi Web Database Anggota Dinamis v1.3 • Siap Embed di GitHub Pages</p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // 1. STATE MANAJEMEN DASBOR (Dideklarasikan di bagian paling atas skrip global untuk menghindari ReferenceError)
+        let currentUser = null;
+        let chartKepegawaianInstance = null;
+        let chartGenderInstance = null;
+        let currentFilterType = 'all';
+        let currentFilterValue = null;
+
+        // 2. DATA USER DAN KREDENSIAL YANG DISEPAKATI (9 Akun Ranting Lengkap Sesuai Ranting Baru)
+        const USER_ACCOUNTS = {
+            "rantingsamarang": { password: "pgrisamarang", name: "Yudi Sopyan, S.Pd.", ranting: "Ranting Samarang" },
+            "rantingparakan": { password: "pgrisamarang", name: "Banyu Nusantara, S.Pd.", ranting: "Ranting Parakan" },
+            "rantingsukurasa": { password: "pgrisamarang", name: "Muhammad Fajar Sidik, S.Pd.", ranting: "Ranting Sukarasa" },
+            "rantingcintarakyat": { password: "pgrisamarang", name: "Ahmad Ropi, S.Pd.I", ranting: "Ranting Cintarakyat" },
+            "rantingsmpn1": { password: "pgrisamarang", name: "Ranting SMPN 1 Samarang.", ranting: "Ranting SMPN 1 Samarang" },
+            "rantingsmpn2": { password: "pgrisamarang", name: "Ranting SMPN 2 Samarang", ranting: "Ranting SMPN 2 Samarang" },
+            "rantingmuslimin": { password: "pgrisamarang", name: "Ranting SMP Muslimin", ranting: "Ranting SMP Muslimin" },
+            "rantingtk": { password: "pgrisamarang", name: "Ranting TK", ranting: "Ranting TK" },
+            "rantingsma": { password: "pgrisamarang", name: "Ranting SMA", ranting: "Ranting SMA" }
+        };
+
+        // 🚨 TARUH LINK CSV GOOGLE SHEETS ANDA DI SINI 🚨
+        const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRI1aIw_udN7HeKLvc5RkTrcdZKJkunFBBi6lckqPPzPsV8fqoUhRpCW22V-bZVbZEtHITFaaVBKteh/pub?output=csv";
+
+        // MASTER DATA CADANGAN (Akan otomatis digantikan saat SPREADSHEET_CSV_URL diisi dengan benar)
+        let MASTER_DATA_ANGGOTA = [
+            { nama: "Yoni Hermanto, M.Pd.", npa: "10190100001", ranting: "Ranting Samarang", ttl: "Garut, 12 Maret 1985", unit: "SDN 1 Samarang", pendidikan: "S2 Tek. Pendidikan", status: "PNS", gender: "L", sertifikasi: "Sudah", aktif: "Aktif" },
+            { nama: "Siti Masitoh, S.Pd.", npa: "10190100002", ranting: "Ranting Samarang", ttl: "Garut, 25 April 1990", unit: "SDN 1 Samarang", pendidikan: "S1 PGSD", status: "PPPK", gender: "P", sertifikasi: "Sudah", aktif: "Aktif" },
+            { nama: "Andri Wijaya, S.Pd.", npa: "10190100003", ranting: "Ranting Samarang", ttl: "Bandung, 05 Juni 1995", unit: "SDN 2 Samarang", pendidikan: "S1 Penjas", status: "Honorer", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
+            { nama: "Lilis Herlina, S.Pd.", npa: "10190100004", ranting: "Ranting Samarang", ttl: "Garut, 18 September 1980", unit: "SDN 2 Samarang", pendidikan: "S1 PGSD", status: "GTY", gender: "P", sertifikasi: "Sudah", aktif: "Aktif" },
+            { nama: "Dian Mulyana, S.Pd.", npa: "10190100005", ranting: "Ranting Samarang", ttl: "Garut, 22 Agustus 1996", unit: "SMKS Pasundan Samarang", pendidikan: "S1 Pend. Ekonomi", status: "GTT", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
+            { nama: "Soni Hermawan, S.Kom", npa: "10190700003", ranting: "Ranting Parakan", ttl: "Bandung, 14 Des 1991", unit: "SDN 1 Tanjungsari", pendidikan: "S1 Komputer", status: "GTY", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
+            { nama: "Yuni Kartika, S.Pd.", npa: "10190700004", ranting: "Ranting Sukarasa", ttl: "Garut, 18 Juni 1995", unit: "SMPN 3 Samarang", pendidikan: "S1 Pend. Bahasa Inggris", status: "GTT", gender: "P", sertifikasi: "Belum", aktif: "Aktif" }
+        ];
+
+        // 3. FUNGSI UNTUK MENARIK DATA REAL-TIME DARI GOOGLE SHEETS DENGAN FILTER MULTI-KOLOM
+        async function loadDataFromSpreadsheet() {
+            if (!SPREADSHEET_CSV_URL || SPREADSHEET_CSV_URL === "TARUH_URL_CSV_GOOGLE_SHEETS_ANDA_DI_SINI") {
+                console.log("Menggunakan data simulasi lokal. Masukkan URL CSV Google Sheets Anda untuk mengaktifkan data dinamis.");
+                return;
+            }
+
+            try {
+                const response = await fetch(SPREADSHEET_CSV_URL);
+                const dataText = await response.text();
+                
+                // Bersihkan carriage return \r dari seluruh teks agar tidak merusak nama kolom terakhir
+                const cleanText = dataText.replace(/\r/g, '');
+                const lines = cleanText.split("\n").map(line => {
+                    const result = [];
+                    let current = '';
+                    let inQuotes = false;
+                    for (let char of line) {
+                        if (char === '"') {
+                            inQuotes = !inQuotes;
+                        } else if (char === ',' && !inQuotes) {
+                            result.push(current.trim());
+                            current = '';
+                        } else {
+                            current += char;
+                        }
+                    }
+                    result.push(current.trim());
+                    return result;
+                });
+
+                // Normalisasi penulisan headers ke huruf kecil dan ganti spasi dengan underscore
+                const headers = lines[0].map(h => h.replace(/"/g, '').toLowerCase().replace(/ /g, "_").trim());
+                
+                const tempArray = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const cells = lines[i];
+                    if (cells.length < headers.length || !cells[0]) continue; // Skip jika baris kosong
+                    
+                    let row = {};
+                    cells.forEach((cell, idx) => {
+                        let cleanCell = cell.replace(/"/g, '').trim();
+                        row[headers[idx]] = cleanCell;
+                    });
+                    
+                    // Fungsi pembantu pencari data dengan toleransi nama header (Fuzzy Header Matching)
+                    const getVal = (keys) => {
+                        for (let k of keys) {
+                            const cleanK = k.toLowerCase().replace(/ /g, "_");
+                            if (row[cleanK] !== undefined) return row[cleanK];
+                        }
+                        return "";
+                    };
+                    
+                    // Tarik data dengan toleransi penulisan kolom spreadsheet
+                    const npaVal = getVal(["npa", "no_anggota", "no._anggota", "nomor_anggota"]);
+                    const namaVal = getVal(["nama_lengkap", "nama"]);
+                    const rantingVal = getVal(["ranting"]);
+                    const ttlVal = getVal(["tempat_tanggal_lahir", "ttl", "tempat_tgl_lahir"]);
+                    const unitVal = getVal(["unit_kerja", "sekolah", "unit", "instansi"]);
+                    const pendidikanVal = getVal(["pendidikan_terakhir", "pendidikan", "ijazah"]);
+                    const statusVal = getVal(["status_pegawai", "status_kepegawaian", "status"]);
+                    const genderVal = getVal(["jenis_kelamin", "l/p", "lp", "jk", "gender", "sex"]);
+                    const sertifikasiVal = getVal(["sertifikasi", "serdik", "sertifikasi_guru"]);
+                    const aktifVal = getVal(["status_keaktifan", "keaktifan", "aktif", "status_aktif"]);
+
+                    // NORMALISASI DATA JENIS KELAMIN (L/P)
+                    let normalizedGender = "P"; // default perempuan
+                    const rawGender = genderVal.trim().toUpperCase();
+                    if (rawGender.startsWith("L") || rawGender === "LAKI-LAKI" || rawGender === "LAKI LAKI" || rawGender === "MALE") {
+                        normalizedGender = "L";
+                    } else if (rawGender.startsWith("P") || rawGender === "PEREMPUAN" || rawGender === "FEMALE") {
+                        normalizedGender = "P";
+                    }
+
+                    // NORMALISASI DATA SERTIFIKASI
+                    let normalizedSertifikasi = "Belum";
+                    const rawSertif = sertifikasiVal.trim().toUpperCase();
+                    if (rawSertif.startsWith("SUD") || rawSertif === "YA" || rawSertif === "SUDAH") {
+                        normalizedSertifikasi = "Sudah";
+                    }
+
+                    // NORMALISASI STATUS KEAKTIFAN
+                    let normalizedAktif = "Aktif";
+                    const rawAktif = aktifVal.trim().toUpperCase();
+                    if (rawAktif.startsWith("TID") || rawAktif === "NON" || rawAktif === "TIDAK AKTIF") {
+                        normalizedAktif = "Tidak Aktif";
+                    }
+
+                    if (namaVal) {
+                        tempArray.push({
+                            npa: npaVal,
+                            nama: namaVal,
+                            ranting: rantingVal,
+                            ttl: ttlVal,
+                            unit: unitVal,
+                            pendidikan: pendidikanVal,
+                            status: statusVal,
+                            gender: normalizedGender, // data bersih L / P
+                            sertifikasi: normalizedSertifikasi,
+                            aktif: normalizedAktif
+                        });
+                    }
+                }
+
+                if (tempArray.length > 0) {
+                    MASTER_DATA_ANGGOTA = tempArray;
+                    console.log("Database Google Sheets Berhasil Dimuat!", MASTER_DATA_ANGGOTA);
+                    
+                    // Render ulang data jika user sudah berada dalam dashboard
+                    if (currentUser) {
+                        renderDashboardData();
+                    }
+                }
+            } catch (error) {
+                console.error("Gagal menarik data dari Google Sheets, menggunakan data cadangan offline.", error);
+            }
+        }
+
+        // Jalankan fetch data Google Sheets sesaat setelah halaman dimuat
+        window.addEventListener('DOMContentLoaded', () => {
+            loadDataFromSpreadsheet();
+        });
+
+        function handleLogin(event) {
+            event.preventDefault();
+            const usernameInput = document.getElementById("username").value.trim().toLowerCase();
+            const passwordInput = document.getElementById("password").value;
+            const errorDiv = document.getElementById("login-error");
+            const errorText = document.getElementById("error-text");
+
+            if (USER_ACCOUNTS[usernameInput]) {
+                const account = USER_ACCOUNTS[usernameInput];
+                if (account.password === passwordInput) {
+                    errorDiv.classList.add("hidden");
+                    
+                    currentUser = {
+                        username: usernameInput,
+                        name: account.name,
+                        ranting: account.ranting
+                    };
+
+                    sessionStorage.setItem("pgri_session", JSON.stringify(currentUser));
+                    showDashboard(currentUser);
+                } else {
+                    errorText.textContent = "Kata sandi salah! Silakan coba lagi.";
+                    errorDiv.classList.remove("hidden");
+                }
+            } else {
+                errorText.textContent = "Username Ranting tidak terdaftar!";
+                errorDiv.classList.remove("hidden");
+            }
+        }
+
+        function togglePassword() {
+            const pwdInput = document.getElementById("password");
+            const icon = document.getElementById("password-toggle-icon");
+            if (pwdInput.type === "password") {
+                pwdInput.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                pwdInput.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+
+        function showDashboard(user) {
+            document.getElementById("login-container").classList.add("hidden");
+            document.getElementById("dashboard-container").classList.remove("hidden");
+
+            document.getElementById("user-display-name").textContent = user.name;
+            document.getElementById("welcome-name").textContent = user.name;
+            document.getElementById("welcome-ranting").textContent = user.ranting;
+            document.getElementById("badge-ranting").textContent = user.ranting;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            currentFilterType = 'all';
+            currentFilterValue = null;
+
+            renderDashboardData();
+        }
+
+        function handleLogout() {
+            sessionStorage.removeItem("pgri_session");
+            currentUser = null;
+            document.getElementById("login-form").reset();
+            document.getElementById("dashboard-container").classList.add("hidden");
+            document.getElementById("login-container").classList.remove("hidden");
+        }
+
+        function renderDashboardData() {
+            if (!currentUser) return;
+
+            const myRanting = currentUser.ranting;
+            const myRantingData = MASTER_DATA_ANGGOTA.filter(item => item.ranting === myRanting);
+
+            const total = myRantingData.length;
+            const totalL = myRantingData.filter(item => item.gender === "L").length;
+            const totalP = myRantingData.filter(item => item.gender === "P").length;
+            
+            const totalPNS = myRantingData.filter(item => item.status === "PNS").length;
+            const totalPPPK = myRantingData.filter(item => item.status === "PPPK").length;
+            const totalPPPKPW = myRantingData.filter(item => item.status === "PPPK Paruh Waktu").length;
+            
+            // Logika: Gabungkan hitungan Honorer, GTY, dan GTT untuk Statistik Utama
+            const totalHonorerGroup = myRantingData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status)).length;
+            
+            const totalPensiun = myRantingData.filter(item => item.status === "Pensiunan").length;
+            const totalSertifikasi = myRantingData.filter(item => item.sertifikasi === "Sudah").length;
+
+            document.getElementById("stat-total").textContent = total;
+            document.getElementById("stat-total-l").textContent = totalL;
+            document.getElementById("stat-total-p").textContent = totalP;
+            
+            document.getElementById("stat-pns").textContent = totalPNS;
+            document.getElementById("stat-pppk").textContent = totalPPPK;
+            document.getElementById("stat-pppk-pw").textContent = totalPPPKPW;
+            document.getElementById("stat-honorer").textContent = totalHonorerGroup;
+            document.getElementById("stat-pensiun").textContent = totalPensiun;
+            document.getElementById("stat-sertifikasi").textContent = totalSertifikasi;
+
+            // Render grafik dengan group honorer kumulatif
+            renderKepegawaianChart(totalPNS, totalPPPK, totalPPPKPW, totalHonorerGroup, totalPensiun);
+            renderGenderChart(totalL, totalP);
+
+            applyFiltersAndRenderTable();
+        }
+
+        function setFilter(filterCode) {
+            const cards = ["card-total", "card-pns", "card-pppk", "card-pppk-pw", "card-honorer", "card-pensiun", "card-sertifikasi"];
+            
+            cards.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    el.classList.remove(
+                        "ring-4", 
+                        "ring-red-500/20", 
+                        "border-red-500", 
+                        "bg-gradient-to-br", 
+                        "from-red-50/50", 
+                        "to-rose-50/50", 
+                        "shadow-md",
+                        "scale-[1.01]"
+                    );
+                }
+            });
+
+            if (filterCode === 'all') {
+                currentFilterType = 'all';
+                currentFilterValue = null;
+                document.getElementById("card-total").classList.add(
+                    "ring-4", 
+                    "ring-red-500/20", 
+                    "border-red-500", 
+                    "scale-[1.01]"
+                );
+            } else {
+                const parts = filterCode.split('_');
+                currentFilterType = parts[0];
+                currentFilterValue = parts[1];
+
+                let cardId = "";
+                if (parts[0] === 'status') {
+                    if (parts[1] === 'PNS') cardId = "card-pns";
+                    if (parts[1] === 'PPPK') cardId = "card-pppk";
+                    if (parts[1] === 'PPPK Paruh Waktu') cardId = "card-pppk-pw";
+                    if (parts[1] === 'Honorer/GTY/GTT') cardId = "card-honorer";
+                    if (parts[1] === 'Pensiunan') cardId = "card-pensiun";
+                } else if (parts[0] === 'sertifikasi') {
+                    cardId = "card-sertifikasi";
+                } else if (parts[0] === 'gender') {
+                    cardId = "card-total";
+                }
+
+                if (cardId) {
+                    const activeCard = document.getElementById(cardId);
+                    activeCard.classList.add(
+                        "ring-4", 
+                        "ring-red-500/20", 
+                        "border-red-500", 
+                        "bg-gradient-to-br", 
+                        "from-red-50/40", 
+                        "to-rose-50/40", 
+                        "scale-[1.01]"
+                    );
+                }
+            }
+
+            const btnReset = document.getElementById("btn-reset-filter");
+            const filterBadge = document.getElementById("active-filter-badge");
+
+            if (currentFilterType !== 'all') {
+                btnReset.classList.remove("hidden");
+                filterBadge.classList.remove("hidden");
+                
+                let label = currentFilterValue;
+                if (currentFilterType === 'gender') {
+                    label = currentFilterValue === 'L' ? 'Laki-laki' : 'Perempuan';
+                } else if (currentFilterType === 'sertifikasi') {
+                    label = 'Telah Sertifikasi';
+                } else if (currentFilterValue === 'Honorer/GTY/GTT') {
+                    label = 'Honorer/GTT/GTY';
+                }
+                filterBadge.textContent = label;
+            } else {
+                btnReset.classList.add("hidden");
+                filterBadge.classList.add("hidden");
+            }
+
+            document.getElementById("table-search").value = "";
+            applyFiltersAndRenderTable();
+        }
+
+        function clearFilters() {
+            setFilter('all');
+        }
+
+        function applyFiltersAndRenderTable() {
+            if (!currentUser) return;
+
+            const myRanting = currentUser.ranting;
+            let finalData = MASTER_DATA_ANGGOTA.filter(item => item.ranting === myRanting);
+
+            if (currentFilterType === 'status') {
+                if (currentFilterValue === 'Honorer/GTY/GTT') {
+                    finalData = finalData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status));
+                } else {
+                    finalData = finalData.filter(item => item.status === currentFilterValue);
+                }
+            } else if (currentFilterType === 'gender') {
+                finalData = finalData.filter(item => item.gender === currentFilterValue);
+            } else if (currentFilterType === 'sertifikasi') {
+                finalData = finalData.filter(item => item.sertifikasi === currentFilterValue);
+            }
+
+            renderTableData(finalData);
+        }
+
+        function filterTable() {
+            if (!currentUser) return;
+
+            const query = document.getElementById("table-search").value.trim().toLowerCase();
+            const myRanting = currentUser.ranting;
+
+            let baseData = MASTER_DATA_ANGGOTA.filter(item => item.ranting === myRanting);
+            if (currentFilterType === 'status') {
+                if (currentFilterValue === 'Honorer/GTY/GTT') {
+                    baseData = baseData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status));
+                } else {
+                    baseData = baseData.filter(item => item.status === currentFilterValue);
+                }
+            } else if (currentFilterType === 'gender') {
+                baseData = baseData.filter(item => item.gender === currentFilterValue);
+            } else if (currentFilterType === 'sertifikasi') {
+                baseData = baseData.filter(item => item.sertifikasi === currentFilterValue);
+            }
+
+            const searchFiltered = baseData.filter(item => {
+                return item.nama.toLowerCase().includes(query) || 
+                       item.npa.toLowerCase().includes(query) || 
+                       item.unit.toLowerCase().includes(query) || 
+                       item.status.toLowerCase().includes(query);
+            });
+
+            renderTableData(searchFiltered);
+        }
+
+        function renderTableData(data) {
+            const tbody = document.getElementById("member-table-body");
+            const showingCountSpan = document.getElementById("table-showing");
+            const totalCountSpan = document.getElementById("table-total");
+            const emptyState = document.getElementById("table-empty-state");
+            
+            tbody.innerHTML = "";
+            showingCountSpan.textContent = data.length;
+
+            if (currentUser) {
+                totalCountSpan.textContent = MASTER_DATA_ANGGOTA.filter(item => item.ranting === currentUser.ranting).length;
+            }
+
+            if (data.length === 0) {
+                emptyState.classList.remove("hidden");
+                return;
+            } else {
+                emptyState.classList.add("hidden");
+            }
+
+            data.forEach((member, index) => {
+                const tr = document.createElement("tr");
+                tr.className = "hover:bg-slate-50/80 transition-colors duration-150";
+
+                let statusBadge = "";
+                switch(member.status) {
+                    case "PNS":
+                        statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold bg-amber-50 text-amber-700 rounded-full border border-amber-100">PNS</span>`;
+                        break;
+                    case "PPPK":
+                        statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold bg-blue-50 text-blue-700 rounded-full border border-blue-100">PPPK</span>`;
+                        break;
+                    case "PPPK Paruh Waktu":
+                        statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold bg-indigo-50 text-indigo-700 rounded-full border border-indigo-100">PPPK PW</span>`;
+                        break;
+                    case "Honorer":
+                        statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold bg-slate-100 text-slate-700 rounded-full border border-slate-200" title="Honorer Sekolah Negeri">Honorer</span>`;
+                        break;
+                    case "GTY":
+                        statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold bg-purple-50 text-purple-700 rounded-full border border-purple-200" title="Guru Tetap Yayasan (Swasta)">GTY (Yayasan)</span>`;
+                        break;
+                    case "GTT":
+                        statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold bg-fuchsia-50 text-fuchsia-700 rounded-full border border-fuchsia-200" title="Guru Tidak Tetap (Swasta)">GTT (Swasta)</span>`;
+                        break;
+                    case "Pensiunan":
+                        statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 rounded-full border border-emerald-100">Pensiunan</span>`;
+                        break;
+                    default:
+                        statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold bg-slate-50 text-slate-600 rounded-full border border-slate-100">${member.status}</span>`;
+                }
+
+                const genderBadge = member.gender === "L" 
+                    ? `<span class="text-sky-600 font-semibold inline-flex items-center gap-1 text-[11px]"><i class="fa-solid fa-mars"></i> Laki-laki</span>`
+                    : `<span class="text-pink-600 font-semibold inline-flex items-center gap-1 text-[11px]"><i class="fa-solid fa-venus"></i> Perempuan</span>`;
+
+                const serdikIndicator = member.sertifikasi === "Sudah"
+                    ? `<span class="bg-teal-100 text-teal-800 text-[8px] font-extrabold px-1 py-0.5 rounded ml-1.5 inline-flex items-center gap-0.5" title="Sertifikasi Aktif"><i class="fa-solid fa-circle-check text-[9px]"></i> SERDIK</span>`
+                    : ``;
+
+                const activeBadge = member.aktif === "Aktif"
+                    ? `<span class="inline-flex items-center gap-1 text-[11px] text-emerald-600 font-bold"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>Aktif</span>`
+                    : `<span class="inline-flex items-center gap-1 text-[11px] text-slate-400 font-bold"><span class="w-2 h-2 rounded-full bg-slate-300"></span>Non-Aktif</span>`;
+
+                const memberEscaped = JSON.stringify(member).replace(/"/g, '&quot;');
+
+                tr.innerHTML = `
+                    <td class="py-2.5 px-4 font-bold text-slate-400 text-center border-r border-slate-100/50">${index + 1}</td>
+                    <td class="py-2.5 px-4 text-slate-600 font-mono text-xs font-bold">${member.npa}</td>
+                    <td class="py-2.5 px-4 font-extrabold text-slate-900 flex items-center">${member.nama}${serdikIndicator}</td>
+                    <td class="py-2.5 px-4 text-slate-600 font-medium text-xs hidden md:table-cell">${member.ttl || '-'}</td>
+                    <td class="py-2.5 px-4 text-slate-655 font-semibold text-xs">${member.unit}</td>
+                    <td class="py-2.5 px-4 text-slate-600 text-xs hidden lg:table-cell font-medium">${member.pendidikan || '-'}</td>
+                    <td class="py-2.5 px-4">${statusBadge}</td>
+                    <td class="py-2.5 px-4 hidden md:table-cell">${genderBadge}</td>
+                    <td class="py-2.5 px-4">${activeBadge}</td>
+                    <td class="py-2.5 px-4 text-center md:hidden">
+                        <button onclick="openDetailModal('${memberEscaped}')" class="text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 w-7 h-7 rounded-lg inline-flex items-center justify-center transition-all">
+                            <i class="fa-solid fa-circle-info text-base"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // JAVASCRIPT MODAL LOGIC FOR MOBILE DEVICE
+        function openDetailModal(memberJsonString) {
+            const member = JSON.parse(memberJsonString.replace(/&quot;/g, '"'));
+            
+            document.getElementById("modal-nama").textContent = member.nama;
+            document.getElementById("modal-npa").textContent = "NPA: " + member.npa;
+            document.getElementById("modal-ranting").textContent = member.ranting;
+            document.getElementById("modal-ttl").textContent = member.ttl || '-';
+            document.getElementById("modal-unit").textContent = member.unit;
+            document.getElementById("modal-pendidikan").textContent = member.pendidikan || '-';
+            
+            let statusLabel = member.status;
+            if (member.status === "GTY") statusLabel = "GTY (Guru Tetap Yayasan)";
+            if (member.status === "GTT") statusLabel = "GTT (Guru Tidak Tetap)";
+            document.getElementById("modal-status").textContent = statusLabel;
+            
+            document.getElementById("modal-gender").textContent = member.gender === "L" ? "Laki-laki" : "Perempuan";
+            document.getElementById("modal-sertifikasi").textContent = member.sertifikasi === "Sudah" ? "Sertifikasi Aktif" : "Belum Sertifikasi";
+            document.getElementById("modal-aktif").textContent = member.aktif;
+
+            const modal = document.getElementById("mobile-detail-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeDetailModal() {
+            const modal = document.getElementById("mobile-detail-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            document.body.style.overflow = "auto";
+        }
+
+        // CHART RENDERING FUNCTIONS (MENDUKUNG GRUP KUMULATIF)
+        function renderKepegawaianChart(pns, pppk, pppk_pw, honorerGroup, pensiun) {
+            const ctx = document.getElementById('chartKepegawaian').getContext('2d');
+            
+            if (chartKepegawaianInstance) {
+                chartKepegawaianInstance.destroy();
+            }
+
+            const gradPns = ctx.createLinearGradient(0, 0, 0, 200);
+            gradPns.addColorStop(0, 'rgba(245, 158, 11, 1)'); 
+            gradPns.addColorStop(1, 'rgba(245, 158, 11, 0.3)');
+
+            const gradPppk = ctx.createLinearGradient(0, 0, 0, 200);
+            gradPppk.addColorStop(0, 'rgba(59, 130, 246, 1)'); 
+            gradPppk.addColorStop(1, 'rgba(59, 130, 246, 0.3)');
+
+            const gradPppkPw = ctx.createLinearGradient(0, 0, 0, 200);
+            gradPppkPw.addColorStop(0, 'rgba(99, 102, 241, 1)'); 
+            gradPppkPw.addColorStop(1, 'rgba(99, 102, 241, 0.3)');
+
+            const gradHonorerGroup = ctx.createLinearGradient(0, 0, 0, 200);
+            gradHonorerGroup.addColorStop(0, 'rgba(100, 116, 139, 1)'); 
+            gradHonorerGroup.addColorStop(1, 'rgba(100, 116, 139, 0.3)');
+
+            const gradPensiun = ctx.createLinearGradient(0, 0, 0, 200);
+            gradPensiun.addColorStop(0, 'rgba(16, 185, 129, 1)'); 
+            gradPensiun.addColorStop(1, 'rgba(16, 185, 129, 0.3)');
+
+            chartKepegawaianInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['PNS', 'PPPK', 'PPPK PW', 'Honorer/GTT/GTY', 'Pensiunan'],
+                    datasets: [{
+                        label: 'Jumlah Anggota',
+                        data: [pns, pppk, pppk_pw, honorerGroup, pensiun],
+                        backgroundColor: [gradPns, gradPppk, gradPppkPw, gradHonorerGroup, gradPensiun],
+                        borderColor: [
+                            'rgb(217, 119, 6)',
+                            'rgb(37, 99, 235)',
+                            'rgb(79, 70, 229)',
+                            'rgb(71, 85, 105)',
+                            'rgb(5, 150, 105)'
+                        ],
+                        borderWidth: 1.5,
+                        borderRadius: 8,
+                        borderSkipped: false,
+                        barThickness: 24
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: '#0f172a',
+                            titleFont: { size: 11, weight: 'bold' },
+                            bodyFont: { size: 11 },
+                            padding: 8,
+                            cornerRadius: 6
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0,
+                                stepSize: 1,
+                                font: { size: 10, weight: 'bold' }
+                            },
+                            grid: {
+                                color: '#f8fafc'
+                            }
+                        },
+                        x: {
+                            ticks: {
+                                font: { size: 10, weight: 'bold' }
+                            },
+                            grid: {
+                                display: false
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderGenderChart(laki, perempuan) {
+            const ctx = document.getElementById('chartGender').getContext('2d');
+
+            if (chartGenderInstance) {
+                chartGenderInstance.destroy();
+            }
+
+            chartGenderInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Laki-laki (L)', 'Perempuan (P)'],
+                    datasets: [{
+                        data: [laki, perempuan],
+                        backgroundColor: [
+                            'rgba(14, 165, 233, 0.95)', 
+                            'rgba(236, 72, 153, 0.95)'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#ffffff',
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 8,
+                                padding: 12,
+                                font: {
+                                    size: 10,
+                                    weight: 'bold'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#0f172a',
+                            padding: 10,
+                            cornerRadius: 6
+                        }
+                    },
+                    cutout: '72%'
+                }
+            });
+        }
+
+        // EKSPOR DATA KE CSV (MENGEKSPOR STATUS ASLI: Honorer, GTY, GTT)
+        function exportData() {
+            if (!currentUser) return;
+            const rantingAktif = currentUser.ranting;
+            
+            const query = document.getElementById("table-search").value.trim().toLowerCase();
+            let baseData = MASTER_DATA_ANGGOTA.filter(item => item.ranting === rantingAktif);
+            
+            if (currentFilterType === 'status') {
+                if (currentFilterValue === 'Honorer/GTY/GTT') {
+                    baseData = baseData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status));
+                } else {
+                    baseData = baseData.filter(item => item.status === currentFilterValue);
+                }
+            } else if (currentFilterType === 'gender') {
+                baseData = baseData.filter(item => item.gender === currentFilterValue);
+            } else if (currentFilterType === 'sertifikasi') {
+                baseData = baseData.filter(item => item.sertifikasi === currentFilterValue);
+            }
+
+            const currentFilteredData = baseData.filter(item => {
+                return item.nama.toLowerCase().includes(query) || 
+                       item.npa.toLowerCase().includes(query) || 
+                       item.unit.toLowerCase().includes(query) || 
+                       item.status.toLowerCase().includes(query);
+            });
+
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "No,NPA,Nama Lengkap,Ranting,Tempat Tanggal Lahir,Unit Kerja,Pendidikan Terakhir,Status Pegawai,Jenis Kelamin,Sertifikasi,Status Keaktifan\r\n";
+
+            currentFilteredData.forEach((row, index) => {
+                let statusLabel = row.status;
+                if (row.status === "GTY") statusLabel = "GTY (Guru Tetap Yayasan)";
+                if (row.status === "GTT") statusLabel = "GTT (Guru Tidak Tetap)";
+
+                const rowData = [
+                    index + 1,
+                    `"${row.npa}"`,
+                    `"${row.nama}"`,
+                    `"${row.ranting}"`,
+                    `"${row.ttl || ''}"`,
+                    `"${row.unit}"`,
+                    `"${row.pendidikan || ''}"`,
+                    `"${statusLabel}"`,
+                    row.gender === "L" ? "Laki-laki" : "Perempuan",
+                    row.sertifikasi === "Sudah" ? "Sertifikasi" : "Belum Sertifikasi",
+                    row.aktif
+                ];
+                csvContent += rowData.join(",") + "\r\n";
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            
+            let filename = `Rekap_Anggota_PGRI_${rantingAktif.replace(" ", "_")}`;
+            if (currentFilterType !== 'all') {
+                filename += `_Filter_${currentFilterValue.replace("/", "_").replace(" ", "_")}`;
+            }
+            link.setAttribute("download", `${filename}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
