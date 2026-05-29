@@ -21,6 +21,10 @@
         .smooth-transition {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        /* Custom Glowing LED Indicator for Active Filter Cards */
+        .active-glow {
+            box-shadow: 0 10px 25px -5px rgba(239, 68, 68, 0.15), 0 8px 10px -6px rgba(239, 68, 68, 0.15);
+        }
     </style>
 </head>
 <body class="bg-[#f8fafc] min-h-screen flex flex-col justify-between text-slate-800">
@@ -42,7 +46,7 @@
                              onerror="this.src='https://api.dicebear.com/7.x/identicon/svg?seed=pgri'">
                     </div>
                     <div class="text-left">
-                        <span class="font-extrabold text-white block text-sm tracking-wider uppercase">PGRI SAMARANG</span>
+                        <span class="font-extrabold text-white block text-sm tracking-wider uppercase">PGRI SAMARANG BRANCH</span>
                         <span class="text-[10px] text-red-200 block font-medium">Kecamatan Samarang, Kabupaten Garut</span>
                     </div>
                 </div>
@@ -60,7 +64,7 @@
 
                     <div class="space-y-1">
                         <h3 class="font-extrabold text-base tracking-wide text-white">Arief Fauzi Mansur, S.Pd.</h3>
-                        <p class="text-xs text-red-200 font-medium">Ketua PGRI Cabang Samarang</p>
+                        <p class="text-xs text-red-200 font-medium">Ketua Cabang PGRI Kecamatan Samarang</p>
                     </div>
 
                     <div class="w-16 h-1 bg-red-400 mx-auto md:ml-0 rounded-full"></div>
@@ -77,7 +81,7 @@
                 </div>
             </div>
 
-            <!-- SISI KANAN: PORTAL LOGIN (7 Kolom di Desktop) -->
+            <!-- SISI KANAN: PORTAL LOGIN -->
             <div class="md:col-span-7 p-8 sm:p-12 flex flex-col justify-center">
                 <div class="mb-6">
                     <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Portal Akses Ranting</h2>
@@ -181,7 +185,7 @@
                 </div>
             </div>
 
-            <!-- JALUR FILTER KHUSUS ADMIN CABANG (TAMPIL HANYA JIKA LOGIN SEBAGAI CABANG) -->
+            <!-- JALUR FILTER KHUSUS ADMIN CABANG -->
             <div id="admin-branch-filter-container" class="hidden bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div class="flex items-center gap-2">
                     <div class="w-8 h-8 rounded-lg bg-red-50 text-red-600 flex items-center justify-center text-sm">
@@ -208,106 +212,142 @@
                 </div>
             </div>
 
-            <!-- INTERACTIVE STATISTIC CARDS (7 PREMIUM PRO-COMPACT VERTICAL TILES) -->
+            <!-- REDESAIN ULTRA-PREMIUM: GLASSMORPHIC WIDGETS & STATS CONTROL PANEL -->
             <div class="space-y-3">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-1.5">
-                        <span class="w-1 h-3 bg-red-600 rounded-full"></span>
-                        <h3 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Kategori Statistik (Klik untuk Filter)</h3>
+                        <span class="w-1.5 h-3.5 bg-red-600 rounded-full"></span>
+                        <h3 class="text-[11px] font-bold text-slate-450 uppercase tracking-widest">Panel Analisis Data Utama</h3>
                     </div>
-                    <button id="btn-reset-filter" onclick="clearFilters()" class="hidden text-[11px] font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-2.5 py-1 rounded-lg transition-all flex items-center gap-1 border border-red-100 shadow-sm">
+                    <button id="btn-reset-filter" onclick="clearFilters()" class="hidden text-[11px] font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-xl transition-all flex items-center gap-1 border border-red-100 shadow-sm">
                         <i class="fa-solid fa-filter-circle-xmark"></i>
-                        <span>Reset</span>
+                        <span>Atur Ulang Filter</span>
                     </button>
                 </div>
                 
-                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-3 max-w-6xl mx-auto">
-                    <!-- Card 1: Total Anggota -->
-                    <div id="card-total" onclick="setFilter('all')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-rose-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
-                        <div class="text-rose-600 bg-rose-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                <!-- Grid Statistik Baru: Memakai border gradien menyala, micro-interactions, dan LED aktif -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4 max-w-6xl mx-auto">
+                    
+                    <!-- Card 1: Total Anggota (Neon Accent Rose) -->
+                    <div id="card-total" onclick="setFilter('all')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-rose-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
+                        <!-- LED Active Status -->
+                        <div id="led-total" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-rose-500 animate-ping hidden"></div>
+                        <div class="text-rose-600 bg-rose-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-users"></i>
                         </div>
-                        <div class="my-1.5">
+                        <div class="my-1">
                             <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Total Anggota</span>
-                            <span id="stat-total" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                            <span id="stat-total" class="text-2xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
                         </div>
-                        <div class="flex gap-1 text-[8px] font-bold text-slate-500 w-full justify-center">
-                            <span onclick="event.stopPropagation(); setFilter('gender_L');" class="hover:text-sky-600 transition-colors bg-sky-50 px-1 py-0.5 rounded">L: <b id="stat-total-l">0</b></span>
-                            <span onclick="event.stopPropagation(); setFilter('gender_P');" class="hover:text-pink-600 transition-colors bg-pink-50 px-1 py-0.5 rounded">P: <b id="stat-total-p">0</b></span>
+                        <!-- PIL FILTER GENDER -->
+                        <div class="flex gap-1 w-full justify-center mt-1">
+                            <button id="btn-gender-l" onclick="event.stopPropagation(); setFilter('gender_L');" class="smooth-transition text-[9px] font-extrabold bg-sky-50 text-sky-700 border border-sky-100/50 px-1.5 py-1 rounded-lg flex items-center gap-0.5 hover:bg-sky-500 hover:text-white cursor-pointer">
+                                <i class="fa-solid fa-mars text-[8px]"></i> L:<span id="stat-total-l">0</span>
+                            </button>
+                            <button id="btn-gender-p" onclick="event.stopPropagation(); setFilter('gender_P');" class="smooth-transition text-[9px] font-extrabold bg-pink-50 text-pink-700 border border-pink-100/50 px-1.5 py-1 rounded-lg flex items-center gap-0.5 hover:bg-pink-500 hover:text-white cursor-pointer">
+                                <i class="fa-solid fa-venus text-[8px]"></i> P:<span id="stat-total-p">0</span>
+                            </button>
                         </div>
                     </div>
 
-                    <!-- Card 2: PNS -->
-                    <div id="card-pns" onclick="setFilter('status_PNS')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-amber-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
-                        <div class="text-amber-600 bg-amber-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                    <!-- Card 2: PNS (Neon Accent Amber) -->
+                    <div id="card-pns" onclick="setFilter('status_PNS')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-amber-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
+                        <div id="led-pns" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-500 animate-ping hidden"></div>
+                        <div class="text-amber-600 bg-amber-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-id-card"></i>
                         </div>
                         <div class="my-1.5">
-                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">PNS</span>
-                            <span id="stat-pns" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Aparatur PNS</span>
+                            <span id="stat-pns" class="text-2xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
                         </div>
-                        <span class="text-[8px] text-amber-600 font-bold bg-amber-50 px-1.5 py-0.5 rounded-md">Negeri</span>
+                        <span class="text-[8px] text-amber-700 font-extrabold bg-amber-50 px-2 py-0.5 rounded-md uppercase tracking-wider">Negeri</span>
                     </div>
 
-                    <!-- Card 3: PPPK -->
-                    <div id="card-pppk" onclick="setFilter('status_PPPK')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-blue-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
-                        <div class="text-blue-600 bg-blue-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                    <!-- Card 3: PPPK (Neon Accent Blue) -->
+                    <div id="card-pppk" onclick="setFilter('status_PPPK')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-blue-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
+                        <div id="led-pppk" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-blue-500 animate-ping hidden"></div>
+                        <div class="text-blue-600 bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-user-tie"></i>
                         </div>
                         <div class="my-1.5">
-                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">PPPK</span>
-                            <span id="stat-pppk" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Pegawai PPPK</span>
+                            <span id="stat-pppk" class="text-2xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
                         </div>
-                        <span class="text-[8px] text-blue-600 font-bold bg-blue-50 px-1.5 py-0.5 rounded-md">Full Time</span>
+                        <span class="text-[8px] text-blue-700 font-extrabold bg-blue-50 px-2 py-0.5 rounded-md uppercase tracking-wider">Penuh Waktu</span>
                     </div>
 
-                    <!-- Card 4: PPPK Paruh Waktu -->
-                    <div id="card-pppk-pw" onclick="setFilter('status_PPPK Paruh Waktu')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-indigo-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
-                        <div class="text-indigo-600 bg-indigo-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                    <!-- Card 4: PPPK Paruh Waktu (Neon Accent Indigo) -->
+                    <div id="card-pppk-pw" onclick="setFilter('status_PPPK Paruh Waktu')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-indigo-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center group min-h-[145px]">
+                        <div id="led-pppk-pw" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-indigo-500 animate-ping hidden"></div>
+                        <div class="text-indigo-600 bg-indigo-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-user-clock"></i>
                         </div>
                         <div class="my-1.5">
                             <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">PPPK PW</span>
-                            <span id="stat-pppk-pw" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                            <span id="stat-pppk-pw" class="text-2xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
                         </div>
-                        <span class="text-[8px] text-indigo-600 font-bold bg-indigo-50 px-1.5 py-0.5 rounded-md">Paruh Waktu</span>
+                        <span class="text-[8px] text-indigo-700 font-extrabold bg-indigo-50 px-2 py-0.5 rounded-md uppercase tracking-wider">Paruh Waktu</span>
                     </div>
 
-                    <!-- Card 5: Honorer/GTY/GTT (AKUMULATIF DI STATISTIK) -->
-                    <div id="card-honorer" onclick="setFilter('status_Honorer/GTY/GTT')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-slate-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
-                        <div class="text-slate-600 bg-slate-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                    <!-- Card 5: Honorer/GTY/GTT (Neon Accent Slate) -->
+                    <div id="card-honorer" onclick="setFilter('status_Honorer/GTY/GTT')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-slate-550 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
+                        <div id="led-honorer" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-slate-550 animate-ping hidden"></div>
+                        <div class="text-slate-600 bg-slate-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-graduation-cap"></i>
                         </div>
                         <div class="my-1.5">
-                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Honorer/GTT/GTY</span>
-                            <span id="stat-honorer" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Honorer/GTY/GTT</span>
+                            <span id="stat-honorer" class="text-2xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
                         </div>
-                        <span class="text-[8px] text-slate-600 font-bold bg-slate-50 px-1.5 py-0.5 rounded-md">Gabungan</span>
+                        <span class="text-[8px] text-slate-700 font-extrabold bg-slate-50 px-2 py-0.5 rounded-md uppercase tracking-wider">GTT / Yayasan</span>
                     </div>
 
-                    <!-- Card 6: Pensiunan -->
-                    <div id="card-pensiun" onclick="setFilter('status_Pensiunan')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-emerald-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
-                        <div class="text-emerald-600 bg-emerald-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                    <!-- Card 6: Pensiunan (Neon Accent Emerald) -->
+                    <div id="card-pensiun" onclick="setFilter('status_Pensiunan')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-emerald-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
+                        <div id="led-pensiun" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-500 animate-ping hidden"></div>
+                        <div class="text-emerald-600 bg-emerald-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-user-shield"></i>
                         </div>
                         <div class="my-1.5">
-                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Pensiun</span>
-                            <span id="stat-pensiun" class="text-xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
+                            <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Pensiunan</span>
+                            <span id="stat-pensiun" class="text-2xl font-extrabold text-slate-900 block mt-0.5 leading-none">0</span>
                         </div>
-                        <span class="text-[8px] text-emerald-600 font-bold bg-emerald-50 px-1.5 py-0.5 rounded-md">Purna Bakti</span>
+                        <span class="text-[8px] text-emerald-700 font-extrabold bg-emerald-50 px-2 py-0.5 rounded-md uppercase tracking-wider">Purna Bakti</span>
                     </div>
 
-                    <!-- Card 7: Sertifikasi -->
-                    <div id="card-sertifikasi" onclick="setFilter('sertifikasi_Sudah')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-teal-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
-                        <div class="text-teal-600 bg-teal-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
+                    <!-- Card 7: Sertifikasi (Neon Accent Teal) -->
+                    <div id="card-sertifikasi" onclick="setFilter('sertifikasi_Sudah')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-teal-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
+                        <div id="led-sertifikasi" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-teal-500 animate-ping hidden"></div>
+                        <div class="text-teal-600 bg-teal-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-award"></i>
                         </div>
                         <div class="my-1.5">
                             <span class="text-[9px] font-bold text-slate-400 uppercase tracking-wider block">Sertifikasi</span>
-                            <span id="stat-sertifikasi" class="text-xl font-extrabold text-teal-600 block mt-0.5 leading-none">0</span>
+                            <span id="stat-sertifikasi" class="text-2xl font-extrabold text-teal-655 block mt-0.5 leading-none">0</span>
                         </div>
-                        <span class="text-[8px] text-teal-600 font-bold bg-teal-50 px-1.5 py-0.5 rounded-md">Serdik</span>
+                        <span class="text-[8px] text-teal-700 font-extrabold bg-teal-50 px-2 py-0.5 rounded-md uppercase tracking-wider">Lulus Serdik</span>
                     </div>
+                </div>
+            </div>
+
+            <!-- 🚨 DYNAMIC RETIREMENT NOTIFICATION PANEL (Guru Pensiun < 1 Tahun Berjalan) 🚨 -->
+            <div id="retirement-panel" class="hidden bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-5 shadow-sm space-y-3 smooth-transition">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-9 h-9 rounded-xl bg-amber-500 text-white flex items-center justify-center text-base shadow-sm">
+                            <i class="fa-solid fa-hourglass-half"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-extrabold text-slate-900 tracking-tight text-sm">📢 Monitor Masa Purna Bakti (Pensiun &lt; 1 Tahun Berjalan)</h4>
+                            <p class="text-[10px] text-slate-500">Anggota Ranting aktif yang akan memasuki batas usia pensiun guru (60 tahun) dalam waktu dekat.</p>
+                        </div>
+                    </div>
+                    <span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider" id="retirement-badge-count">0 Anggota</span>
+                </div>
+                
+                <!-- Row List Guru Pensiun -->
+                <div id="retirement-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 pt-1.5">
+                    <!-- Dynamic cards inject here -->
                 </div>
             </div>
 
@@ -354,7 +394,7 @@
                         <div class="flex items-center gap-1.5">
                             <h3 class="font-extrabold text-slate-800 text-base tracking-tight">Daftar Anggota PGRI</h3>
                             <span id="active-filter-badge" class="hidden text-[9px] font-bold bg-red-100 text-red-700 px-2 py-0.5 rounded-md uppercase tracking-wider"></span>
-                            <!-- ☁️ CLOUD SYNC STATUS LAMP INDICATOR (VISUAL PREMIUM STATUS) -->
+                            <!-- ☁️ CLOUD SYNC STATUS LAMP INDICATOR -->
                             <span id="cloud-sync-status" class="text-[10px] font-semibold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full inline-flex items-center gap-1">
                                 <span class="w-2 h-2 rounded-full bg-slate-400 inline-block"></span>
                                 <span>Mengecek Cloud...</span>
@@ -434,7 +474,7 @@
                 </div>
                 <div class="flex-grow">
                     <h4 class="font-bold text-slate-900 tracking-tight text-xs sm:text-sm">Verifikasi & Penyelarasan Data</h4>
-                    <p class="text-slate-500 mt-0.5 text-[11px] sm:text-xs">Jika terdapat ketidaksesuaian pada data di atas, silakan hubungi tim administrator <span class="font-bold text-red-700">Cabang Kecamatan</span> untuk proses pemutakhiran data secara terpusat.</p>
+                    <p class="text-slate-500 mt-0.5 text-[11px] sm:text-xs">Jika terdapat ketidaksesuaian pada data di atas, silakan edit dan jangan lupa simpan. Atau bisa hubungi tim administrator <span class="font-bold text-red-700">Cabang Kecamatan</span> untuk proses pemutakhiran data secara terpusat.</p>
                 </div>
             </div>
 
@@ -543,7 +583,7 @@
         </div>
     </div>
 
-    <!-- CONFIRMATION MODAL: HAPUS ANGGOTA (PENGGANTI WINDOW.CONFIRM) -->
+    <!-- CONFIRMATION MODAL: HAPUS ANGGOTA -->
     <div id="delete-confirm-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-slate-100 p-6 space-y-4 transform transition-all text-center">
             <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-lg mx-auto shadow-inner">
@@ -561,7 +601,7 @@
         </div>
     </div>
 
-    <!-- SUCCESS TOAST POPUP (PENGGANTI WINDOW.ALERT) -->
+    <!-- SUCCESS TOAST POPUP -->
     <div id="toast-success" class="hidden fixed bottom-6 right-6 z-50 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-800 transform translate-y-10 opacity-0 transition-all duration-300">
         <div class="w-6 h-6 rounded-full bg-emerald-500 text-white flex items-center justify-center text-xs">
             <i class="fa-solid fa-check"></i>
@@ -569,7 +609,7 @@
         <span class="text-xs font-bold" id="toast-message">Operasi berhasil diselesaikan!</span>
     </div>
 
-    <!-- MODAL DETAIL UNTUK MOBILE -->
+    <!-- MODAL DETAIL UNTUK MOBILE & DESKTOP -->
     <div id="mobile-detail-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden border border-slate-100 transform transition-all">
             <div class="bg-gradient-to-r from-red-700 to-rose-600 p-4 text-white flex justify-between items-center">
@@ -677,7 +717,7 @@
         // 🚨 TARUH LINK CSV GOOGLE SHEETS ANDA DI SINI 🚨
         const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRI1aIw_udN7HeKLvc5RkTrcdZKJkunFBBi6lckqPPzPsV8fqoUhRpCW22V-bZVbZEtHITFaaVBKteh/pub?output=csv";
 
-        // 🚨 MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI (DAPATKAN DARI LANGKAH BAGIAN 2 DI ATAS) 🚨
+        // 🚨 MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI 🚨
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby3Mlfi23cMBa4D3oX7qHr_TR6P_eHTHpkZjPveGpl7ovxpQZeJMR2xzHFYp6NYSvo3lw/exec";
 
         // MASTER DATA CADANGAN (Akan otomatis digantikan saat SPREADSHEET_CSV_URL diisi dengan benar)
@@ -690,6 +730,70 @@
             { nama: "Soni Hermawan, S.Kom", npa: "10190700003", ranting: "Ranting Parakan", ttl: "Bandung, 14 Des 1991", unit: "SDN 1 Tanjungsari", pendidikan: "S1 Komputer", status: "GTY", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
             { nama: "Yuni Kartika, S.Pd.", npa: "10190700004", ranting: "Ranting Sukarasa", ttl: "Garut, 18 Juni 1995", unit: "SMPN 3 Samarang", pendidikan: "S1 Pend. Bahasa Inggris", status: "GTT", gender: "P", sertifikasi: "Belum", aktif: "Aktif" }
         ];
+
+        // 📝 FUNGSI UNTUK MERAPIKAN PENULISAN NAMA & GELAR SESUAI DENGAN ATURAN EYD YANG SEMPURNA
+        function formatNameWithDegrees(fullName) {
+            if (!fullName) return "";
+            
+            // Pisahkan antara nama utama dan bagian gelar di belakang koma
+            let parts = fullName.split(',');
+            let mainName = parts[0].trim();
+            mainName = formatToEYD(mainName);
+            
+            if (parts.length > 1) {
+                // Proses pemformatan gelar akademik di belakang koma secara sangat detail
+                let degrees = parts.slice(1).map(deg => {
+                    let d = deg.trim().replace(/\./g, ''); // Hapus titik sementara untuk standardisasi
+                    let dLower = d.toLowerCase();
+                    
+                    // Pemetaan Singkatan Gelar Akademik Resmi (Baku EYD)
+                    if (dLower === 'spd') return 'S.Pd.';
+                    if (dLower === 'mpd') return 'M.Pd.';
+                    if (dLower === 'skom') return 'S.Kom.';
+                    if (dLower === 'spd_sd' || dLower === 'spdsd') return 'S.Pd.SD.';
+                    if (dLower === 'mpdi') return 'M.Pd.I.';
+                    if (dLower === 'spdi') return 'S.Pd.I.';
+                    if (dLower === 'se') return 'S.E.';
+                    if (dLower === 'sh') return 'S.H.';
+                    if (dLower === 'st') return 'S.T.';
+                    if (dLower === 'mt') return 'M.T.';
+                    if (dLower === 'spdaud' || dLower === 'spd_aud') return 'S.Pd.AUD.';
+                    if (dLower === 'mm') return 'M.M.';
+                    if (dLower === 'sip') return 'S.IP.';
+                    if (dLower === 'ss') return 'S.S.';
+                    if (dLower === 'saq') return 'S.Ag.';
+                    if (dLower === 'sag') return 'S.Ag.';
+                    
+                    // Fallback cerdas jika ada gelar khusus di luar daftar
+                    if (d.length >= 2) {
+                        return d.charAt(0).toUpperCase() + '.' + d.slice(1, 2).toUpperCase() + d.slice(2) + '.';
+                    }
+                    return d.toUpperCase() + '.';
+                });
+                return mainName + ", " + degrees.join(", ");
+            }
+            return mainName;
+        }
+
+        // Fungsi bantu merapikan huruf kapital standar EYD
+        function formatToEYD(text) {
+            if (!text) return "";
+            text = String(text).trim().replace(/\s+/g, ' ');
+            const exceptions = ["dan", "atau", "di", "ke", "dari", "pada", "dalam", "dengan", "sebagai", "se", "untuk", "yg", "yang"];
+            
+            return text.split(' ').map((word, index) => {
+                if (word.toUpperCase() === "NPA" || word.toUpperCase() === "PNS" || word.toUpperCase() === "PPPK" || word.toUpperCase() === "PW" || word.toUpperCase() === "TK" || word.toUpperCase() === "SMA" || word.toUpperCase() === "SMP" || word.toUpperCase() === "SMPN" || word.toUpperCase() === "SDN") {
+                    return word.toUpperCase();
+                }
+                
+                const lowerWord = word.toLowerCase();
+                if (exceptions.includes(lowerWord) && index > 0) {
+                    return lowerWord;
+                }
+                
+                return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+            }).join(' ');
+        }
 
         // 3. FUNGSI UNTUK MENARIK DATA REAL-TIME DARI GOOGLE SHEETS DENGAN FILTER MULTI-KOLOM
         async function loadDataFromSpreadsheet() {
@@ -780,12 +884,12 @@
 
                     if (namaVal) {
                         tempArray.push({
-                            npa: npaVal,
-                            nama: namaVal,
-                            ranting: rantingVal,
-                            ttl: ttlVal,
-                            unit: unitVal,
-                            pendidikan: pendidikanVal,
+                            npa: npaVal.replace(/\s+/g, ''), // Bersihkan spasi tersembunyi pada NPA
+                            nama: formatNameWithDegrees(namaVal), // Terapkan EYD otomatis dengan pemisahan gelar yang sempurna
+                            ranting: formatToEYD(rantingVal), // Terapkan EYD otomatis pada nama ranting
+                            ttl: formatToEYD(ttlVal), // Terapkan EYD otomatis pada tempat tanggal lahir
+                            unit: formatToEYD(unitVal), // Terapkan EYD otomatis pada unit kerja sekolah
+                            pendidikan: pendidikanVal.trim(), 
                             status: statusVal,
                             gender: normalizedGender,
                             sertifikasi: normalizedSertifikasi,
@@ -795,7 +899,7 @@
                 }
 
                 if (tempArray.length > 0) {
-                    // SINKRONISASI DATABASE LOKAL: Gabungkan data dari Google Sheets dengan modifikasi localStorage
+                    // SINKRONISASI DATABASE LOKAL
                     MASTER_DATA_ANGGOTA = applyLocalDatabaseModifications(tempArray);
                     console.log("Database Google Sheets Berhasil Dimuat & Disinkronkan!", MASTER_DATA_ANGGOTA);
                     updateCloudStatus("synced");
@@ -915,6 +1019,110 @@
             renderDashboardData();
         }
 
+        // FUNGSI UNTUK MERENDER PANEL RETIREMENT / PENSIUN DINAMIS (KURUN WAKTU 1 TAHUN BERJALAN)
+        function renderRetirementMonitor(dataList) {
+            const panel = document.getElementById("retirement-panel");
+            const listContainer = document.getElementById("retirement-list");
+            const countBadge = document.getElementById("retirement-badge-count");
+            
+            listContainer.innerHTML = "";
+            
+            const currentYear = 2026; // Batas tahun berjalan sesuai timeline context
+            const retiringTeachers = [];
+            
+            const shortToFull = {
+                "jan": "Januari", "feb": "Februari", "mar": "Maret", "apr": "April", 
+                "mei": "Mei", "jun": "Juni", "jul": "Juli", "agu": "Agustus", 
+                "agt": "Agustus", "sep": "September", "okt": "Oktober", "nov": "November", "des": "Desember"
+            };
+
+            const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+            
+            dataList.forEach(member => {
+                if (!member.ttl) return;
+                
+                // Cari kecocokan 4 digit angka tahun lahir
+                const matchYear = member.ttl.match(/\b(19[5-9]\d)\b/);
+                if (matchYear) {
+                    const birthYear = parseInt(matchYear[1]);
+                    const pensionYear = birthYear + 60;
+                    
+                    // Seleksi: Guru yang akan pensiun tepat tahun ini (2026) atau tahun depan (2027)
+                    if (pensionYear === currentYear || pensionYear === currentYear + 1) {
+                        // 🚨 PARSING BULAN LAHIR SECARA SPESIFIK 🚨
+                        let birthMonth = "";
+                        const ttlLower = member.ttl.toLowerCase();
+                        
+                        // Cari bulan penuh dahulu
+                        for (let m of monthNames) {
+                            if (ttlLower.includes(m.toLowerCase())) {
+                                birthMonth = m;
+                                break;
+                            }
+                        }
+                        // Jika tidak ada, cari versi singkatan
+                        if (!birthMonth) {
+                            for (let short in shortToFull) {
+                                if (ttlLower.includes(short)) {
+                                    birthMonth = shortToFull[short];
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        if (!birthMonth) birthMonth = "Bulan Lahir"; // fallback aman
+
+                        retiringTeachers.push({
+                            ...member,
+                            birthYear: birthYear,
+                            pensionYear: pensionYear,
+                            birthMonth: birthMonth,
+                            remainingYears: pensionYear - currentYear
+                        });
+                    }
+                }
+            });
+
+            // Urutkan berdasarkan waktu pensiun terdekat (tahun pensiun lalu bulan pensiun)
+            retiringTeachers.sort((a, b) => {
+                if (a.pensionYear !== b.pensionYear) {
+                    return a.pensionYear - b.pensionYear;
+                }
+                const indexA = monthNames.indexOf(a.birthMonth);
+                const indexB = monthNames.indexOf(b.birthMonth);
+                return indexA - indexB;
+            });
+
+            if (retiringTeachers.length === 0) {
+                panel.classList.add("hidden");
+                return;
+            }
+
+            panel.classList.remove("hidden");
+            countBadge.textContent = `${retiringTeachers.length} Guru Purna Bakti`;
+
+            retiringTeachers.forEach(teacher => {
+                const card = document.createElement("div");
+                card.className = "bg-white p-4 rounded-xl border border-amber-200/60 shadow-sm flex items-center justify-between smooth-transition hover:border-orange-300";
+                
+                const timelineText = teacher.pensionYear === currentYear 
+                    ? `<span class="bg-red-100 text-red-800 text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider animate-pulse">Purnatugas: ${teacher.birthMonth} ${currentYear}</span>`
+                    : `<span class="bg-amber-100 text-amber-800 text-[10px] font-extrabold px-3 py-1.5 rounded-full uppercase tracking-wider">Purnatugas: ${teacher.birthMonth} ${teacher.pensionYear}</span>`;
+
+                card.innerHTML = `
+                    <div class="space-y-1">
+                        <h5 class="font-extrabold text-slate-900 text-xs">${teacher.nama}</h5>
+                        <p class="text-[10px] text-slate-400 font-medium">NPA: ${teacher.npa} • ${teacher.unit}</p>
+                        <p class="text-[10px] text-slate-500 font-semibold"><i class="fa-solid fa-building-columns text-slate-400 mr-1"></i>${teacher.ranting}</p>
+                    </div>
+                    <div class="text-right pl-3 shrink-0">
+                        ${timelineText}
+                    </div>
+                `;
+                listContainer.appendChild(card);
+            });
+        }
+
         function renderDashboardData() {
             if (!currentUser) return;
 
@@ -946,6 +1154,9 @@
             document.getElementById("stat-pensiun").textContent = totalPensiun;
             document.getElementById("stat-sertifikasi").textContent = totalSertifikasi;
 
+            // Render Monitor Purna Bakti
+            renderRetirementMonitor(activeData);
+
             // Render grafik dengan group honorer kumulatif
             renderKepegawaianChart(totalPNS, totalPPPK, totalPPPKPW, totalHonorerGroup, totalPensiun);
             renderGenderChart(totalL, totalP);
@@ -968,13 +1179,15 @@
 
         function setFilter(filterCode) {
             const cards = ["card-total", "card-pns", "card-pppk", "card-pppk-pw", "card-honorer", "card-pensiun", "card-sertifikasi"];
+            const leds = ["led-total", "led-pns", "led-pppk", "led-pppk-pw", "led-honorer", "led-pensiun", "led-sertifikasi"];
             
+            // Reset semua glow dan led
             cards.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
                     el.classList.remove(
                         "ring-4", 
-                        "ring-red-500/20", 
+                        "ring-red-500/15", 
                         "border-red-500", 
                         "bg-gradient-to-br", 
                         "from-red-50/50", 
@@ -985,44 +1198,73 @@
                 }
             });
 
+            leds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.add("hidden");
+            });
+
+            // Reset gaya tombol saku L & P ke default
+            const btnL = document.getElementById("btn-gender-l");
+            const btnP = document.getElementById("btn-gender-p");
+            if (btnL) {
+                btnL.className = "smooth-transition text-[9px] font-extrabold bg-sky-50 text-sky-700 border border-sky-100/50 px-1.5 py-1 rounded-lg flex items-center gap-0.5 hover:bg-sky-500 hover:text-white cursor-pointer";
+            }
+            if (btnP) {
+                btnP.className = "smooth-transition text-[9px] font-extrabold bg-pink-50 text-pink-700 border border-pink-100/50 px-1.5 py-1 rounded-lg flex items-center gap-0.5 hover:bg-pink-500 hover:text-white cursor-pointer";
+            }
+
             if (filterCode === 'all') {
                 currentFilterType = 'all';
                 currentFilterValue = null;
                 document.getElementById("card-total").classList.add(
                     "ring-4", 
-                    "ring-red-500/20", 
+                    "ring-red-500/15", 
                     "border-red-500", 
                     "scale-[1.01]"
                 );
+                document.getElementById("led-total").classList.remove("hidden");
             } else {
                 const parts = filterCode.split('_');
                 currentFilterType = parts[0];
                 currentFilterValue = parts[1];
 
                 let cardId = "";
+                let ledId = "";
                 if (parts[0] === 'status') {
-                    if (parts[1] === 'PNS') cardId = "card-pns";
-                    if (parts[1] === 'PPPK') cardId = "card-pppk";
-                    if (parts[1] === 'PPPK Paruh Waktu') cardId = "card-pppk-pw";
-                    if (parts[1] === 'Honorer/GTY/GTT') cardId = "card-honorer";
-                    if (parts[1] === 'Pensiunan') cardId = "card-pensiun";
+                    if (parts[1] === 'PNS') { cardId = "card-pns"; ledId = "led-pns"; }
+                    if (parts[1] === 'PPPK') { cardId = "card-pppk"; ledId = "led-pppk"; }
+                    if (parts[1] === 'PPPK Paruh Waktu') { cardId = "card-pppk-pw"; ledId = "led-pppk-pw"; }
+                    if (parts[1] === 'Honorer/GTY/GTT') { cardId = "card-honorer"; ledId = "led-honorer"; }
+                    if (parts[1] === 'Pensiunan') { cardId = "card-pensiun"; ledId = "led-pensiun"; }
                 } else if (parts[0] === 'sertifikasi') {
                     cardId = "card-sertifikasi";
+                    ledId = "led-sertifikasi";
                 } else if (parts[0] === 'gender') {
                     cardId = "card-total";
+                    ledId = "led-total";
+                    // Aktifkan gaya active-state pada tombol saku yang terpilih
+                    if (parts[1] === 'L' && btnL) {
+                        btnL.className = "smooth-transition text-[9px] font-extrabold bg-sky-500 text-white border border-sky-500 px-1.5 py-1 rounded-lg flex items-center gap-0.5 cursor-pointer shadow-sm shadow-sky-100";
+                    } else if (parts[1] === 'P' && btnP) {
+                        btnP.className = "smooth-transition text-[9px] font-extrabold bg-pink-500 text-white border border-pink-500 px-1.5 py-1 rounded-lg flex items-center gap-0.5 cursor-pointer shadow-sm shadow-pink-100";
+                    }
                 }
 
                 if (cardId) {
                     const activeCard = document.getElementById(cardId);
                     activeCard.classList.add(
                         "ring-4", 
-                        "ring-red-500/20", 
+                        "ring-red-500/15", 
                         "border-red-500", 
                         "bg-gradient-to-br", 
                         "from-red-50/40", 
                         "to-rose-50/40", 
                         "scale-[1.01]"
                     );
+                }
+                if (ledId) {
+                    const activeLed = document.getElementById(ledId);
+                    if (activeLed) activeLed.classList.remove("hidden");
                 }
             }
 
@@ -1123,7 +1365,12 @@
                 emptyState.classList.add("hidden");
             }
 
-            data.forEach((member, index) => {
+            // 🚨 SINKRONISASI ALFABET: Urutkan data berdasarkan nama secara alfabetis (A-Z) sebelum dirender 🚨
+            const sortedData = [...data].sort((a, b) => {
+                return String(a.nama).localeCompare(String(b.nama), 'id', { sensitivity: 'base' });
+            });
+
+            sortedData.forEach((member, index) => {
                 const tr = document.createElement("tr");
                 tr.className = "hover:bg-slate-50/80 transition-colors duration-150";
 
@@ -1180,6 +1427,10 @@
                     <td class="py-2.5 px-4">${activeBadge}</td>
                     <td class="py-2.5 px-4 text-center">
                         <div class="flex items-center justify-center gap-1.5">
+                            <!-- Detail/Info Button (Mendukung modal detail EYD lengkap) -->
+                            <button onclick="openDetailModal('${memberEscaped}')" class="text-slate-500 hover:text-red-650 bg-slate-100 hover:bg-red-50 p-1.5 rounded-lg transition-all" title="Detail Anggota">
+                                <i class="fa-solid fa-circle-info text-xs"></i>
+                            </button>
                             <!-- Edit Button -->
                             <button onclick="openEditModal('${member.npa}')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 p-1.5 rounded-lg transition-all" title="Edit Data">
                                 <i class="fa-solid fa-pen-to-square text-xs"></i>
@@ -1195,16 +1446,17 @@
             });
         }
 
-        // JAVASCRIPT MODAL LOGIC FOR MOBILE DEVICE
+        // JAVASCRIPT MODAL DETAIL UNTUK MOBILE & DESKTOP (SUDAH DISINKRONKAN DENGAN ATURAN EYD GELAR & NAMA BAKU)
         function openDetailModal(memberJsonString) {
             const member = JSON.parse(memberJsonString.replace(/&quot;/g, '"'));
             
-            document.getElementById("modal-nama").textContent = member.nama;
-            document.getElementById("modal-npa").textContent = "NPA: " + member.npa;
-            document.getElementById("modal-ranting").textContent = member.ranting;
-            document.getElementById("modal-ttl").textContent = member.ttl || '-';
-            document.getElementById("modal-unit").textContent = member.unit;
-            document.getElementById("modal-pendidikan").textContent = member.pendidikan || '-';
+            // Konversi isian identitas detail agar konsisten sesuai dengan kaidah EYD huruf kapital resmi
+            document.getElementById("modal-nama").textContent = formatNameWithDegrees(member.nama);
+            document.getElementById("modal-npa").textContent = "NPA: " + String(member.npa).trim();
+            document.getElementById("modal-ranting").textContent = formatToEYD(member.ranting);
+            document.getElementById("modal-ttl").textContent = formatToEYD(member.ttl) || '-';
+            document.getElementById("modal-unit").textContent = formatToEYD(member.unit);
+            document.getElementById("modal-pendidikan").textContent = String(member.pendidikan).trim() || '-';
             
             let statusLabel = member.status;
             if (member.status === "GTY") statusLabel = "GTY (Guru Tetap Yayasan)";
@@ -1212,7 +1464,7 @@
             document.getElementById("modal-status").textContent = statusLabel;
             
             document.getElementById("modal-gender").textContent = member.gender === "L" ? "Laki-laki" : "Perempuan";
-            document.getElementById("modal-sertifikasi").textContent = member.sertifikasi === "Sudah" ? "Sertifikasi Hack" : "Belum Sertifikasi";
+            document.getElementById("modal-sertifikasi").textContent = member.sertifikasi === "Sudah" ? "Sertifikasi Aktif" : "Belum Sertifikasi";
             document.getElementById("modal-aktif").textContent = member.aktif;
 
             // Tombol Aksi Mobile
@@ -1323,20 +1575,17 @@
                     aktif: memberObj.aktif
                 };
 
-                // Mengirim fetch POST ke Google Apps Script Web App
                 const response = await fetch(GOOGLE_SCRIPT_URL, {
                     method: "POST",
-                    mode: "no-cors", // Mode aman bypass CORS untuk Apps Script redirection
+                    mode: "no-cors", 
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify(payload)
                 });
 
-                // Dikarenakan mode "no-cors" tidak mengembalikan readable body, kita asumsikan sukses jika fetch berhasil
                 console.log("Perubahan berhasil dikirim ke Google Sheets di Google Drive!", payload);
                 
-                // Berikan jeda sebentar lalu cek ulang status sinkronisasi
                 setTimeout(() => {
                     updateCloudStatus("synced");
                     showToast("Sukses: Data berhasil disinkronkan ke Google Drive!");
@@ -1445,11 +1694,12 @@
             event.preventDefault();
 
             const origNpa = document.getElementById("form-orig-npa").value;
-            const newNpa = document.getElementById("form-npa").value.trim();
-            const nama = document.getElementById("form-nama").value.trim();
-            const ranting = document.getElementById("form-ranting").value;
-            const ttl = document.getElementById("form-ttl").value.trim();
-            const unit = document.getElementById("form-unit").value.trim();
+            const newNpa = document.getElementById("form-npa").value.trim().replace(/\s+/g, '');
+            // Terapkan standardisasi penulisan EYD & Gelar Akademik langsung saat penyimpanan data
+            const nama = formatNameWithDegrees(document.getElementById("form-nama").value);
+            const ranting = formatToEYD(document.getElementById("form-ranting").value);
+            const ttl = formatToEYD(document.getElementById("form-ttl").value);
+            const unit = formatToEYD(document.getElementById("form-unit").value);
             const pendidikan = document.getElementById("form-pendidikan").value.trim();
             const status = document.getElementById("form-status").value;
             const gender = document.getElementById("form-gender").value;
@@ -1493,7 +1743,7 @@
                 showToast("Sukses: " + nama + " berhasil ditambahkan!");
             }
 
-            // 1. Amankan perubahan di LocalStorage (Supaya instan & anti-hilang)
+            // 1. Amankan perubahan di LocalStorage
             saveLocalAddedMembers(localAdded);
             saveLocalUpdatedMembers(localUpdated);
 
@@ -1570,6 +1820,17 @@
                 { nama: "Yuni Kartika, S.Pd.", npa: "10190700004", ranting: "Ranting Sukarasa", ttl: "Garut, 18 Juni 1995", unit: "SMPN 3 Samarang", pendidikan: "S1 Pend. Bahasa Inggris", status: "GTT", gender: "P", sertifikasi: "Belum", aktif: "Aktif" }
             ];
             
+            // Konversikan data statis lokal ke EYD sebagai cadangan
+            baseData = baseData.map(m => {
+                return {
+                    ...m,
+                    nama: formatNameWithDegrees(m.nama),
+                    ranting: formatToEYD(m.ranting),
+                    ttl: formatToEYD(m.ttl),
+                    unit: formatToEYD(m.unit)
+                };
+            });
+
             if (SPREADSHEET_CSV_URL && SPREADSHEET_CSV_URL !== "TARUH_URL_CSV_GOOGLE_SHEETS_ANDA_DI_SINI") {
                 loadDataFromSpreadsheet();
             } else {
@@ -1578,7 +1839,7 @@
         }
 
         // ==========================================
-        // END OF CRUD OPERATIONS LOGIC
+        // END OF CODE OPERATIONS LOGIC
         // ==========================================
 
         function renderKepegawaianChart(pns, pppk, pppk_pw, honorerGroup, pensiun) {
@@ -1747,7 +2008,12 @@
             let csvContent = "data:text/csv;charset=utf-8,";
             csvContent += "No,NPA,Nama Lengkap,Ranting,Tempat Tanggal Lahir,Unit Kerja,Pendidikan Terakhir,Status Pegawai,Jenis Kelamin,Sertifikasi,Status Keaktifan\r\n";
 
-            currentFilteredData.forEach((row, index) => {
+            // 🚨 Pastikan saat ekspor juga terurut secara alfabetis (A-Z) 🚨
+            const sortedExportData = [...currentFilteredData].sort((a, b) => {
+                return String(a.nama).localeCompare(String(b.nama), 'id', { sensitivity: 'base' });
+            });
+
+            sortedExportData.forEach((row, index) => {
                 let statusLabel = row.status;
                 if (row.status === "GTY") statusLabel = "GTY (Guru Tetap Yayasan)";
                 if (row.status === "GTT") statusLabel = "GTT (Guru Tidak Tetap)";
