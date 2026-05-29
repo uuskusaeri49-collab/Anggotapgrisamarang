@@ -73,7 +73,7 @@
                 </div>
 
                 <div class="text-[10px] text-red-300 font-medium mt-6 md:mt-0 relative z-10">
-                    Sistem Database Anggota Ranting Terintegrasi v1.4
+                    Sistem Database Anggota Ranting Terintegrasi v1.5
                 </div>
             </div>
 
@@ -98,7 +98,7 @@
                             </span>
                             <input type="text" id="username" required
                                 class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-all text-sm font-medium"
-                                placeholder="Contoh: ranting">
+                                placeholder="Contoh: loginranting">
                         </div>
                     </div>
 
@@ -175,7 +175,7 @@
                 <div class="absolute right-0 top-0 w-60 h-60 bg-white/5 rounded-full blur-3xl transform translate-x-20 -translate-y-20"></div>
                 
                 <div class="relative z-10 space-y-1.5">
-                    <span id="badge-ranting" class="bg-white/20 text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-widest mb-1 inline-block backdrop-blur-md">Ranting Aktif</span>
+                    <span id="badge-ranting" class="bg-white/20 text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-widest mb-1 inline-block backdrop-blur-md">Ranting Hack</span>
                     <h2 class="text-lg sm:text-xl font-extrabold tracking-tight">Selamat Datang kembali, <span id="welcome-name" class="text-yellow-300">Nama Admin</span>!</h2>
                     <p class="text-red-100 text-xs max-w-3xl leading-relaxed">Kelola data resmi <b id="welcome-ranting" class="underline decoration-yellow-400 decoration-2">Ranting X</b>. Klik kartu statistik di bawah ini untuk filter instan.</p>
                 </div>
@@ -354,6 +354,11 @@
                         <div class="flex items-center gap-1.5">
                             <h3 class="font-extrabold text-slate-800 text-base tracking-tight">Daftar Anggota PGRI</h3>
                             <span id="active-filter-badge" class="hidden text-[9px] font-bold bg-red-100 text-red-700 px-2 py-0.5 rounded-md uppercase tracking-wider"></span>
+                            <!-- ☁️ CLOUD SYNC STATUS LAMP INDICATOR (VISUAL PREMIUM STATUS) -->
+                            <span id="cloud-sync-status" class="text-[10px] font-semibold bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full inline-flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-slate-400 inline-block"></span>
+                                <span>Mengecek Cloud...</span>
+                            </span>
                         </div>
                         <p class="text-[11px] text-slate-400 mt-0.5">Daftar guru terverifikasi pada Ranting terpilih. Klik <i class="fa-solid fa-circle-info mx-0.5 text-red-500"></i> pada mobile untuk data lengkap.</p>
                     </div>
@@ -628,7 +633,7 @@
     <footer class="bg-slate-950 text-slate-400 py-4 text-center border-t border-slate-900 text-[10px]">
         <div class="max-w-7xl mx-auto px-4">
             <p>© 2026 PGRI Cabang Samarang. Dibuat dengan cinta untuk Bapak/Ibu Guru Indonesia.</p>
-            <p class="mt-0.5 text-slate-600">Aplikasi Web Database Anggota Dinamis v1.4 • Siap Embed di GitHub Pages</p>
+            <p class="mt-0.5 text-slate-600">Aplikasi Web Database Anggota Dinamis v1.5 • Siap Embed di GitHub Pages</p>
         </div>
     </footer>
 
@@ -672,6 +677,9 @@
         // 🚨 TARUH LINK CSV GOOGLE SHEETS ANDA DI SINI 🚨
         const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRI1aIw_udN7HeKLvc5RkTrcdZKJkunFBBi6lckqPPzPsV8fqoUhRpCW22V-bZVbZEtHITFaaVBKteh/pub?output=csv";
 
+        // 🚨 MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI (DAPATKAN DARI LANGKAH BAGIAN 2 DI ATAS) 🚨
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby3Mlfi23cMBa4D3oX7qHr_TR6P_eHTHpkZjPveGpl7ovxpQZeJMR2xzHFYp6NYSvo3lw/exec";
+
         // MASTER DATA CADANGAN (Akan otomatis digantikan saat SPREADSHEET_CSV_URL diisi dengan benar)
         let MASTER_DATA_ANGGOTA = [
             { nama: "Yoni Hermanto, M.Pd.", npa: "10190100001", ranting: "Ranting Samarang", ttl: "Garut, 12 Maret 1985", unit: "SDN 1 Samarang", pendidikan: "S2 Tek. Pendidikan", status: "PNS", gender: "L", sertifikasi: "Sudah", aktif: "Aktif" },
@@ -685,8 +693,10 @@
 
         // 3. FUNGSI UNTUK MENARIK DATA REAL-TIME DARI GOOGLE SHEETS DENGAN FILTER MULTI-KOLOM
         async function loadDataFromSpreadsheet() {
+            updateCloudStatus("loading");
             if (!SPREADSHEET_CSV_URL || SPREADSHEET_CSV_URL === "TARUH_URL_CSV_GOOGLE_SHEETS_ANDA_DI_SINI") {
                 console.log("Menggunakan data simulasi lokal. Masukkan URL CSV Google Sheets Anda untuk mengaktifkan data dinamis.");
+                updateCloudStatus("offline");
                 return;
             }
 
@@ -785,14 +795,18 @@
                 }
 
                 if (tempArray.length > 0) {
-                    MASTER_DATA_ANGGOTA = tempArray;
-                    console.log("Database Google Sheets Berhasil Dimuat!", MASTER_DATA_ANGGOTA);
+                    // SINKRONISASI DATABASE LOKAL: Gabungkan data dari Google Sheets dengan modifikasi localStorage
+                    MASTER_DATA_ANGGOTA = applyLocalDatabaseModifications(tempArray);
+                    console.log("Database Google Sheets Berhasil Dimuat & Disinkronkan!", MASTER_DATA_ANGGOTA);
+                    updateCloudStatus("synced");
                     if (currentUser) {
                         renderDashboardData();
                     }
                 }
             } catch (error) {
                 console.error("Gagal menarik data dari Google Sheets, menggunakan data cadangan offline.", error);
+                MASTER_DATA_ANGGOTA = applyLocalDatabaseModifications(MASTER_DATA_ANGGOTA);
+                updateCloudStatus("offline");
             }
         }
 
@@ -831,7 +845,6 @@
                         ranting: account.ranting
                     };
 
-                    // 🚨 PERBAIKAN: Menggunakan localStorage agar tidak otomatis logout saat di-refresh 🚨
                     localStorage.setItem("pgri_session", JSON.stringify(currentUser));
                     showDashboard(currentUser);
                 } else {
@@ -887,7 +900,6 @@
         }
 
         function handleLogout() {
-            // Bersihkan data sesi permanen dari localStorage
             localStorage.removeItem("pgri_session");
             currentUser = null;
             document.getElementById("login-form").reset();
@@ -1220,8 +1232,124 @@
             document.body.style.overflow = "auto";
         }
 
+        // =========================================================================
+        // 🚨 SINKRONISASI DATABASE LOKAL (CRUD DENGAN LOCAL STORAGE SINKRON) 🚨
+        // =========================================================================
+        
+        // Membaca daftar modifikasi lokal dari localStorage
+        function getLocalAddedMembers() {
+            return JSON.parse(localStorage.getItem("pgri_local_added") || "[]");
+        }
+        function getLocalUpdatedMembers() {
+            return JSON.parse(localStorage.getItem("pgri_local_updated") || "[]");
+        }
+        function getLocalDeletedNpas() {
+            return JSON.parse(localStorage.getItem("pgri_local_deleted") || "[]");
+        }
+
+        // Simpan perubahan ke localStorage
+        function saveLocalAddedMembers(arr) {
+            localStorage.setItem("pgri_local_added", JSON.stringify(arr));
+        }
+        function saveLocalUpdatedMembers(arr) {
+            localStorage.setItem("pgri_local_updated", JSON.stringify(arr));
+        }
+        function saveLocalDeletedNpas(arr) {
+            localStorage.setItem("pgri_local_deleted", JSON.stringify(arr));
+        }
+
+        // Fungsi kritis untuk menggabungkan data Google Sheets dengan data modifikasi localStorage
+        function applyLocalDatabaseModifications(apiData) {
+            const added = getLocalAddedMembers();
+            const updated = getLocalUpdatedMembers();
+            const deleted = getLocalDeletedNpas();
+
+            // 1. Saring/Buang data yang sudah dihapus oleh user
+            let merged = apiData.filter(m => !deleted.includes(m.npa));
+
+            // 2. Perbarui data yang telah diedit oleh user
+            merged = merged.map(m => {
+                const foundUpdate = updated.find(u => u.npa === m.npa);
+                return foundUpdate ? foundUpdate : m;
+            });
+
+            // 3. Sisipkan data anggota baru yang ditambah ke baris paling atas
+            return [...added, ...merged];
+        }
+
+        // =========================================================================
+        // ☁️ SINKRONISASI DUA ARAH KE GOOGLE SHEETS & DRIVE VIA APPS SCRIPT API
+        // =========================================================================
+        
+        function updateCloudStatus(statusType) {
+            const indicator = document.getElementById("cloud-sync-status");
+            if (!indicator) return;
+
+            if (statusType === "synced") {
+                indicator.className = "text-[10px] font-semibold bg-emerald-50 text-emerald-700 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 border border-emerald-100";
+                indicator.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span> ☁️ Terhubung & Sinkron`;
+            } else if (statusType === "syncing") {
+                indicator.className = "text-[10px] font-semibold bg-blue-50 text-blue-700 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 border border-blue-100";
+                indicator.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-blue-500 inline-block animate-spin"></span> 🔄 Menyinkronkan...`;
+            } else if (statusType === "offline") {
+                indicator.className = "text-[10px] font-semibold bg-amber-50 text-amber-700 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 border border-amber-100";
+                indicator.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block"></span> ⚠️ Mode Offline`;
+            } else if (statusType === "loading") {
+                indicator.className = "text-[10px] font-semibold bg-slate-100 text-slate-500 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1";
+                indicator.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-slate-400 inline-block animate-bounce"></span> Mengecek Cloud...`;
+            }
+        }
+
+        async function syncTransactionToCloud(action, memberObj) {
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "TARUH_URL_WEB_APP_APPS_SCRIPT_DI_SINI") {
+                console.log("Transaksi disimpan lokal. Hubungkan Google Apps Script untuk sinkronisasi cloud otomatis.");
+                updateCloudStatus("offline");
+                return;
+            }
+
+            updateCloudStatus("syncing");
+            try {
+                const payload = {
+                    action: action,
+                    npa: memberObj.npa,
+                    nama: memberObj.nama,
+                    ranting: memberObj.ranting,
+                    ttl: memberObj.ttl,
+                    unit: memberObj.unit,
+                    pendidikan: memberObj.pendidikan,
+                    status: memberObj.status,
+                    gender: memberObj.gender,
+                    sertifikasi: memberObj.sertifikasi,
+                    aktif: memberObj.aktif
+                };
+
+                // Mengirim fetch POST ke Google Apps Script Web App
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors", // Mode aman bypass CORS untuk Apps Script redirection
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                // Dikarenakan mode "no-cors" tidak mengembalikan readable body, kita asumsikan sukses jika fetch berhasil
+                console.log("Perubahan berhasil dikirim ke Google Sheets di Google Drive!", payload);
+                
+                // Berikan jeda sebentar lalu cek ulang status sinkronisasi
+                setTimeout(() => {
+                    updateCloudStatus("synced");
+                    showToast("Sukses: Data berhasil disinkronkan ke Google Drive!");
+                }, 1500);
+
+            } catch (error) {
+                console.error("Gagal menyinkronkan data ke Cloud, transaksi tersimpan lokal.", error);
+                updateCloudStatus("offline");
+            }
+        }
+
         // ==========================================
-        // 🛠️ CRUD OPERATIONS LOGIC (IN-MEMORY STATE)
+        // 🛠️ CRUD OPERATIONS LOGIC
         // ==========================================
 
         function showToast(message) {
@@ -1275,7 +1403,6 @@
 
             populateFormRantingOptions(member.ranting);
 
-            // Supaya tidak merusak sinkronisasi NPA jika di-lock
             document.getElementById("form-npa").disabled = false;
 
             const modal = document.getElementById("member-form-modal");
@@ -1296,7 +1423,6 @@
             selector.innerHTML = "";
 
             if (currentUser.username === "admincabang") {
-                // Cabang bisa mendaftarkan guru ke ranting mana saja
                 LIST_ALL_RANTINGS.forEach(ranting => {
                     const opt = document.createElement("option");
                     opt.value = ranting;
@@ -1306,13 +1432,12 @@
                 });
                 selector.disabled = false;
             } else {
-                // Ranting biasa hanya dikunci pada Ranting mereka sendiri
                 const opt = document.createElement("option");
                 opt.value = currentUser.ranting;
                 opt.textContent = currentUser.ranting;
                 opt.selected = true;
                 selector.appendChild(opt);
-                selector.disabled = true; // Lock agar tidak bisa ganti ranting lain
+                selector.disabled = true;
             }
         }
 
@@ -1331,30 +1456,52 @@
             const sertifikasi = document.getElementById("form-sertifikasi").value;
             const aktif = document.getElementById("form-aktif").value;
 
-            // Cek Duplikasi NPA jika mendaftarkan baru atau ganti NPA lama
+            // Cek Duplikasi NPA
             if (origNpa !== newNpa) {
                 const isDuplicate = MASTER_DATA_ANGGOTA.some(m => m.npa === newNpa);
                 if (isDuplicate) {
-                    showToast("Error: NPA " + newNpa + " sudah terdaftar di database!");
+                    showToast("Error: NPA " + newNpa + " sudah terdaftar!");
                     return;
                 }
             }
 
             const memberObj = { npa: newNpa, nama, ranting, ttl, unit, pendidikan, status, gender, sertifikasi, aktif };
 
+            let localAdded = getLocalAddedMembers();
+            let localUpdated = getLocalUpdatedMembers();
+            let actionType = "add";
+
             if (origNpa) {
-                // Aksi EDIT
-                const idx = MASTER_DATA_ANGGOTA.findIndex(m => m.npa === origNpa);
-                if (idx !== -1) {
-                    MASTER_DATA_ANGGOTA[idx] = memberObj;
-                    showToast("Sukses: Data " + nama + " berhasil diperbarui!");
+                // Aksi EDIT/UPDATE
+                actionType = "update";
+                const addedIndex = localAdded.findIndex(m => m.npa === origNpa);
+                if (addedIndex !== -1) {
+                    localAdded[addedIndex] = memberObj;
+                } else {
+                    const updatedIndex = localUpdated.findIndex(m => m.npa === origNpa);
+                    if (updatedIndex !== -1) {
+                        localUpdated[updatedIndex] = memberObj;
+                    } else {
+                        localUpdated.push(memberObj);
+                    }
                 }
+                showToast("Sukses: Data " + nama + " berhasil diperbarui!");
             } else {
-                // Aksi TAMBAH
-                MASTER_DATA_ANGGOTA.unshift(memberObj);
+                // Aksi TAMBAH BARU
+                actionType = "add";
+                localAdded.unshift(memberObj);
                 showToast("Sukses: " + nama + " berhasil ditambahkan!");
             }
 
+            // 1. Amankan perubahan di LocalStorage (Supaya instan & anti-hilang)
+            saveLocalAddedMembers(localAdded);
+            saveLocalUpdatedMembers(localUpdated);
+
+            // 2. Kirim transaksi perubahan data ke Cloud Google Drive Sheets secara Background
+            syncTransactionToCloud(actionType, memberObj);
+
+            // Re-merge data untuk ditampilkan
+            refreshMasterDatabaseLocal();
             closeMemberFormModal();
             renderDashboardData();
         }
@@ -1378,15 +1525,56 @@
 
         function executeDeleteMember() {
             const npa = document.getElementById("delete-member-npa").value;
-            const idx = MASTER_DATA_ANGGOTA.findIndex(m => m.npa === npa);
-            if (idx !== -1) {
-                const deletedName = MASTER_DATA_ANGGOTA[idx].nama;
-                MASTER_DATA_ANGGOTA.splice(idx, 1);
-                showToast("Sukses: Data " + deletedName + " berhasil dihapus!");
+            
+            let localAdded = getLocalAddedMembers();
+            let localUpdated = getLocalUpdatedMembers();
+            let localDeleted = getLocalDeletedNpas();
+
+            // Simpan objek data untuk kebutuhan log payload API
+            const memberObjToDelete = MASTER_DATA_ANGGOTA.find(m => m.npa === npa) || { npa: npa };
+
+            const addedIdx = localAdded.findIndex(m => m.npa === npa);
+            if (addedIdx !== -1) {
+                localAdded.splice(addedIdx, 1);
+                saveLocalAddedMembers(localAdded);
+            } else {
+                if (!localDeleted.includes(npa)) {
+                    localDeleted.push(npa);
+                    saveLocalDeletedNpas(localDeleted);
+                }
+                const updatedIdx = localUpdated.findIndex(m => m.npa === npa);
+                if (updatedIdx !== -1) {
+                    localUpdated.splice(updatedIdx, 1);
+                    saveLocalUpdatedMembers(localUpdated);
+                }
             }
 
+            showToast("Sukses: Data anggota berhasil dihapus!");
+
+            // Kirim perintah Hapus ke Cloud API Google Sheets
+            syncTransactionToCloud("delete", memberObjToDelete);
+            
+            refreshMasterDatabaseLocal();
             closeDeleteConfirmModal();
             renderDashboardData();
+        }
+
+        function refreshMasterDatabaseLocal() {
+            let baseData = [
+                { nama: "Yoni Hermanto, M.Pd.", npa: "10190100001", ranting: "Ranting Samarang", ttl: "Garut, 12 Maret 1985", unit: "SDN 1 Samarang", pendidikan: "S2 Tek. Pendidikan", status: "PNS", gender: "L", sertifikasi: "Sudah", aktif: "Aktif" },
+                { nama: "Siti Masitoh, S.Pd.", npa: "10190100002", ranting: "Ranting Samarang", ttl: "Garut, 25 April 1990", unit: "SDN 1 Samarang", pendidikan: "S1 PGSD", status: "PPPK", gender: "P", sertifikasi: "Sudah", aktif: "Aktif" },
+                { nama: "Andri Wijaya, S.Pd.", npa: "10190100003", ranting: "Ranting Samarang", ttl: "Bandung, 05 Juni 1995", unit: "SDN 2 Samarang", pendidikan: "S1 Penjas", status: "Honorer", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
+                { nama: "Lilis Herlina, S.Pd.", npa: "10190100004", ranting: "Ranting Samarang", ttl: "Garut, 18 September 1980", unit: "SDN 2 Samarang", pendidikan: "S1 PGSD", status: "GTY", gender: "P", sertifikasi: "Sudah", aktif: "Aktif" },
+                { nama: "Dian Mulyana, S.Pd.", npa: "10190100005", ranting: "Ranting Samarang", ttl: "Garut, 22 Agustus 1996", unit: "SMKS Pasundan Samarang", pendidikan: "S1 Pend. Ekonomi", status: "GTT", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
+                { nama: "Soni Hermawan, S.Kom", npa: "10190700003", ranting: "Ranting Parakan", ttl: "Bandung, 14 Des 1991", unit: "SDN 1 Tanjungsari", pendidikan: "S1 Komputer", status: "GTY", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
+                { nama: "Yuni Kartika, S.Pd.", npa: "10190700004", ranting: "Ranting Sukarasa", ttl: "Garut, 18 Juni 1995", unit: "SMPN 3 Samarang", pendidikan: "S1 Pend. Bahasa Inggris", status: "GTT", gender: "P", sertifikasi: "Belum", aktif: "Aktif" }
+            ];
+            
+            if (SPREADSHEET_CSV_URL && SPREADSHEET_CSV_URL !== "TARUH_URL_CSV_GOOGLE_SHEETS_ANDA_DI_SINI") {
+                loadDataFromSpreadsheet();
+            } else {
+                MASTER_DATA_ANGGOTA = applyLocalDatabaseModifications(baseData);
+            }
         }
 
         // ==========================================
