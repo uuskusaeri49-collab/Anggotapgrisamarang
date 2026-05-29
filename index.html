@@ -98,7 +98,7 @@
                             </span>
                             <input type="text" id="username" required
                                 class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-all text-sm font-medium"
-                                placeholder="Contoh: rantingsamarang / admincabang">
+                                placeholder="Contoh: ranting">
                         </div>
                     </div>
 
@@ -273,7 +273,7 @@
                         <span class="text-[8px] text-indigo-600 font-bold bg-indigo-50 px-1.5 py-0.5 rounded-md">Paruh Waktu</span>
                     </div>
 
-                    <!-- Card 5: Honorer/GTY/GTT -->
+                    <!-- Card 5: Honorer/GTY/GTT (AKUMULATIF DI STATISTIK) -->
                     <div id="card-honorer" onclick="setFilter('status_Honorer/GTY/GTT')" class="smooth-transition bg-white p-3 rounded-xl border-t-4 border-t-slate-500 border-x border-b border-slate-100 shadow-sm cursor-pointer hover:shadow-md hover:-translate-y-0.5 flex flex-col items-center justify-between text-center group min-h-[120px]">
                         <div class="text-slate-600 bg-slate-50 w-7 h-7 rounded-full flex items-center justify-center text-xs group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-graduation-cap"></i>
@@ -355,7 +355,7 @@
                             <h3 class="font-extrabold text-slate-800 text-base tracking-tight">Daftar Anggota PGRI</h3>
                             <span id="active-filter-badge" class="hidden text-[9px] font-bold bg-red-100 text-red-700 px-2 py-0.5 rounded-md uppercase tracking-wider"></span>
                         </div>
-                        <p class="text-[11px] text-slate-400 mt-0.5">Daftar guru terverifikasi pada Ranting terpilih.</p>
+                        <p class="text-[11px] text-slate-400 mt-0.5">Daftar guru terverifikasi pada Ranting terpilih. Klik <i class="fa-solid fa-circle-info mx-0.5 text-red-500"></i> pada mobile untuk data lengkap.</p>
                     </div>
 
                     <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
@@ -796,10 +796,22 @@
             }
         }
 
-        // Jalankan fetch data Google Sheets sesaat setelah halaman dimuat
-        window.addEventListener('DOMContentLoaded', () => {
+        // AUTO-RESTORE LOGIN: Berfungsi mem-bypass login jika ada data sesi aktif di localStorage
+        window.onload = function() {
             loadDataFromSpreadsheet();
-        });
+            
+            // Mengambil sesi permanen dari localStorage
+            const savedSession = localStorage.getItem("pgri_session");
+            if (savedSession) {
+                try {
+                    currentUser = JSON.parse(savedSession);
+                    showDashboard(currentUser);
+                    console.log("Sesi login berhasil dipulihkan secara otomatis!");
+                } catch (e) {
+                    localStorage.removeItem("pgri_session");
+                }
+            }
+        };
 
         function handleLogin(event) {
             event.preventDefault();
@@ -819,7 +831,8 @@
                         ranting: account.ranting
                     };
 
-                    sessionStorage.setItem("pgri_session", JSON.stringify(currentUser));
+                    // 🚨 PERBAIKAN: Menggunakan localStorage agar tidak otomatis logout saat di-refresh 🚨
+                    localStorage.setItem("pgri_session", JSON.stringify(currentUser));
                     showDashboard(currentUser);
                 } else {
                     errorText.textContent = "Kata sandi salah! Silakan coba lagi.";
@@ -874,7 +887,8 @@
         }
 
         function handleLogout() {
-            sessionStorage.removeItem("pgri_session");
+            // Bersihkan data sesi permanen dari localStorage
+            localStorage.removeItem("pgri_session");
             currentUser = null;
             document.getElementById("login-form").reset();
             document.getElementById("dashboard-container").classList.add("hidden");
@@ -1186,7 +1200,7 @@
             document.getElementById("modal-status").textContent = statusLabel;
             
             document.getElementById("modal-gender").textContent = member.gender === "L" ? "Laki-laki" : "Perempuan";
-            document.getElementById("modal-sertifikasi").textContent = member.sertifikasi === "Sudah" ? "Sertifikasi Aktif" : "Belum Sertifikasi";
+            document.getElementById("modal-sertifikasi").textContent = member.sertifikasi === "Sudah" ? "Sertifikasi Hack" : "Belum Sertifikasi";
             document.getElementById("modal-aktif").textContent = member.aktif;
 
             // Tombol Aksi Mobile
