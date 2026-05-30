@@ -31,9 +31,9 @@
 
     <!-- LOGIN SCREEN WITH HERO SPLIT LAYOUT -->
     <div id="login-container" class="flex-grow flex items-center justify-center p-4 md:p-8">
-        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-4xl border border-slate-100 overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[580px] transition-all duration-300">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-5xl border border-slate-100 overflow-hidden grid grid-cols-1 md:grid-cols-12 min-h-[580px] transition-all duration-300">
             
-            <!-- SISI KIRI: PANEL KETUA & BRANDING PGRI (5 Kolom di Desktop) -->
+            <!-- SISI KIRI: PANEL KETUA & BRANDING PGRI (5 Kolom di Desktop dengan Foto Ketua Diperbesar) -->
             <div class="md:col-span-5 bg-gradient-to-br from-red-700 via-red-800 to-slate-900 p-8 text-white flex flex-col justify-between relative overflow-hidden text-center md:text-left">
                 <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/5 rounded-full blur-2xl"></div>
                 
@@ -51,25 +51,25 @@
                     </div>
                 </div>
 
-                <!-- Foto Ketua & Tagline Transformasi Digital -->
-                <div class="my-auto space-y-6 relative z-10 py-4">
-                    <div class="relative w-44 h-44 mx-auto md:ml-0 rounded-2xl overflow-hidden border-4 border-white/20 shadow-xl bg-slate-800/50 group/photo">
+                <!-- Foto Ketua & Tagline Transformasi Digital (Diperbesar secara Proporsional & Mengisi Ruang) -->
+                <div class="my-auto space-y-5 relative z-10 py-4 flex flex-col items-center md:items-start">
+                    <div class="relative w-64 h-64 md:w-full md:h-80 rounded-2xl overflow-hidden border-4 border-white/20 shadow-2xl bg-slate-850 group/photo smooth-transition">
                         <img id="ketua-photo" 
                              src="https://lh3.googleusercontent.com/d/1MkSv3R3WWZQtOSbHnYszXGtCX9d13i6d?auto=format&fit=crop&q=200&w=500" 
                              alt="Ketua Cabang PGRI Samarang" 
-                             class="w-full h-full object-cover object-center scale-105 group-hover/photo:scale-115 transition-transform duration-500"
+                             class="w-full h-full object-cover object-center scale-100 group-hover/photo:scale-110 transition-transform duration-500"
                              onerror="this.src='https://api.dicebear.com/7.x/bottts/svg?seed=pgri'">
-                        <span class="absolute bottom-0 inset-x-0 bg-red-600/90 text-[10px] font-bold py-1.5 uppercase tracking-wider text-center block">Ketua Cabang</span>
+                        <span class="absolute bottom-0 inset-x-0 bg-red-600/95 text-[10px] font-bold py-2 uppercase tracking-wider text-center block">Ketua Cabang PGRI Samarang</span>
                     </div>
 
-                    <div class="space-y-1">
+                    <div class="space-y-1 w-full text-center md:text-left">
                         <h3 class="font-extrabold text-base tracking-wide text-white">Arief Fauzi Mansur, S.Pd.</h3>
                         <p class="text-xs text-red-200 font-medium">Ketua Cabang PGRI Kecamatan Samarang</p>
                     </div>
 
-                    <div class="w-16 h-1 bg-red-400 mx-auto md:ml-0 rounded-full"></div>
+                    <div class="w-16 h-1 bg-red-400 rounded-full"></div>
 
-                    <div class="bg-black/15 p-4 rounded-xl border border-white/10 text-left">
+                    <div class="bg-black/15 p-4 rounded-xl border border-white/10 text-left w-full">
                         <p class="text-xs italic text-red-50 leading-relaxed font-medium">
                             "Transformasi Digital Guru Samarang: Bersatu, Berinovasi, dan Berbagi untuk Mewujudkan Ekosistem Pendidikan yang Cerdas, Kreatif, dan Berkemajuan di Era Modern."
                         </p>
@@ -81,19 +81,43 @@
                 </div>
             </div>
 
-            <!-- SISI KANAN: PORTAL LOGIN -->
-            <div class="md:col-span-7 p-8 sm:p-12 flex flex-col justify-center">
-                <div class="mb-6">
+            <!-- SISI KANAN: PORTAL LOGIN & PENGUMUMAN RESMI (7 Kolom di Desktop) -->
+            <div class="md:col-span-7 p-6 sm:p-10 flex flex-col justify-center space-y-6">
+                <div>
                     <h2 class="text-2xl font-extrabold text-slate-900 tracking-tight">Portal Akses Ranting</h2>
-                    <p class="text-slate-500 text-sm mt-1">Silakan masuk menggunakan kredensial koordinasi ranting Anda.</p>
+                    <p class="text-slate-500 text-sm mt-1">Silakan masuk menggunakan akun pengguna.</p>
                 </div>
 
-                <div id="login-error" class="hidden mb-5 p-3.5 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm flex items-center gap-2.5">
+                <!-- 📢 KOTAK PENGUMUMAN FORMAL DAN INFORMATIF SESUAI EYD 📢 -->
+                <div class="bg-amber-50/75 border border-amber-200 rounded-2xl p-4 text-xs text-slate-700 leading-relaxed space-y-2.5 shadow-sm">
+                    <div class="flex items-center gap-2 text-amber-800">
+                        <i class="fa-solid fa-bullhorn text-sm animate-bounce"></i>
+                        <span class="font-extrabold tracking-wide uppercase text-[10px]">Informasi & Instruksi Kerja Pengurus Ranting</span>
+                    </div>
+                    <p class="font-medium">
+                        Portal Akses Ranting ini berisi data anggota per Ranting yang sudah terdata pada basis data resmi KTA Digital PGRI. Tugas Bapak/Ibu pengurus Ranting adalah melakukan <strong class="text-slate-950 font-bold">proses cross-check data</strong> yang tersedia. Apabila terdapat data yang tertera tidak sesuai, silakan lakukan proses penyuntingan agar tersimpan dengan baik di sistem.
+                    </p>
+                    <p class="font-medium">
+                        Jika terdapat anggota di Ranting Anda yang belum terdaftar di portal ini, maka menjadi kewajiban bagi pengurus Ranting untuk mendorong anggota tersebut agar segera mendaftarkan diri secara mandiri melalui tautan resmi dengan senantiasa mematuhi AD/ART PGRI. Data ini sepenuhnya digunakan untuk memenuhi kebutuhan akurasi administrasi data di Ranting masing-masing.
+                    </p>
+                    <!-- Tombol Tautan Pintar -->
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <a href="https://ktadigitalpgri.org/" target="_blank" class="bg-amber-550/15 hover:bg-amber-500 hover:text-white text-amber-905 font-bold px-3 py-1.5 rounded-lg smooth-transition inline-flex items-center gap-1 border border-amber-250/50 text-[10px]">
+                            <i class="fa-solid fa-globe"></i> Basis Data Pusat
+                        </a>
+                        <a href="https://ktadigitalpgri.org/masuk" target="_blank" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3 py-1.5 rounded-lg smooth-transition inline-flex items-center gap-1 shadow-sm shadow-red-100 text-[10px]">
+                            <i class="fa-solid fa-user-plus"></i> Daftar KTA Digital
+                        </a>
+                    </div>
+                </div>
+
+                <div id="login-error" class="hidden p-3.5 bg-red-50 border border-red-200 text-red-600 rounded-xl text-sm flex items-center gap-2.5">
                     <i class="fa-solid fa-circle-exclamation text-base"></i>
                     <span id="error-text">Username atau password salah!</span>
                 </div>
 
-                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-5">
+                <!-- Formulir Login -->
+                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
                     <div>
                         <label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Username Akses</label>
                         <div class="relative">
@@ -102,7 +126,7 @@
                             </span>
                             <input type="text" id="username" required
                                 class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-all text-sm font-medium"
-                                placeholder="Contoh: rantingsamarang / admincabang">
+                                placeholder="Contoh: rantingpgri">
                         </div>
                     </div>
 
@@ -128,7 +152,7 @@
                     </button>
                 </form>
 
-                <div class="mt-8 pt-6 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 font-medium">
+                <div class="pt-2 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 font-medium">
                     <span>Butuh bantuan akses?</span>
                     <a href="#" class="text-red-600 hover:underline">Hubungi Admin Cabang</a>
                 </div>
@@ -203,7 +227,7 @@
             <!-- JALUR FILTER KHUSUS ADMIN CABANG -->
             <div id="admin-branch-filter-container" class="hidden bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-lg bg-red-50 text-red-650 flex items-center justify-center text-sm">
+                    <div class="w-8 h-8 rounded-lg bg-red-50 text-red-655 flex items-center justify-center text-sm">
                         <i class="fa-solid fa-building-columns"></i>
                     </div>
                     <div>
@@ -240,14 +264,14 @@
                     </button>
                 </div>
                 
-                <!-- Grid Statistik Baru: Memakai border gradien menyala, micro-interactions, dan LED aktif -->
+                <!-- Grid Statistik Baru -->
                 <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4 max-w-6xl mx-auto">
                     
-                    <!-- Card 1: Total Anggota (Neon Accent Rose) -->
+                    <!-- Card 1: Total Anggota -->
                     <div id="card-total" onclick="setFilter('all')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-rose-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
                         <!-- LED Active Status -->
                         <div id="led-total" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-rose-500 animate-ping hidden"></div>
-                        <div class="text-rose-650 bg-rose-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
+                        <div class="text-rose-655 bg-rose-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-users"></i>
                         </div>
                         <div class="my-1">
@@ -259,7 +283,7 @@
                             <button id="btn-gender-l" onclick="event.stopPropagation(); setFilter('gender_L');" class="smooth-transition text-[9px] font-extrabold bg-sky-50 text-sky-700 border border-sky-100/50 px-1.5 py-1 rounded-lg flex items-center gap-0.5 hover:bg-sky-500 hover:text-white cursor-pointer">
                                 <i class="fa-solid fa-mars text-[8px]"></i> L:<span id="stat-total-l">0</span>
                             </button>
-                            <button id="btn-gender-p" onclick="event.stopPropagation(); setFilter('gender_P');" class="smooth-transition text-[9px] font-extrabold bg-pink-50 text-pink-700 border border-pink-100/50 px-1.5 py-1 rounded-lg flex items-center gap-0.5 hover:bg-pink-500 hover:text-white cursor-pointer">
+                            <button id="btn-gender-p" onclick="event.stopPropagation(); setFilter('gender_P');" class="smooth-transition text-[9px] font-extrabold bg-pink-50 text-pink-700 border border-pink-100/50 px-1.5 py-1 rounded-lg flex items-center gap-0.5 hover:bg-pink-555 hover:text-white cursor-pointer">
                                 <i class="fa-solid fa-venus text-[8px]"></i> P:<span id="stat-total-p">0</span>
                             </button>
                         </div>
@@ -435,7 +459,7 @@
                             <span>Tambah Anggota</span>
                         </button>
 
-                        <!-- Export Button (UPGRADED TO REAL EXCEL SUITE) -->
+                        <!-- Export Button -->
                         <button onclick="exportDataExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-3.5 py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-sm">
                             <i class="fa-solid fa-file-excel text-xs"></i>
                             <span>Ekspor Excel</span>
@@ -833,7 +857,7 @@
         // 🚨 MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI 🚨
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx3fkNAJc2kUTvqTxR46QFaXvyZRQBdXexqpqDS976Pmf6DSypn1Y22GS-k2G7PXKsKpQ/exec";
 
-        // MASTER DATA CADANGAN
+        // MASTER DATA ANGOTA
         let MASTER_DATA_ANGGOTA = [];
 
         // 📝 FUNGSI UNTUK MERAPIKAN PENULISAN NAMA & GELAR SESUAI DENGAN ATURAN EYD
@@ -1284,7 +1308,6 @@
             activeFilters.sertifikasi = null;
 
             // 🚨 SINKRONISASI INTEGRITAS: TAMPILKAN LANGSUNG SEJAK AWAL DARI MEMORI LOKAL 🚨
-            // Kita bypass skeleton loader berputar karena data instan lokal sudah siap 100%
             isInitialLoading = false;
             renderDashboardData();
         }
@@ -1723,11 +1746,10 @@
             });
         }
 
-        // JAVASCRIPT MODAL DETAIL UNTUK MOBILE & DESKTOP (SUDAH DISINKRONKAN DENGAN ATURAN EYD GELAR & NAMA BAKU)
+        // JAVASCRIPT MODAL DETAIL
         function openDetailModal(memberJsonString) {
             const member = JSON.parse(memberJsonString.replace(/&quot;/g, '"'));
             
-            // Konversi isian identitas detail agar konsisten sesuai dengan kaidah EYD huruf kapital resmi
             document.getElementById("modal-nama").textContent = formatNameWithDegrees(member.nama);
             document.getElementById("modal-npa").textContent = "NPA: " + String(member.npa).trim();
             document.getElementById("modal-ranting").textContent = formatToEYD(member.ranting);
@@ -1741,7 +1763,7 @@
             document.getElementById("modal-status").textContent = statusLabel;
             
             document.getElementById("modal-gender").textContent = member.gender === "L" ? "Laki-laki" : "Perempuan";
-            document.getElementById("modal-sertifikasi").textContent = member.sertifikasi === "Sudah" ? "Sertifikasi Hack" : "Belum Sertifikasi";
+            document.getElementById("modal-sertifikasi").textContent = member.sertifikasi === "Sudah" ? "Sertifikasi Aktif" : "Belum Sertifikasi";
             document.getElementById("modal-aktif").textContent = member.aktif;
 
             // Tombol Aksi Mobile
@@ -1808,7 +1830,7 @@
                 icon.classList.add("fa-eye-slash");
             } else {
                 pwd.type = "password";
-                icon.classList.remove("fa-eye-slash");
+                icon.classList.remove("fa-eye-shadow");
                 icon.classList.add("fa-eye");
             }
         }
@@ -1818,7 +1840,6 @@
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    // Kompresi data gambar Base64
                     document.getElementById("profile-modal-avatar").src = e.target.result;
                 };
                 reader.readAsDataURL(input.files[0]);
@@ -1836,7 +1857,6 @@
             const video = document.getElementById("camera-video");
 
             if (container.classList.contains("hidden")) {
-                // Hidupkan Kamera Stream
                 navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false })
                     .then(stream => {
                         cameraStream = stream;
@@ -1872,13 +1892,10 @@
                 canvas.height = video.videoHeight;
                 const ctx = canvas.getContext("2d");
                 
-                // Mirroring effect untuk selfie kamera
                 ctx.translate(canvas.width, 0);
                 ctx.scale(-1, 1);
-                
                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
                 
-                // Konversi kanvas ke Base64 Data URL
                 const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
                 avatar.src = dataUrl;
                 
@@ -1914,7 +1931,7 @@
             // 3. SINKRONKAN PERUBAHAN KE CLOUD GOOGLE SPREADSHEETS (DUA ARAH ANTAR-PERANGKAT)
             syncProfileUpdateToCloud(u, newName, newPassword, avatarBase64);
             
-            showToast("Sukses: Pengaturan profil disimpan secara permanen!");
+            showToast("Sukses: Pengaturan profil berhasil disimpan!");
             closeProfileModal();
         }
 
@@ -1956,7 +1973,6 @@
             let filename = `Rekap_Anggota_PGRI_${rantingAktif.replace(/ /g, "_")}`;
             let tabName = rantingAktif.length > 30 ? rantingAktif.substring(0, 30) : rantingAktif;
 
-            // Rancang Struktur XML/HTML Workbook agar langsung terbuka di Excel
             let excelTemplate = `
                 <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
                 <head>
@@ -2032,7 +2048,6 @@
                 </html>
             `;
 
-            // Process Unduhan Berkas xls
             const blob = new Blob([excelTemplate], { type: "application/vnd.ms-excel" });
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -2048,7 +2063,6 @@
         // SINKRONISASI DATABASE LOKAL
         // ==========================================
         
-        // Membaca daftar modifikasi lokal dari localStorage
         function getLocalAddedMembers() {
             return JSON.parse(localStorage.getItem("pgri_local_added") || "[]");
         }
@@ -2059,7 +2073,6 @@
             return JSON.parse(localStorage.getItem("pgri_local_deleted") || "[]");
         }
 
-        // Simpan perubahan ke localStorage
         function saveLocalAddedMembers(arr) {
             localStorage.setItem("pgri_local_added", JSON.stringify(arr));
         }
@@ -2070,22 +2083,18 @@
             localStorage.setItem("pgri_local_deleted", JSON.stringify(arr));
         }
 
-        // Fungsi kritis untuk menggabungkan data Google Sheets dengan data modifikasi localStorage
         function applyLocalDatabaseModifications(apiData) {
             const added = getLocalAddedMembers();
             const updated = getLocalUpdatedMembers();
             const deleted = getLocalDeletedNpas();
 
-            // 1. Saring/Buang data yang sudah dihapus oleh user
             let merged = apiData.filter(m => !deleted.includes(m.npa));
 
-            // 2. Perbarui data yang telah diedit oleh user
             merged = merged.map(m => {
                 const foundUpdate = updated.find(u => u.npa === m.npa);
                 return foundUpdate ? foundUpdate : m;
             });
 
-            // 3. Sisipkan data anggota baru yang ditambah ke baris paling atas
             return [...added, ...merged];
         }
 
@@ -2114,7 +2123,7 @@
 
         async function syncTransactionToCloud(action, memberObj) {
             if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "TARUH_URL_WEB_APP_APPS_SCRIPT_DI_SINI") {
-                console.log("Transaksi disimpan lokal. Hubungkan Google Apps Script untuk sinkronisasi cloud otomatis.");
+                console.log("Transaksi disimpan lokal.");
                 updateCloudStatus("offline");
                 return;
             }
@@ -2131,7 +2140,6 @@
                     pendidikan: memberObj.pendidikan,
                     status: memberObj.status,
                     gender: memberObj.gender,
-                    sertifikasi: memberObj.sertifikasi,
                     aktif: memberObj.aktif
                 };
 
@@ -2144,7 +2152,7 @@
                     body: JSON.stringify(payload)
                 });
 
-                console.log("Perubahan berhasil dikirim ke Google Sheets di Google Drive!", payload);
+                console.log("Perubahan berhasil dikirim ke Google Sheets!", payload);
                 
                 setTimeout(() => {
                     updateCloudStatus("synced");
@@ -2152,7 +2160,7 @@
                 }, 1500);
 
             } catch (error) {
-                console.error("Gagal menyinkronkan data ke Cloud, transaksi tersimpan lokal.", error);
+                console.error("Gagal menyinkronkan data ke Cloud.", error);
                 updateCloudStatus("offline");
             }
         }
@@ -2161,8 +2169,10 @@
         // 🛠️ CRUD OPERATIONS LOGIC
         // ==========================================
 
+        // 🚨 KEMBALIKAN DEKLARASI FUNGSI YANG TERLEPAS (populateFormRantingOptions) 🚨
         function populateFormRantingOptions(selectedRanting = "") {
             const selector = document.getElementById("form-ranting");
+            if (!selector) return;
             selector.innerHTML = "";
 
             if (currentUser.username === "admincabang") {
@@ -2199,7 +2209,6 @@
             const sertifikasi = document.getElementById("form-sertifikasi").value;
             const aktif = document.getElementById("form-aktif") ? document.getElementById("form-aktif").value : "Aktif";
 
-            // Cek Duplikasi NPA
             if (origNpa !== newNpa) {
                 const isDuplicate = MASTER_DATA_ANGGOTA.some(m => m.npa === newNpa);
                 if (isDuplicate) {
@@ -2270,9 +2279,8 @@
 
             const memberObjToDelete = MASTER_DATA_ANGGOTA.find(m => m.npa === npa) || { npa: npa };
 
-            const addedIdx = localAdded.findIndex(m => m.npa === npa);
-            if (addedIdx !== -1) {
-                localAdded.splice(addedIdx, 1);
+            const addedIdx = localAdded.splice(localAdded.findIndex(m => m.npa === npa), 1);
+            if (addedIdx.length > 0) {
                 saveLocalAddedMembers(localAdded);
             } else {
                 if (!localDeleted.includes(npa)) {
@@ -2440,7 +2448,6 @@
             });
         }
 
-        // KEMBALIKAN DEKLARASI EDIT MODAL YANG SEMPAT TERLEPAS
         function openEditModal(npa) {
             const member = MASTER_DATA_ANGGOTA.find(m => m.npa === npa);
             if (!member) return;
