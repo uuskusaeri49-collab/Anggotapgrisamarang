@@ -102,7 +102,7 @@
                             </span>
                             <input type="text" id="username" required
                                 class="w-full pl-11 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-all text-sm font-medium"
-                                placeholder="Contoh: loginranting">
+                                placeholder="Contoh: rantingsamarang / admincabang">
                         </div>
                     </div>
 
@@ -115,7 +115,7 @@
                             <input type="password" id="password" required
                                 class="w-full pl-11 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-all text-sm font-medium"
                                 placeholder="••••••••">
-                            <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-600">
+                            <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-650">
                                 <i id="password-toggle-icon" class="fa-solid fa-eye"></i>
                             </button>
                         </div>
@@ -156,11 +156,20 @@
                         </div>
                     </div>
 
+                    <!-- Profil Ringkas & Tombol Setting Profil -->
                     <div class="flex items-center gap-3">
+                        <!-- Foto Avatar Mini Admin -->
+                        <div class="w-8 h-8 rounded-full overflow-hidden border border-slate-200 shadow-sm shrink-0 bg-slate-100">
+                            <img id="header-avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=samarang" alt="Avatar Admin" class="w-full h-full object-cover">
+                        </div>
                         <div class="hidden md:block text-right">
                             <p class="text-[10px] text-slate-400 font-medium">Selamat datang,</p>
                             <p id="user-display-name" class="text-xs font-bold text-slate-800">Nama Admin</p>
                         </div>
+                        <!-- Tombol Menu Pengaturan Profil -->
+                        <button onclick="openProfileModal()" class="text-slate-400 hover:text-slate-650 bg-slate-50 hover:bg-slate-100 p-2 rounded-lg smooth-transition" title="Ubah Profil & Password">
+                            <i class="fa-solid fa-user-gear text-sm"></i>
+                        </button>
                         <div class="h-6 w-px bg-slate-200 hidden md:block"></div>
                         <button onclick="handleLogout()" class="flex items-center gap-1.5 px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded-lg transition-all font-semibold border border-transparent hover:border-red-100">
                             <i class="fa-solid fa-right-from-bracket"></i>
@@ -178,10 +187,16 @@
             <div class="bg-gradient-to-r from-red-700 via-rose-600 to-slate-900 rounded-2xl p-5 text-white shadow-md relative overflow-hidden">
                 <div class="absolute right-0 top-0 w-60 h-60 bg-white/5 rounded-full blur-3xl transform translate-x-20 -translate-y-20"></div>
                 
-                <div class="relative z-10 space-y-1.5">
-                    <span id="badge-ranting" class="bg-white/20 text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-widest mb-1 inline-block backdrop-blur-md">Ranting Hack</span>
-                    <h2 class="text-lg sm:text-xl font-extrabold tracking-tight">Selamat Datang kembali, <span id="welcome-name" class="text-yellow-300">Nama Admin</span>!</h2>
-                    <p class="text-red-100 text-xs max-w-3xl leading-relaxed">Kelola data resmi <b id="welcome-ranting" class="underline decoration-yellow-400 decoration-2">Ranting X</b>. Klik kartu statistik di bawah ini untuk filter instan.</p>
+                <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div class="space-y-1.5">
+                        <span id="badge-ranting" class="bg-white/20 text-white text-[9px] font-extrabold px-2.5 py-1 rounded-full uppercase tracking-widest mb-1 inline-block backdrop-blur-md">Ranting Hack</span>
+                        <h2 class="text-lg sm:text-xl font-extrabold tracking-tight">Selamat Datang kembali, <span id="welcome-name" class="text-yellow-300">Nama Admin</span>!</h2>
+                        <p class="text-red-100 text-xs max-w-3xl leading-relaxed">Kelola data resmi <b id="welcome-ranting" class="underline decoration-yellow-400 decoration-2">Ranting X</b>. Klik kartu statistik di bawah ini untuk filter instan.</p>
+                    </div>
+                    <!-- Foto Banner Besar Admin -->
+                    <div class="w-20 h-20 rounded-2xl overflow-hidden border-4 border-white/20 shadow-xl bg-slate-850 shrink-0 hidden md:block">
+                        <img id="banner-avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=samarang" alt="Foto Admin" class="w-full h-full object-cover">
+                    </div>
                 </div>
             </div>
 
@@ -250,7 +265,7 @@
                         </div>
                     </div>
 
-                    <!-- Card 2: PNS (Neon Accent Amber) -->
+                    <!-- Card 2: PNS -->
                     <div id="card-pns" onclick="setFilter('status_PNS')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-amber-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
                         <div id="led-pns" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-amber-500 animate-ping hidden"></div>
                         <div class="text-amber-600 bg-amber-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
@@ -263,7 +278,7 @@
                         <span class="text-[8px] text-amber-700 font-extrabold bg-amber-50 px-2 py-0.5 rounded-md uppercase tracking-wider">Negeri</span>
                     </div>
 
-                    <!-- Card 3: PPPK (Neon Accent Blue) -->
+                    <!-- Card 3: PPPK -->
                     <div id="card-pppk" onclick="setFilter('status_PPPK')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-blue-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
                         <div id="led-pppk" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-blue-500 animate-ping hidden"></div>
                         <div class="text-blue-600 bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
@@ -276,7 +291,7 @@
                         <span class="text-[8px] text-blue-700 font-extrabold bg-blue-50 px-2 py-0.5 rounded-md uppercase tracking-wider">Penuh Waktu</span>
                     </div>
 
-                    <!-- Card 4: PPPK Paruh Waktu (Neon Accent Indigo) -->
+                    <!-- Card 4: PPPK Paruh Waktu -->
                     <div id="card-pppk-pw" onclick="setFilter('status_PPPK Paruh Waktu')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-indigo-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center group min-h-[145px]">
                         <div id="led-pppk-pw" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-indigo-500 animate-ping hidden"></div>
                         <div class="text-indigo-600 bg-indigo-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
@@ -289,7 +304,7 @@
                         <span class="text-[8px] text-indigo-700 font-extrabold bg-indigo-50 px-2 py-0.5 rounded-md uppercase tracking-wider">Paruh Waktu</span>
                     </div>
 
-                    <!-- Card 5: Honorer/GTY/GTT (Neon Accent Slate) -->
+                    <!-- Card 5: Honorer/GTY/GTT -->
                     <div id="card-honorer" onclick="setFilter('status_Honorer/GTY/GTT')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-slate-550 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
                         <div id="led-honorer" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-slate-550 animate-ping hidden"></div>
                         <div class="text-slate-600 bg-slate-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
@@ -302,7 +317,7 @@
                         <span class="text-[8px] text-slate-700 font-extrabold bg-slate-50 px-2 py-0.5 rounded-md uppercase tracking-wider">GTT / Yayasan</span>
                     </div>
 
-                    <!-- Card 6: Pensiunan (Neon Accent Emerald) -->
+                    <!-- Card 6: Pensiunan -->
                     <div id="card-pensiun" onclick="setFilter('status_Pensiunan')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-emerald-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
                         <div id="led-pensiun" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-emerald-500 animate-ping hidden"></div>
                         <div class="text-emerald-600 bg-emerald-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
@@ -315,10 +330,10 @@
                         <span class="text-[8px] text-emerald-700 font-extrabold bg-emerald-50 px-2 py-0.5 rounded-md uppercase tracking-wider">Purna Bakti</span>
                     </div>
 
-                    <!-- Card 7: Sertifikasi (Neon Accent Teal) -->
+                    <!-- Card 7: Sertifikasi -->
                     <div id="card-sertifikasi" onclick="setFilter('sertifikasi_Sudah')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-teal-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
                         <div id="led-sertifikasi" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-teal-500 animate-ping hidden"></div>
-                        <div class="text-teal-600 bg-teal-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
+                        <div class="text-teal-655 bg-teal-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-award"></i>
                         </div>
                         <div class="my-1.5">
@@ -330,7 +345,7 @@
                 </div>
             </div>
 
-            <!-- 🚨 DYNAMIC RETIREMENT NOTIFICATION PANEL (Guru Pensiun < 1 Tahun Berjalan) 🚨 -->
+            <!-- 🚨 DYNAMIC RETIREMENT NOTIFICATION PANEL -->
             <div id="retirement-panel" class="hidden bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-200 rounded-2xl p-5 shadow-sm space-y-3 smooth-transition">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-2">
@@ -421,9 +436,9 @@
                         </button>
 
                         <!-- Export Button -->
-                        <button onclick="exportData()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-3.5 py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-sm">
+                        <button onclick="exportDataExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-3.5 py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-sm">
                             <i class="fa-solid fa-file-excel text-xs"></i>
-                            <span>Ekspor</span>
+                            <span>Ekspor Excel</span>
                         </button>
                     </div>
                 </div>
@@ -467,7 +482,7 @@
                 </div>
             </div>
 
-            <!-- INFORMASI CATATAN KAKI (FOOTER NOTE) DENGAN TATA LETAK PROFESIONAL -->
+            <!-- INFORMASI CATATAN KAKI -->
             <div class="bg-[#fef2f2] border border-[#fee2e2] rounded-2xl p-4 flex items-start sm:items-center gap-3.5 text-slate-700 text-xs smooth-transition hover:border-red-200 shadow-sm">
                 <div class="w-9 h-9 rounded-xl bg-red-100 text-red-700 flex items-center justify-center text-sm shrink-0 shadow-inner">
                     <i class="fa-solid fa-triangle-exclamation"></i>
@@ -479,6 +494,80 @@
             </div>
 
         </main>
+    </div>
+
+    <!-- MODAL SETTING PROFIL ADMIN (UPGRADED: UBAH PROFIL, PASSWORD, KAMERA/FOTO PERMANEN) -->
+    <div id="profile-settings-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl w-full max-w-md shadow-2xl overflow-hidden border border-slate-100 transform transition-all">
+            <div class="bg-gradient-to-r from-slate-800 to-slate-900 p-5 text-white flex justify-between items-center">
+                <div>
+                    <h3 class="font-bold text-base"><i class="fa-solid fa-user-gear mr-1.5"></i>Pengaturan Profil Admin</h3>
+                    <p class="text-[11px] text-slate-300">Sesuaikan identitas tampilan & kata sandi ranting Anda.</p>
+                </div>
+                <button onclick="closeProfileModal()" class="text-white hover:text-slate-300 text-xl p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 space-y-5 text-xs">
+                <!-- PANEL INPUT FOTO (UPLOAD ATAU JEPRET LANGSUNG) -->
+                <div class="flex flex-col items-center space-y-3">
+                    <div class="relative group">
+                        <div class="w-24 h-24 rounded-full overflow-hidden border-4 border-slate-100 shadow-lg bg-slate-100">
+                            <img id="profile-modal-avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=samarang" alt="Foto Admin" class="w-full h-full object-cover">
+                        </div>
+                        <!-- Overlay kamera jepret -->
+                        <button onclick="triggerCaptureCamera()" class="absolute bottom-0 right-0 bg-red-600 text-white w-8 h-8 rounded-full flex items-center justify-center shadow-md hover:bg-red-700 transition-colors" title="Ambil Foto Kamera">
+                            <i class="fa-solid fa-camera text-xs"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Pilihan Upload File Foto -->
+                    <div class="flex items-center gap-2">
+                        <label class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-1.5 rounded-xl cursor-pointer transition-all">
+                            <i class="fa-solid fa-cloud-arrow-up mr-1.5"></i>Pilih File Foto
+                            <input type="file" id="profile-file-input" accept="image/*" onchange="handleProfileFileSelect(this)" class="hidden">
+                        </label>
+                        <button id="btn-camera-toggle" onclick="toggleCameraStream()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-3 py-1.5 rounded-xl transition-all">
+                            <i class="fa-solid fa-camera-retro mr-1.5"></i>Kamera Aktif
+                        </button>
+                    </div>
+
+                    <!-- Panel Kamera Jepret Video Stream -->
+                    <div id="camera-stream-container" class="hidden w-full bg-black rounded-2xl overflow-hidden aspect-video relative">
+                        <video id="camera-video" autoplay playsinline class="w-full h-full object-cover"></video>
+                        <button onclick="captureFromCamera()" class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-2 rounded-full shadow-lg flex items-center gap-1.5">
+                            <i class="fa-solid fa-circle text-xs"></i> Jepret Foto
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">Username Akses</label>
+                        <input type="text" id="profile-username" disabled class="w-full bg-slate-100 border border-slate-200 text-slate-500 rounded-xl px-3.5 py-2.5 font-semibold cursor-not-allowed">
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">Nama Tampilan Admin *</label>
+                        <input type="text" id="profile-display-name" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 font-bold focus:outline-none focus:ring-2 focus:ring-slate-800" placeholder="Contoh: Yudi Sopyan, S.Pd.">
+                    </div>
+                    <div>
+                        <label class="block text-slate-500 font-bold mb-1">Ubah Kata Sandi Sesi *</label>
+                        <div class="relative">
+                            <input type="password" id="profile-password" class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-3.5 pr-10 py-2.5 font-mono focus:outline-none focus:ring-2 focus:ring-slate-800" placeholder="Masukkan password baru">
+                            <button type="button" onclick="toggleProfilePasswordView()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-650">
+                                <i id="profile-pwd-toggle-icon" class="fa-solid fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-3 border-t border-slate-100 flex justify-end gap-2">
+                    <button onclick="closeProfileModal()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2.5 rounded-xl transition-all">Batal</button>
+                    <button onclick="saveProfileChanges()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-5 py-2.5 rounded-xl transition-all shadow-md">Simpan Perubahan</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- CRUD MODAL: FORM TAMBAH / EDIT ANGGOTA -->
@@ -568,11 +657,6 @@
                         <option value="Aktif">Aktif</option>
                         <option value="Tidak Aktif">Tidak Aktif</option>
                     </select>
-                </div>
-
-                <!-- Banner Informasi Status Session In-Memory -->
-                <div class="p-3 bg-blue-50 border border-blue-100 rounded-2xl text-blue-800 text-[10px] leading-relaxed">
-                    <i class="fa-solid fa-circle-info mr-1"></i> Perubahan data disimpan dalam memori sesi aplikasi ini. Data permanen diatur melalui Google Sheets Anda.
                 </div>
 
                 <div class="pt-2 border-t border-slate-150 flex justify-end gap-2.5">
@@ -679,13 +763,40 @@
 
     <!-- JAVASCRIPT LOGIC -->
     <script>
-        // 1. STATE MANAJEMEN DASBOR (Dideklarasikan di bagian paling atas skrip global untuk menghindari ReferenceError)
+        // 1. STATE MANAJEMEN DASBOR
         let currentUser = null;
         let chartKepegawaianInstance = null;
         let chartGenderInstance = null;
-        let currentFilterType = 'all';
-        let currentFilterValue = null;
+        let activeFilters = {
+            gender: null,
+            status: null,
+            sertifikasi: null
+        };
         let adminSelectedRanting = "Semua Ranting"; // Khusus jika Super Admin login
+        let cameraStream = null; // Stream video aktif untuk jepret langsung
+
+        // ==========================================
+        // 📢 GLOBAL TOAST MESSAGE SYSTEM
+        // ==========================================
+        function showToast(message) {
+            const toast = document.getElementById("toast-success");
+            const toastMsg = document.getElementById("toast-message");
+            if (!toast || !toastMsg) return;
+            
+            toastMsg.textContent = message;
+
+            toast.classList.remove("hidden");
+            setTimeout(() => {
+                toast.classList.remove("translate-y-10", "opacity-0");
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add("translate-y-10", "opacity-0");
+                setTimeout(() => {
+                    toast.classList.add("hidden");
+                }, 300);
+            }, 3000);
+        }
 
         // 2. DATA USER DAN KREDENSIAL (9 Akun Ranting + 1 Super Admin Cabang)
         const USER_ACCOUNTS = {
@@ -720,7 +831,7 @@
         // 🚨 MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI 🚨
         const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby3Mlfi23cMBa4D3oX7qHr_TR6P_eHTHpkZjPveGpl7ovxpQZeJMR2xzHFYp6NYSvo3lw/exec";
 
-        // MASTER DATA CADANGAN (Akan otomatis digantikan saat SPREADSHEET_CSV_URL diisi dengan benar)
+        // MASTER DATA CADANGAN
         let MASTER_DATA_ANGGOTA = [
             { nama: "Yoni Hermanto, M.Pd.", npa: "10190100001", ranting: "Ranting Samarang", ttl: "Garut, 12 Maret 1985", unit: "SDN 1 Samarang", pendidikan: "S2 Tek. Pendidikan", status: "PNS", gender: "L", sertifikasi: "Sudah", aktif: "Aktif" },
             { nama: "Siti Masitoh, S.Pd.", npa: "10190100002", ranting: "Ranting Samarang", ttl: "Garut, 25 April 1990", unit: "SDN 1 Samarang", pendidikan: "S1 PGSD", status: "PPPK", gender: "P", sertifikasi: "Sudah", aktif: "Aktif" },
@@ -731,22 +842,17 @@
             { nama: "Yuni Kartika, S.Pd.", npa: "10190700004", ranting: "Ranting Sukarasa", ttl: "Garut, 18 Juni 1995", unit: "SMPN 3 Samarang", pendidikan: "S1 Pend. Bahasa Inggris", status: "GTT", gender: "P", sertifikasi: "Belum", aktif: "Aktif" }
         ];
 
-        // 📝 FUNGSI UNTUK MERAPIKAN PENULISAN NAMA & GELAR SESUAI DENGAN ATURAN EYD YANG SEMPURNA
+        // 📝 FUNGSI UNTUK MERAPIKAN PENULISAN NAMA & GELAR SESUAI DENGAN ATURAN EYD
         function formatNameWithDegrees(fullName) {
             if (!fullName) return "";
-            
-            // Pisahkan antara nama utama dan bagian gelar di belakang koma
             let parts = fullName.split(',');
             let mainName = parts[0].trim();
             mainName = formatToEYD(mainName);
             
             if (parts.length > 1) {
-                // Proses pemformatan gelar akademik di belakang koma secara sangat detail
                 let degrees = parts.slice(1).map(deg => {
-                    let d = deg.trim().replace(/\./g, ''); // Hapus titik sementara untuk standardisasi
+                    let d = deg.trim().replace(/\./g, '');
                     let dLower = d.toLowerCase();
-                    
-                    // Pemetaan Singkatan Gelar Akademik Resmi (Baku EYD)
                     if (dLower === 'spd') return 'S.Pd.';
                     if (dLower === 'mpd') return 'M.Pd.';
                     if (dLower === 'skom') return 'S.Kom.';
@@ -761,10 +867,7 @@
                     if (dLower === 'mm') return 'M.M.';
                     if (dLower === 'sip') return 'S.IP.';
                     if (dLower === 'ss') return 'S.S.';
-                    if (dLower === 'saq') return 'S.Ag.';
-                    if (dLower === 'sag') return 'S.Ag.';
-                    
-                    // Fallback cerdas jika ada gelar khusus di luar daftar
+                    if (dLower === 'saq' || dLower === 'sag') return 'S.Ag.';
                     if (d.length >= 2) {
                         return d.charAt(0).toUpperCase() + '.' + d.slice(1, 2).toUpperCase() + d.slice(2) + '.';
                     }
@@ -775,7 +878,6 @@
             return mainName;
         }
 
-        // Fungsi bantu merapikan huruf kapital standar EYD
         function formatToEYD(text) {
             if (!text) return "";
             text = String(text).trim().replace(/\s+/g, ' ');
@@ -785,17 +887,29 @@
                 if (word.toUpperCase() === "NPA" || word.toUpperCase() === "PNS" || word.toUpperCase() === "PPPK" || word.toUpperCase() === "PW" || word.toUpperCase() === "TK" || word.toUpperCase() === "SMA" || word.toUpperCase() === "SMP" || word.toUpperCase() === "SMPN" || word.toUpperCase() === "SDN") {
                     return word.toUpperCase();
                 }
-                
                 const lowerWord = word.toLowerCase();
                 if (exceptions.includes(lowerWord) && index > 0) {
                     return lowerWord;
                 }
-                
                 return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
             }).join(' ');
         }
 
-        // 3. FUNGSI UNTUK MENARIK DATA REAL-TIME DARI GOOGLE SHEETS DENGAN FILTER MULTI-KOLOM
+        // 🚨 SINKRONISASI CAKUPAN DATA SIFAT ADMIN / SUPER ADMIN (getScopedData) 🚨
+        function getScopedData() {
+            if (!currentUser) return [];
+            if (currentUser.username === "admincabang") {
+                if (adminSelectedRanting === "Semua Ranting") {
+                    return MASTER_DATA_ANGGOTA;
+                } else {
+                    return MASTER_DATA_ANGGOTA.filter(item => item.ranting === adminSelectedRanting);
+                }
+            } else {
+                return MASTER_DATA_ANGGOTA.filter(item => item.ranting === currentUser.ranting);
+            }
+        }
+
+        // 3. FUNGSI UNTUK MENARIK DATA REAL-TIME DARI GOOGLE SHEETS
         async function loadDataFromSpreadsheet() {
             updateCloudStatus("loading");
             if (!SPREADSHEET_CSV_URL || SPREADSHEET_CSV_URL === "TARUH_URL_CSV_GOOGLE_SHEETS_ANDA_DI_SINI") {
@@ -808,7 +922,6 @@
                 const response = await fetch(SPREADSHEET_CSV_URL);
                 const dataText = await response.text();
                 
-                // Bersihkan carriage return \r dari seluruh teks agar tidak merusak nama kolom terakhir
                 const cleanText = dataText.replace(/\r/g, '');
                 const lines = cleanText.split("\n").map(line => {
                     const result = [];
@@ -828,13 +941,12 @@
                     return result;
                 });
 
-                // Normalisasi penulisan headers ke huruf kecil dan ganti spasi dengan underscore
                 const headers = lines[0].map(h => h.replace(/"/g, '').toLowerCase().replace(/ /g, "_").trim());
                 
                 const tempArray = [];
                 for (let i = 1; i < lines.length; i++) {
                     const cells = lines[i];
-                    if (cells.length < headers.length || !cells[0]) continue; // Skip jika baris kosong
+                    if (cells.length < headers.length || !cells[0]) continue;
                     
                     let row = {};
                     cells.forEach((cell, idx) => {
@@ -861,21 +973,18 @@
                     const sertifikasiVal = getVal(["sertifikasi", "serdik", "sertifikasi_guru"]);
                     const aktifVal = getVal(["status_keaktifan", "keaktifan", "aktif", "status_aktif"]);
 
-                    // NORMALISASI DATA JENIS GENDER
                     let normalizedGender = "P";
                     const rawGender = genderVal.trim().toUpperCase();
                     if (rawGender.startsWith("L") || rawGender === "LAKI-LAKI" || rawGender === "LAKI LAKI" || rawGender === "MALE") {
                         normalizedGender = "L";
                     }
 
-                    // NORMALISASI DATA SERTIFIKASI
                     let normalizedSertifikasi = "Belum";
                     const rawSertif = sertifikasiVal.trim().toUpperCase();
                     if (rawSertif.startsWith("SUD") || rawSertif === "YA" || rawSertif === "SUDAH") {
                         normalizedSertifikasi = "Sudah";
                     }
 
-                    // NORMALISASI STATUS KEAKTIFAN
                     let normalizedAktif = "Aktif";
                     const rawAktif = aktifVal.trim().toUpperCase();
                     if (rawAktif.startsWith("TID") || rawAktif === "NON" || rawAktif === "TIDAK AKTIF") {
@@ -884,11 +993,11 @@
 
                     if (namaVal) {
                         tempArray.push({
-                            npa: npaVal.replace(/\s+/g, ''), // Bersihkan spasi tersembunyi pada NPA
-                            nama: formatNameWithDegrees(namaVal), // Terapkan EYD otomatis dengan pemisahan gelar yang sempurna
-                            ranting: formatToEYD(rantingVal), // Terapkan EYD otomatis pada nama ranting
-                            ttl: formatToEYD(ttlVal), // Terapkan EYD otomatis pada tempat tanggal lahir
-                            unit: formatToEYD(unitVal), // Terapkan EYD otomatis pada unit kerja sekolah
+                            npa: npaVal.replace(/\s+/g, ''), 
+                            nama: formatNameWithDegrees(namaVal), 
+                            ranting: formatToEYD(rantingVal), 
+                            ttl: formatToEYD(ttlVal), 
+                            unit: formatToEYD(unitVal), 
                             pendidikan: pendidikanVal.trim(), 
                             status: statusVal,
                             gender: normalizedGender,
@@ -899,7 +1008,6 @@
                 }
 
                 if (tempArray.length > 0) {
-                    // SINKRONISASI DATABASE LOKAL
                     MASTER_DATA_ANGGOTA = applyLocalDatabaseModifications(tempArray);
                     console.log("Database Google Sheets Berhasil Dimuat & Disinkronkan!", MASTER_DATA_ANGGOTA);
                     updateCloudStatus("synced");
@@ -923,6 +1031,8 @@
             if (savedSession) {
                 try {
                     currentUser = JSON.parse(savedSession);
+                    // Ambil kustomisasi profil lokal jika ada
+                    applyCustomProfile(currentUser.username);
                     showDashboard(currentUser);
                     console.log("Sesi login berhasil dipulihkan secara otomatis!");
                 } catch (e) {
@@ -931,12 +1041,49 @@
             }
         };
 
+        // MEMBACA DAN MENERAPKAN KUSTOMISASI PROFIL ADMIN SECARA PERMANEN
+        function applyCustomProfile(username) {
+            const customData = localStorage.getItem("pgri_profile_custom_" + username);
+            if (customData) {
+                try {
+                    const profile = JSON.parse(customData);
+                    
+                    // Update sesi aktif memori
+                    if (USER_ACCOUNTS[username]) {
+                        USER_ACCOUNTS[username].name = profile.name;
+                        USER_ACCOUNTS[username].password = profile.password;
+                    }
+                    if (currentUser && currentUser.username === username) {
+                        currentUser.name = profile.name;
+                    }
+                    
+                    // Update Tampilan DOM Foto & Nama
+                    document.getElementById("user-display-name").textContent = profile.name;
+                    document.getElementById("welcome-name").textContent = profile.name;
+                    
+                    if (profile.avatar) {
+                        document.getElementById("header-avatar").src = profile.avatar;
+                        document.getElementById("banner-avatar").src = profile.avatar;
+                    }
+                } catch (e) {
+                    console.error("Gagal memulihkan kustomisasi profil.", e);
+                }
+            } else {
+                // Reset ke default jika tidak ada kustomisasi
+                document.getElementById("header-avatar").src = "https://api.dicebear.com/7.x/bottts/svg?seed=" + username;
+                document.getElementById("banner-avatar").src = "https://api.dicebear.com/7.x/bottts/svg?seed=" + username;
+            }
+        }
+
         function handleLogin(event) {
             event.preventDefault();
             const usernameInput = document.getElementById("username").value.trim().toLowerCase();
             const passwordInput = document.getElementById("password").value;
             const errorDiv = document.getElementById("login-error");
             const errorText = document.getElementById("error-text");
+
+            // Ambil kustomisasi profil lokal sebelum memproses pengecekan password
+            applyCustomProfile(usernameInput);
 
             if (USER_ACCOUNTS[usernameInput]) {
                 const account = USER_ACCOUNTS[usernameInput];
@@ -995,15 +1142,21 @@
                 adminSelectedRanting = user.ranting;
             }
 
+            // Pastikan avatar terupdate sesuai profil tersimpan
+            applyCustomProfile(user.username);
+
             window.scrollTo({ top: 0, behavior: 'smooth' });
 
-            currentFilterType = 'all';
-            currentFilterValue = null;
+            activeFilters.gender = null;
+            activeFilters.status = null;
+            activeFilters.sertifikasi = null;
 
             renderDashboardData();
         }
 
         function handleLogout() {
+            // Matikan kamera jika modal profil ditutup saat kamera masih streaming
+            stopCameraStream();
             localStorage.removeItem("pgri_session");
             currentUser = null;
             document.getElementById("login-form").reset();
@@ -1014,8 +1167,9 @@
         // Khusus Super Admin: Berubah Ranting yang Disorot
         function changeAdminRantingFilter() {
             adminSelectedRanting = document.getElementById("admin-ranting-selector").value;
-            currentFilterType = 'all';
-            currentFilterValue = null;
+            activeFilters.gender = null;
+            activeFilters.status = null;
+            activeFilters.sertifikasi = null;
             renderDashboardData();
         }
 
@@ -1027,7 +1181,7 @@
             
             listContainer.innerHTML = "";
             
-            const currentYear = 2026; // Batas tahun berjalan sesuai timeline context
+            const currentYear = 2026; 
             const retiringTeachers = [];
             
             const shortToFull = {
@@ -1041,26 +1195,21 @@
             dataList.forEach(member => {
                 if (!member.ttl) return;
                 
-                // Cari kecocokan 4 digit angka tahun lahir
                 const matchYear = member.ttl.match(/\b(19[5-9]\d)\b/);
                 if (matchYear) {
                     const birthYear = parseInt(matchYear[1]);
                     const pensionYear = birthYear + 60;
                     
-                    // Seleksi: Guru yang akan pensiun tepat tahun ini (2026) atau tahun depan (2027)
                     if (pensionYear === currentYear || pensionYear === currentYear + 1) {
-                        // 🚨 PARSING BULAN LAHIR SECARA SPESIFIK 🚨
                         let birthMonth = "";
                         const ttlLower = member.ttl.toLowerCase();
                         
-                        // Cari bulan penuh dahulu
                         for (let m of monthNames) {
                             if (ttlLower.includes(m.toLowerCase())) {
                                 birthMonth = m;
                                 break;
                             }
                         }
-                        // Jika tidak ada, cari versi singkatan
                         if (!birthMonth) {
                             for (let short in shortToFull) {
                                 if (ttlLower.includes(short)) {
@@ -1070,7 +1219,7 @@
                             }
                         }
                         
-                        if (!birthMonth) birthMonth = "Bulan Lahir"; // fallback aman
+                        if (!birthMonth) birthMonth = "Bulan Lahir"; 
 
                         retiringTeachers.push({
                             ...member,
@@ -1083,7 +1232,6 @@
                 }
             });
 
-            // Urutkan berdasarkan waktu pensiun terdekat (tahun pensiun lalu bulan pensiun)
             retiringTeachers.sort((a, b) => {
                 if (a.pensionYear !== b.pensionYear) {
                     return a.pensionYear - b.pensionYear;
@@ -1126,7 +1274,6 @@
         function renderDashboardData() {
             if (!currentUser) return;
 
-            // Dapatkan scope data berdasarkan hak akses login atau seleksi Super Admin
             const activeData = getScopedData();
 
             const total = activeData.length;
@@ -1137,7 +1284,6 @@
             const totalPPPK = activeData.filter(item => item.status === "PPPK").length;
             const totalPPPKPW = activeData.filter(item => item.status === "PPPK Paruh Waktu").length;
             
-            // Logika: Gabungkan hitungan Honorer, GTY, dan GTT untuk Statistik Utama
             const totalHonorerGroup = activeData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status)).length;
             
             const totalPensiun = activeData.filter(item => item.status === "Pensiunan").length;
@@ -1164,24 +1310,10 @@
             applyFiltersAndRenderTable();
         }
 
-        // Pembantu untuk mendapatkan data sesuai scope login aktif
-        function getScopedData() {
-            if (currentUser.username === "admincabang") {
-                if (adminSelectedRanting === "Semua Ranting") {
-                    return MASTER_DATA_ANGGOTA;
-                } else {
-                    return MASTER_DATA_ANGGOTA.filter(item => item.ranting === adminSelectedRanting);
-                }
-            } else {
-                return MASTER_DATA_ANGGOTA.filter(item => item.ranting === currentUser.ranting);
-            }
-        }
-
-        function setFilter(filterCode) {
+        function updateFilterUI() {
             const cards = ["card-total", "card-pns", "card-pppk", "card-pppk-pw", "card-honorer", "card-pensiun", "card-sertifikasi"];
             const leds = ["led-total", "led-pns", "led-pppk", "led-pppk-pw", "led-honorer", "led-pensiun", "led-sertifikasi"];
             
-            // Reset semua glow dan led
             cards.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) {
@@ -1203,7 +1335,6 @@
                 if (el) el.classList.add("hidden");
             });
 
-            // Reset gaya tombol saku L & P ke default
             const btnL = document.getElementById("btn-gender-l");
             const btnP = document.getElementById("btn-gender-p");
             if (btnL) {
@@ -1213,82 +1344,90 @@
                 btnP.className = "smooth-transition text-[9px] font-extrabold bg-pink-50 text-pink-700 border border-pink-100/50 px-1.5 py-1 rounded-lg flex items-center gap-0.5 hover:bg-pink-500 hover:text-white cursor-pointer";
             }
 
-            if (filterCode === 'all') {
-                currentFilterType = 'all';
-                currentFilterValue = null;
-                document.getElementById("card-total").classList.add(
-                    "ring-4", 
-                    "ring-red-500/15", 
-                    "border-red-500", 
-                    "scale-[1.01]"
-                );
-                document.getElementById("led-total").classList.remove("hidden");
-            } else {
-                const parts = filterCode.split('_');
-                currentFilterType = parts[0];
-                currentFilterValue = parts[1];
+            let anyFilterActive = false;
 
+            if (activeFilters.status) {
+                anyFilterActive = true;
                 let cardId = "";
                 let ledId = "";
-                if (parts[0] === 'status') {
-                    if (parts[1] === 'PNS') { cardId = "card-pns"; ledId = "led-pns"; }
-                    if (parts[1] === 'PPPK') { cardId = "card-pppk"; ledId = "led-pppk"; }
-                    if (parts[1] === 'PPPK Paruh Waktu') { cardId = "card-pppk-pw"; ledId = "led-pppk-pw"; }
-                    if (parts[1] === 'Honorer/GTY/GTT') { cardId = "card-honorer"; ledId = "led-honorer"; }
-                    if (parts[1] === 'Pensiunan') { cardId = "card-pensiun"; ledId = "led-pensiun"; }
-                } else if (parts[0] === 'sertifikasi') {
-                    cardId = "card-sertifikasi";
-                    ledId = "led-sertifikasi";
-                } else if (parts[0] === 'gender') {
-                    cardId = "card-total";
-                    ledId = "led-total";
-                    // Aktifkan gaya active-state pada tombol saku yang terpilih
-                    if (parts[1] === 'L' && btnL) {
-                        btnL.className = "smooth-transition text-[9px] font-extrabold bg-sky-500 text-white border border-sky-500 px-1.5 py-1 rounded-lg flex items-center gap-0.5 cursor-pointer shadow-sm shadow-sky-100";
-                    } else if (parts[1] === 'P' && btnP) {
-                        btnP.className = "smooth-transition text-[9px] font-extrabold bg-pink-500 text-white border border-pink-500 px-1.5 py-1 rounded-lg flex items-center gap-0.5 cursor-pointer shadow-sm shadow-pink-100";
-                    }
-                }
+                if (activeFilters.status === 'PNS') { cardId = "card-pns"; ledId = "led-pns"; }
+                else if (activeFilters.status === 'PPPK') { cardId = "card-pppk"; ledId = "led-pppk"; }
+                else if (activeFilters.status === 'PPPK Paruh Waktu') { cardId = "card-pppk-pw"; ledId = "led-pppk-pw"; }
+                else if (activeFilters.status === 'Honorer/GTY/GTT') { cardId = "card-honorer"; ledId = "led-honorer"; }
+                else if (activeFilters.status === 'Pensiunan') { cardId = "card-pensiun"; ledId = "led-pensiun"; }
 
                 if (cardId) {
-                    const activeCard = document.getElementById(cardId);
-                    activeCard.classList.add(
-                        "ring-4", 
-                        "ring-red-500/15", 
-                        "border-red-500", 
-                        "bg-gradient-to-br", 
-                        "from-red-50/40", 
-                        "to-rose-50/40", 
-                        "scale-[1.01]"
-                    );
+                    document.getElementById(cardId).classList.add("ring-4", "ring-red-500/15", "border-red-500", "scale-[1.01]");
+                    document.getElementById(ledId).classList.remove("hidden");
                 }
-                if (ledId) {
-                    const activeLed = document.getElementById(ledId);
-                    if (activeLed) activeLed.classList.remove("hidden");
+            }
+
+            if (activeFilters.sertifikasi) {
+                anyFilterActive = true;
+                document.getElementById("card-sertifikasi").classList.add("ring-4", "ring-red-500/15", "border-red-500", "scale-[1.01]");
+                document.getElementById("led-sertifikasi").classList.remove("hidden");
+            }
+
+            if (activeFilters.gender) {
+                anyFilterActive = true;
+                document.getElementById("card-total").classList.add("ring-4", "ring-red-500/15", "border-red-500", "scale-[1.01]");
+                document.getElementById("led-total").classList.remove("hidden");
+                
+                if (activeFilters.gender === 'L' && btnL) {
+                    btnL.className = "smooth-transition text-[9px] font-extrabold bg-sky-500 text-white border border-sky-500 px-1.5 py-1 rounded-lg flex items-center gap-0.5 cursor-pointer shadow-sm shadow-sky-100";
+                } else if (activeFilters.gender === 'P' && btnP) {
+                    btnP.className = "smooth-transition text-[9px] font-extrabold bg-pink-500 text-white border border-pink-500 px-1.5 py-1 rounded-lg flex items-center gap-0.5 cursor-pointer shadow-sm shadow-pink-100";
                 }
+            }
+
+            if (!anyFilterActive) {
+                document.getElementById("card-total").classList.add("ring-4", "ring-red-500/15", "border-red-500", "scale-[1.01]");
+                document.getElementById("led-total").classList.remove("hidden");
             }
 
             const btnReset = document.getElementById("btn-reset-filter");
             const filterBadge = document.getElementById("active-filter-badge");
 
-            if (currentFilterType !== 'all') {
+            if (anyFilterActive) {
                 btnReset.classList.remove("hidden");
                 filterBadge.classList.remove("hidden");
                 
-                let label = currentFilterValue;
-                if (currentFilterType === 'gender') {
-                    label = currentFilterValue === 'L' ? 'Laki-laki' : 'Perempuan';
-                } else if (currentFilterType === 'sertifikasi') {
-                    label = 'Telah Sertifikasi';
-                } else if (currentFilterValue === 'Honorer/GTY/GTT') {
-                    label = 'Honorer/GTT/GTY';
+                let labels = [];
+                if (activeFilters.gender) labels.push(activeFilters.gender === 'L' ? 'Laki-laki' : 'Perempuan');
+                if (activeFilters.status) {
+                    let sLabel = activeFilters.status;
+                    if (sLabel === 'Honorer/GTY/GTT') sLabel = 'Honorer/GTT/GTY';
+                    labels.push(sLabel);
                 }
-                filterBadge.textContent = label;
+                if (activeFilters.sertifikasi) labels.push('Sertifikasi');
+                
+                filterBadge.textContent = labels.join(" + ");
             } else {
                 btnReset.classList.add("hidden");
                 filterBadge.classList.add("hidden");
             }
+        }
 
+        function setFilter(filterCode) {
+            if (filterCode === 'all') {
+                activeFilters.gender = null;
+                activeFilters.status = null;
+                activeFilters.sertifikasi = null;
+            } else {
+                const parts = filterCode.split('_');
+                const type = parts[0]; 
+                const value = parts[1];
+
+                if (type === 'gender') {
+                    activeFilters.gender = (activeFilters.gender === value) ? null : value;
+                } else if (type === 'status') {
+                    activeFilters.status = (activeFilters.status === value) ? null : value;
+                } else if (type === 'sertifikasi') {
+                    activeFilters.sertifikasi = (activeFilters.sertifikasi === value) ? null : value;
+                }
+            }
+
+            updateFilterUI();
             document.getElementById("table-search").value = "";
             applyFiltersAndRenderTable();
         }
@@ -1299,19 +1438,20 @@
 
         function applyFiltersAndRenderTable() {
             if (!currentUser) return;
-
             let finalData = getScopedData();
 
-            if (currentFilterType === 'status') {
-                if (currentFilterValue === 'Honorer/GTY/GTT') {
+            if (activeFilters.gender) {
+                finalData = finalData.filter(item => item.gender === activeFilters.gender);
+            }
+            if (activeFilters.status) {
+                if (activeFilters.status === 'Honorer/GTY/GTT') {
                     finalData = finalData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status));
                 } else {
-                    finalData = finalData.filter(item => item.status === currentFilterValue);
+                    finalData = finalData.filter(item => item.status === activeFilters.status);
                 }
-            } else if (currentFilterType === 'gender') {
-                finalData = finalData.filter(item => item.gender === currentFilterValue);
-            } else if (currentFilterType === 'sertifikasi') {
-                finalData = finalData.filter(item => item.sertifikasi === currentFilterValue);
+            }
+            if (activeFilters.sertifikasi) {
+                finalData = finalData.filter(item => item.sertifikasi === activeFilters.sertifikasi);
             }
 
             renderTableData(finalData);
@@ -1323,16 +1463,18 @@
             const query = document.getElementById("table-search").value.trim().toLowerCase();
             let baseData = getScopedData();
 
-            if (currentFilterType === 'status') {
-                if (currentFilterValue === 'Honorer/GTY/GTT') {
+            if (activeFilters.gender) {
+                baseData = baseData.filter(item => item.gender === activeFilters.gender);
+            }
+            if (activeFilters.status) {
+                if (activeFilters.status === 'Honorer/GTY/GTT') {
                     baseData = baseData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status));
                 } else {
-                    baseData = baseData.filter(item => item.status === currentFilterValue);
+                    baseData = baseData.filter(item => item.status === activeFilters.status);
                 }
-            } else if (currentFilterType === 'gender') {
-                baseData = baseData.filter(item => item.gender === currentFilterValue);
-            } else if (currentFilterType === 'sertifikasi') {
-                baseData = baseData.filter(item => item.sertifikasi === currentFilterValue);
+            }
+            if (activeFilters.sertifikasi) {
+                baseData = baseData.filter(item => item.sertifikasi === activeFilters.sertifikasi);
             }
 
             const searchFiltered = baseData.filter(item => {
@@ -1365,7 +1507,7 @@
                 emptyState.classList.add("hidden");
             }
 
-            // 🚨 SINKRONISASI ALFABET: Urutkan data berdasarkan nama secara alfabetis (A-Z) sebelum dirender 🚨
+            // SINKRONISASI ALFABET: Urutkan data berdasarkan nama secara alfabetis (A-Z) sebelum dirender
             const sortedData = [...data].sort((a, b) => {
                 return String(a.nama).localeCompare(String(b.nama), 'id', { sensitivity: 'base' });
             });
@@ -1406,7 +1548,7 @@
                     : `<span class="text-pink-600 font-semibold inline-flex items-center gap-1 text-[11px]"><i class="fa-solid fa-venus"></i> Perempuan</span>`;
 
                 const serdikIndicator = member.sertifikasi === "Sudah"
-                    ? `<span class="bg-teal-100 text-teal-800 text-[8px] font-extrabold px-1 py-0.5 rounded ml-1.5 inline-flex items-center gap-0.5" title="Sertifikasi Aktif"><i class="fa-solid fa-circle-check text-[9px]"></i> SERDIK</span>`
+                    ? `<span class="bg-teal-100 text-teal-800 text-[8px] font-extrabold px-1 py-0.5 rounded ml-1.5 inline-flex items-center gap-0.5" title="Sertifikasi Hack"><i class="fa-solid fa-circle-check text-[9px]"></i> SERDIK</span>`
                     : ``;
 
                 const activeBadge = member.aktif === "Aktif"
@@ -1427,8 +1569,8 @@
                     <td class="py-2.5 px-4">${activeBadge}</td>
                     <td class="py-2.5 px-4 text-center">
                         <div class="flex items-center justify-center gap-1.5">
-                            <!-- Detail/Info Button (Mendukung modal detail EYD lengkap) -->
-                            <button onclick="openDetailModal('${memberEscaped}')" class="text-slate-500 hover:text-red-650 bg-slate-100 hover:bg-red-50 p-1.5 rounded-lg transition-all" title="Detail Anggota">
+                            <!-- Detail Button -->
+                            <button onclick="openDetailModal('${memberEscaped}')" class="text-slate-500 hover:text-red-655 bg-slate-100 hover:bg-red-50 p-1.5 rounded-lg transition-all" title="Detail Anggota">
                                 <i class="fa-solid fa-circle-info text-xs"></i>
                             </button>
                             <!-- Edit Button -->
@@ -1484,9 +1626,284 @@
             document.body.style.overflow = "auto";
         }
 
-        // =========================================================================
-        // 🚨 SINKRONISASI DATABASE LOKAL (CRUD DENGAN LOCAL STORAGE SINKRON) 🚨
-        // =========================================================================
+        // ==========================================
+        // 🚨 CONFIGURASI UTAMA MODAL PROFIL ADMIN 🚨
+        // ==========================================
+
+        function openProfileModal() {
+            if (!currentUser) return;
+            const u = currentUser.username;
+            const account = USER_ACCOUNTS[u];
+
+            document.getElementById("profile-username").value = u;
+            document.getElementById("profile-display-name").value = account.name;
+            document.getElementById("profile-password").value = account.password;
+
+            // Load kustomisasi foto profil saat ini ke dalam modal
+            const customData = localStorage.getItem("pgri_profile_custom_" + u);
+            if (customData) {
+                const parsed = JSON.parse(customData);
+                if (parsed.avatar) {
+                    document.getElementById("profile-modal-avatar").src = parsed.avatar;
+                }
+            } else {
+                document.getElementById("profile-modal-avatar").src = "https://api.dicebear.com/7.x/bottts/svg?seed=" + u;
+            }
+
+            const modal = document.getElementById("profile-settings-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeProfileModal() {
+            stopCameraStream();
+            const modal = document.getElementById("profile-settings-modal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+            document.body.style.overflow = "auto";
+        }
+
+        function toggleProfilePasswordView() {
+            const pwd = document.getElementById("profile-password");
+            const icon = document.getElementById("profile-pwd-toggle-icon");
+            if (pwd.type === "password") {
+                pwd.type = "text";
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                pwd.type = "password";
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+
+        // UNGGAH FOTO PROFIL VIA FILE INPUT
+        function handleProfileFileSelect(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    // Kompresi data gambar Base64
+                    document.getElementById("profile-modal-avatar").src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // AKSES KAMERA DAN JEPRET LANGSUNG (PERANGKAT DESKTOP / HP)
+        function toggleCameraStream() {
+            const container = document.getElementById("camera-stream-container");
+            const video = document.getElementById("camera-video");
+
+            if (container.classList.contains("hidden")) {
+                // Hidupkan Kamera Stream
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: "user" }, audio: false })
+                    .then(stream => {
+                        cameraStream = stream;
+                        video.srcObject = stream;
+                        container.classList.remove("hidden");
+                        showToast("Kamera berhasil diaktifkan!");
+                    })
+                    .catch(err => {
+                        console.error("Gagal membuka kamera perangkat.", err);
+                        showToast("Error: Gagal mengakses kamera perangkat.");
+                    });
+            } else {
+                stopCameraStream();
+            }
+        }
+
+        function stopCameraStream() {
+            const container = document.getElementById("camera-stream-container");
+            if (cameraStream) {
+                cameraStream.getTracks().forEach(track => track.stop());
+                cameraStream = null;
+            }
+            if (container) container.classList.add("hidden");
+        }
+
+        function captureFromCamera() {
+            const video = document.getElementById("camera-video");
+            const avatar = document.getElementById("profile-modal-avatar");
+            
+            if (video.srcObject) {
+                const canvas = document.createElement("canvas");
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                const ctx = canvas.getContext("2d");
+                
+                // Mirroring effect untuk selfie kamera
+                ctx.translate(canvas.width, 0);
+                ctx.scale(-1, 1);
+                
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                
+                // Konversi kanvas ke Base64 Data URL
+                const dataUrl = canvas.toDataURL("image/jpeg", 0.8);
+                avatar.src = dataUrl;
+                
+                stopCameraStream();
+                showToast("Foto berhasil dijepret!");
+            }
+        }
+
+        // SIMPAN DATA PROFIL PERMANEN KE LOCAL STORAGE
+        function saveProfileChanges() {
+            const u = currentUser.username;
+            const newName = document.getElementById("profile-display-name").value.trim();
+            const newPassword = document.getElementById("profile-password").value.trim();
+            const avatarBase64 = document.getElementById("profile-modal-avatar").src;
+
+            if (!newName || !newPassword) {
+                showToast("Error: Nama & password tidak boleh kosong!");
+                return;
+            }
+
+            const profileObj = {
+                name: newName,
+                password: newPassword,
+                avatar: avatarBase64
+            };
+
+            // Simpan ke brankas localStorage permanen
+            localStorage.setItem("pgri_profile_custom_" + u, JSON.stringify(profileObj));
+
+            // Terapkan perubahan instan pada dashboard
+            applyCustomProfile(u);
+            
+            showToast("Sukses: Pengaturan profil Berhasil disimpan!");
+            closeProfileModal();
+        }
+
+        // ==========================================
+        // 🚨 EKSPOR EXCEL FORMAT ASLI (.XLS SHEET WORKBOOK) 🚨
+        // ==========================================
+        
+        function exportDataExcel() {
+            if (!currentUser) return;
+            const rantingAktif = currentUser.username === "admincabang" ? adminSelectedRanting : currentUser.ranting;
+            
+            const query = document.getElementById("table-search").value.trim().toLowerCase();
+            let baseData = getScopedData();
+            
+            // Terapkan Filter Aktif saat Ekspor
+            if (activeFilters.gender) baseData = baseData.filter(item => item.gender === activeFilters.gender);
+            if (activeFilters.status) {
+                if (activeFilters.status === 'Honorer/GTY/GTT') {
+                    baseData = baseData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status));
+                } else {
+                    baseData = baseData.filter(item => item.status === activeFilters.status);
+                }
+            }
+            if (activeFilters.sertifikasi) baseData = baseData.filter(item => item.sertifikasi === activeFilters.sertifikasi);
+
+            const currentFilteredData = baseData.filter(item => {
+                return item.nama.toLowerCase().includes(query) || 
+                       item.npa.toLowerCase().includes(query) || 
+                       item.unit.toLowerCase().includes(query) || 
+                       item.status.toLowerCase().includes(query);
+            });
+
+            // Urutkan data secara alfabetis (A-Z) sesuai standar EYD kita
+            const sortedExportData = [...currentFilteredData].sort((a, b) => {
+                return String(a.nama).localeCompare(String(b.nama), 'id', { sensitivity: 'base' });
+            });
+
+            // JUDUL DAN FILE NAME
+            let filename = `Rekap_Anggota_PGRI_${rantingAktif.replace(/ /g, "_")}`;
+            let tabName = rantingAktif.length > 30 ? rantingAktif.substring(0, 30) : rantingAktif;
+
+            // Rancang Struktur XML/HTML Workbook agar langsung terbuka di Excel
+            let excelTemplate = `
+                <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+                <head>
+                    <!--[if gte mso 9]>
+                    <xml>
+                        <x:ExcelWorkbook>
+                            <x:ExcelWorksheets>
+                                <x:ExcelWorksheet>
+                                    <x:Name>${tabName}</x:Name>
+                                    <x:WorksheetOptions>
+                                        <x:DisplayGridlines/>
+                                    </x:WorksheetOptions>
+                                </x:ExcelWorksheet>
+                            </x:ExcelWorksheets>
+                        </x:ExcelWorkbook>
+                    </xml>
+                    <![endif]-->
+                    <meta charset="UTF-8">
+                    <style>
+                        table { border-collapse: collapse; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 11pt; }
+                        th { background-color: #be123c; color: #ffffff; font-weight: bold; text-align: left; padding: 8px; border: 1px solid #e2e8f0; }
+                        td { padding: 6px 8px; border: 1px solid #e2e8f0; }
+                        .text-center { text-align: center; }
+                        .title-cell { font-size: 16pt; font-weight: bold; text-align: center; color: #0f172a; }
+                        .subtitle-cell { font-size: 10pt; font-style: italic; text-align: center; color: #64748b; }
+                    </style>
+                </head>
+                <body>
+                    <table>
+                        <tr><td colspan="9" class="title-cell">LAPORAN DATA BASE ANGGOTA PGRI CABANG SAMARANG</td></tr>
+                        <tr><td colspan="9" class="subtitle-cell">Cakupan Wilayah: ${rantingAktif} | Sesi Ekspor: 2026</td></tr>
+                        <tr><td colspan="9"></td></tr>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>NPA</th>
+                                <th>Nama Lengkap</th>
+                                <th>Tempat, Tanggal Lahir</th>
+                                <th>Unit Kerja / Sekolah</th>
+                                <th>Pendidikan Terakhir</th>
+                                <th>Status Pegawai</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Keaktifan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+            `;
+
+            sortedExportData.forEach((row, index) => {
+                let statusLabel = row.status;
+                if (row.status === "GTY") statusLabel = "GTY (Guru Tetap Yayasan)";
+                if (row.status === "GTT") statusLabel = "GTT (Guru Tidak Tetap)";
+
+                excelTemplate += `
+                    <tr>
+                        <td class="text-center">${index + 1}</td>
+                        <td style="mso-number-format:'@';">${row.npa}</td>
+                        <td>${row.nama}</td>
+                        <td>${row.ttl || '-'}</td>
+                        <td>${row.unit}</td>
+                        <td class="text-center">${row.pendidikan || '-'}</td>
+                        <td>${statusLabel}</td>
+                        <td class="text-center">${row.gender === 'L' ? 'Laki-laki' : 'Perempuan'}</td>
+                        <td class="text-center">${row.aktif}</td>
+                    </tr>
+                `;
+            });
+
+            excelTemplate += `
+                        </tbody>
+                    </table>
+                </body>
+                </html>
+            `;
+
+            // Proses Unduhan Berkas xls
+            const blob = new Blob([excelTemplate], { type: "application/vnd.ms-excel" });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `${filename}.xls`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            showToast("Sukses: File Excel (.xls) berhasil diekspor!");
+        }
+
+        // ==========================================
+        // SINKRONISASI DATABASE LOKAL
+        // ==========================================
         
         // Membaca daftar modifikasi lokal dari localStorage
         function getLocalAddedMembers() {
@@ -1601,72 +2018,6 @@
         // 🛠️ CRUD OPERATIONS LOGIC
         // ==========================================
 
-        function showToast(message) {
-            const toast = document.getElementById("toast-success");
-            const toastMsg = document.getElementById("toast-message");
-            toastMsg.textContent = message;
-
-            toast.classList.remove("hidden");
-            setTimeout(() => {
-                toast.classList.remove("translate-y-10", "opacity-0");
-            }, 50);
-
-            setTimeout(() => {
-                toast.classList.add("translate-y-10", "opacity-0");
-                setTimeout(() => {
-                    toast.classList.add("hidden");
-                }, 300);
-            }, 3000);
-        }
-
-        function openAddModal() {
-            document.getElementById("form-modal-title").textContent = "Tambah Anggota Baru";
-            document.getElementById("member-form").reset();
-            document.getElementById("form-orig-npa").value = "";
-            document.getElementById("form-npa").disabled = false;
-
-            populateFormRantingOptions();
-
-            const modal = document.getElementById("member-form-modal");
-            modal.classList.remove("hidden");
-            modal.classList.add("flex");
-            document.body.style.overflow = "hidden";
-        }
-
-        function openEditModal(npa) {
-            const member = MASTER_DATA_ANGGOTA.find(m => m.npa === npa);
-            if (!member) return;
-
-            document.getElementById("form-modal-title").textContent = "Edit Data Anggota";
-            document.getElementById("form-orig-npa").value = member.npa;
-            
-            document.getElementById("form-npa").value = member.npa;
-            document.getElementById("form-nama").value = member.nama;
-            document.getElementById("form-ttl").value = member.ttl;
-            document.getElementById("form-unit").value = member.unit;
-            document.getElementById("form-pendidikan").value = member.pendidikan;
-            document.getElementById("form-status").value = member.status;
-            document.getElementById("form-gender").value = member.gender;
-            document.getElementById("form-sertifikasi").value = member.sertifikasi;
-            document.getElementById("form-aktif").value = member.aktif;
-
-            populateFormRantingOptions(member.ranting);
-
-            document.getElementById("form-npa").disabled = false;
-
-            const modal = document.getElementById("member-form-modal");
-            modal.classList.remove("hidden");
-            modal.classList.add("flex");
-            document.body.style.overflow = "hidden";
-        }
-
-        function closeMemberFormModal() {
-            const modal = document.getElementById("member-form-modal");
-            modal.classList.add("hidden");
-            modal.classList.remove("flex");
-            document.body.style.overflow = "auto";
-        }
-
         function populateFormRantingOptions(selectedRanting = "") {
             const selector = document.getElementById("form-ranting");
             selector.innerHTML = "";
@@ -1695,7 +2046,6 @@
 
             const origNpa = document.getElementById("form-orig-npa").value;
             const newNpa = document.getElementById("form-npa").value.trim().replace(/\s+/g, '');
-            // Terapkan standardisasi penulisan EYD & Gelar Akademik langsung saat penyimpanan data
             const nama = formatNameWithDegrees(document.getElementById("form-nama").value);
             const ranting = formatToEYD(document.getElementById("form-ranting").value);
             const ttl = formatToEYD(document.getElementById("form-ttl").value);
@@ -1722,7 +2072,6 @@
             let actionType = "add";
 
             if (origNpa) {
-                // Aksi EDIT/UPDATE
                 actionType = "update";
                 const addedIndex = localAdded.findIndex(m => m.npa === origNpa);
                 if (addedIndex !== -1) {
@@ -1737,20 +2086,16 @@
                 }
                 showToast("Sukses: Data " + nama + " berhasil diperbarui!");
             } else {
-                // Aksi TAMBAH BARU
                 actionType = "add";
                 localAdded.unshift(memberObj);
                 showToast("Sukses: " + nama + " berhasil ditambahkan!");
             }
 
-            // 1. Amankan perubahan di LocalStorage
             saveLocalAddedMembers(localAdded);
             saveLocalUpdatedMembers(localUpdated);
 
-            // 2. Kirim transaksi perubahan data ke Cloud Google Drive Sheets secara Background
             syncTransactionToCloud(actionType, memberObj);
 
-            // Re-merge data untuk ditampilkan
             refreshMasterDatabaseLocal();
             closeMemberFormModal();
             renderDashboardData();
@@ -1780,7 +2125,6 @@
             let localUpdated = getLocalUpdatedMembers();
             let localDeleted = getLocalDeletedNpas();
 
-            // Simpan objek data untuk kebutuhan log payload API
             const memberObjToDelete = MASTER_DATA_ANGGOTA.find(m => m.npa === npa) || { npa: npa };
 
             const addedIdx = localAdded.findIndex(m => m.npa === npa);
@@ -1800,8 +2144,6 @@
             }
 
             showToast("Sukses: Data anggota berhasil dihapus!");
-
-            // Kirim perintah Hapus ke Cloud API Google Sheets
             syncTransactionToCloud("delete", memberObjToDelete);
             
             refreshMasterDatabaseLocal();
@@ -1820,7 +2162,6 @@
                 { nama: "Yuni Kartika, S.Pd.", npa: "10190700004", ranting: "Ranting Sukarasa", ttl: "Garut, 18 Juni 1995", unit: "SMPN 3 Samarang", pendidikan: "S1 Pend. Bahasa Inggris", status: "GTT", gender: "P", sertifikasi: "Belum", aktif: "Aktif" }
             ];
             
-            // Konversikan data statis lokal ke EYD sebagai cadangan
             baseData = baseData.map(m => {
                 return {
                     ...m,
@@ -1837,10 +2178,6 @@
                 MASTER_DATA_ANGGOTA = applyLocalDatabaseModifications(baseData);
             }
         }
-
-        // ==========================================
-        // END OF CODE OPERATIONS LOGIC
-        // ==========================================
 
         function renderKepegawaianChart(pns, pppk, pppk_pw, honorerGroup, pensiun) {
             const ctx = document.getElementById('chartKepegawaian').getContext('2d');
@@ -1976,76 +2313,6 @@
                     cutout: '72%'
                 }
             });
-        }
-
-        // EKSPOR DATA KE CSV (MENGEKSPOR STATUS ASLI: Honorer, GTY, GTT)
-        function exportData() {
-            if (!currentUser) return;
-            const rantingAktif = currentUser.username === "admincabang" ? adminSelectedRanting : currentUser.ranting;
-            
-            const query = document.getElementById("table-search").value.trim().toLowerCase();
-            let baseData = getScopedData();
-            
-            if (currentFilterType === 'status') {
-                if (currentFilterValue === 'Honorer/GTY/GTT') {
-                    baseData = baseData.filter(item => ["Honorer", "GTY", "GTT"].includes(item.status));
-                } else {
-                    baseData = baseData.filter(item => item.status === currentFilterValue);
-                }
-            } else if (currentFilterType === 'gender') {
-                baseData = baseData.filter(item => item.gender === currentFilterValue);
-            } else if (currentFilterType === 'sertifikasi') {
-                baseData = baseData.filter(item => item.sertifikasi === currentFilterValue);
-            }
-
-            const currentFilteredData = baseData.filter(item => {
-                return item.nama.toLowerCase().includes(query) || 
-                       item.npa.toLowerCase().includes(query) || 
-                       item.unit.toLowerCase().includes(query) || 
-                       item.status.toLowerCase().includes(query);
-            });
-
-            let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "No,NPA,Nama Lengkap,Ranting,Tempat Tanggal Lahir,Unit Kerja,Pendidikan Terakhir,Status Pegawai,Jenis Kelamin,Sertifikasi,Status Keaktifan\r\n";
-
-            // 🚨 Pastikan saat ekspor juga terurut secara alfabetis (A-Z) 🚨
-            const sortedExportData = [...currentFilteredData].sort((a, b) => {
-                return String(a.nama).localeCompare(String(b.nama), 'id', { sensitivity: 'base' });
-            });
-
-            sortedExportData.forEach((row, index) => {
-                let statusLabel = row.status;
-                if (row.status === "GTY") statusLabel = "GTY (Guru Tetap Yayasan)";
-                if (row.status === "GTT") statusLabel = "GTT (Guru Tidak Tetap)";
-
-                const rowData = [
-                    index + 1,
-                    `"${row.npa}"`,
-                    `"${row.nama}"`,
-                    `"${row.ranting}"`,
-                    `"${row.ttl || ''}"`,
-                    `"${row.unit}"`,
-                    `"${row.pendidikan || ''}"`,
-                    `"${statusLabel}"`,
-                    row.gender === "L" ? "Laki-laki" : "Perempuan",
-                    row.sertifikasi === "Sudah" ? "Sertifikasi" : "Belum Sertifikasi",
-                    row.aktif
-                ];
-                csvContent += rowData.join(",") + "\r\n";
-            });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            
-            let filename = `Rekap_Anggota_PGRI_${rantingAktif.replace(/ /g, "_")}`;
-            if (currentFilterType !== 'all') {
-                filename += `_Filter_${currentFilterValue.replace("/", "_").replace(/ /g, "_")}`;
-            }
-            link.setAttribute("download", `${filename}.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
         }
     </script>
 </body>
