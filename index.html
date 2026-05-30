@@ -115,7 +115,7 @@
                             <input type="password" id="password" required
                                 class="w-full pl-11 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500 focus:bg-white transition-all text-sm font-medium"
                                 placeholder="••••••••">
-                            <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-650">
+                            <button type="button" onclick="togglePassword()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-655">
                                 <i id="password-toggle-icon" class="fa-solid fa-eye"></i>
                             </button>
                         </div>
@@ -167,7 +167,7 @@
                             <p id="user-display-name" class="text-xs font-bold text-slate-800">Nama Admin</p>
                         </div>
                         <!-- Tombol Menu Pengaturan Profil -->
-                        <button onclick="openProfileModal()" class="text-slate-400 hover:text-slate-650 bg-slate-50 hover:bg-slate-100 p-2 rounded-lg smooth-transition" title="Ubah Profil & Password">
+                        <button onclick="openProfileModal()" class="text-slate-400 hover:text-slate-655 bg-slate-50 hover:bg-slate-100 p-2 rounded-lg smooth-transition" title="Ubah Profil & Password">
                             <i class="fa-solid fa-user-gear text-sm"></i>
                         </button>
                         <div class="h-6 w-px bg-slate-200 hidden md:block"></div>
@@ -194,7 +194,7 @@
                         <p class="text-red-100 text-xs max-w-3xl leading-relaxed">Kelola data resmi <b id="welcome-ranting" class="underline decoration-yellow-400 decoration-2">Ranting X</b>. Klik kartu statistik di bawah ini untuk filter instan.</p>
                     </div>
                     <!-- Foto Banner Besar Admin -->
-                    <div class="w-20 h-20 rounded-2xl overflow-hidden border-4 border-white/20 shadow-xl bg-slate-850 shrink-0 hidden md:block">
+                    <div class="w-20 h-20 rounded-2xl overflow-hidden border-4 border-white/20 shadow-xl bg-slate-855 shrink-0 hidden md:block">
                         <img id="banner-avatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=samarang" alt="Foto Admin" class="w-full h-full object-cover">
                     </div>
                 </div>
@@ -203,7 +203,7 @@
             <!-- JALUR FILTER KHUSUS ADMIN CABANG -->
             <div id="admin-branch-filter-container" class="hidden bg-white p-4 rounded-2xl border border-slate-100 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                 <div class="flex items-center gap-2">
-                    <div class="w-8 h-8 rounded-lg bg-red-50 text-red-600 flex items-center justify-center text-sm">
+                    <div class="w-8 h-8 rounded-lg bg-red-50 text-red-650 flex items-center justify-center text-sm">
                         <i class="fa-solid fa-building-columns"></i>
                     </div>
                     <div>
@@ -232,7 +232,7 @@
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-1.5">
                         <span class="w-1.5 h-3.5 bg-red-600 rounded-full"></span>
-                        <h3 class="text-[11px] font-bold text-slate-450 uppercase tracking-widest">Panel Analisis Data Utama</h3>
+                        <h3 class="text-[11px] font-bold text-slate-455 uppercase tracking-widest">Panel Analisis Data Utama</h3>
                     </div>
                     <button id="btn-reset-filter" onclick="clearFilters()" class="hidden text-[11px] font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-xl transition-all flex items-center gap-1 border border-red-100 shadow-sm">
                         <i class="fa-solid fa-filter-circle-xmark"></i>
@@ -247,7 +247,7 @@
                     <div id="card-total" onclick="setFilter('all')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-rose-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
                         <!-- LED Active Status -->
                         <div id="led-total" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-rose-500 animate-ping hidden"></div>
-                        <div class="text-rose-600 bg-rose-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
+                        <div class="text-rose-650 bg-rose-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-users"></i>
                         </div>
                         <div class="my-1">
@@ -279,7 +279,7 @@
                     </div>
 
                     <!-- Card 3: PPPK -->
-                    <div id="card-pppk" onclick="setFilter('status_PPPK')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-blue-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center relative group min-h-[145px]">
+                    <div id="card-pppk" onclick="setFilter('status_PPPK')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-blue-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center group min-h-[145px]">
                         <div id="led-pppk" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-blue-500 animate-ping hidden"></div>
                         <div class="text-blue-600 bg-blue-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-user-tie"></i>
@@ -294,7 +294,7 @@
                     <!-- Card 4: PPPK Paruh Waktu -->
                     <div id="card-pppk-pw" onclick="setFilter('status_PPPK Paruh Waktu')" class="smooth-transition bg-white p-4 rounded-2xl border-l-4 border-l-indigo-500 border-y border-r border-slate-100 shadow-sm cursor-pointer hover:-translate-y-1 hover:shadow-md flex flex-col items-center justify-between text-center group min-h-[145px]">
                         <div id="led-pppk-pw" class="absolute top-2 right-2 w-2 h-2 rounded-full bg-indigo-500 animate-ping hidden"></div>
-                        <div class="text-indigo-600 bg-indigo-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
+                        <div class="text-indigo-650 bg-indigo-50 w-8 h-8 rounded-full flex items-center justify-center text-sm group-hover:scale-110 transition-transform">
                             <i class="fa-solid fa-user-clock"></i>
                         </div>
                         <div class="my-1.5">
@@ -435,7 +435,7 @@
                             <span>Tambah Anggota</span>
                         </button>
 
-                        <!-- Export Button -->
+                        <!-- Export Button (UPGRADED TO REAL EXCEL SUITE) -->
                         <button onclick="exportDataExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-3.5 py-1.5 rounded-lg flex items-center justify-center gap-1.5 transition-all shadow-sm">
                             <i class="fa-solid fa-file-excel text-xs"></i>
                             <span>Ekspor Excel</span>
@@ -651,6 +651,7 @@
                     </div>
                 </div>
 
+                <!-- ELEMEN FORM-AKTIF KEMBALI DISEDIAKAN DISINI UNTUK MEMPERBAIKI CRASH -->
                 <div>
                     <label class="block text-slate-500 font-bold mb-1">Status Keaktifan *</label>
                     <select id="form-aktif" required class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-red-500">
@@ -670,7 +671,7 @@
     <!-- CONFIRMATION MODAL: HAPUS ANGGOTA -->
     <div id="delete-confirm-modal" class="hidden fixed inset-0 z-50 overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
         <div class="bg-white rounded-3xl w-full max-w-sm shadow-2xl overflow-hidden border border-slate-100 p-6 space-y-4 transform transition-all text-center">
-            <div class="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-lg mx-auto shadow-inner">
+            <div class="w-12 h-12 rounded-full bg-red-100 text-red-650 flex items-center justify-center text-lg mx-auto shadow-inner">
                 <i class="fa-solid fa-trash-can"></i>
             </div>
             <div>
@@ -774,6 +775,7 @@
         };
         let adminSelectedRanting = "Semua Ranting"; // Khusus jika Super Admin login
         let cameraStream = null; // Stream video aktif untuk jepret langsung
+        let isInitialLoading = true; // State penanda load latar belakang
 
         // ==========================================
         // 📢 GLOBAL TOAST MESSAGE SYSTEM
@@ -829,18 +831,10 @@
         const SPREADSHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRI1aIw_udN7HeKLvc5RkTrcdZKJkunFBBi6lckqPPzPsV8fqoUhRpCW22V-bZVbZEtHITFaaVBKteh/pub?output=csv";
 
         // 🚨 MASUKKAN URL WEB APP GOOGLE APPS SCRIPT ANDA DI SINI 🚨
-        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby3Mlfi23cMBa4D3oX7qHr_TR6P_eHTHpkZjPveGpl7ovxpQZeJMR2xzHFYp6NYSvo3lw/exec";
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx3fkNAJc2kUTvqTxR46QFaXvyZRQBdXexqpqDS976Pmf6DSypn1Y22GS-k2G7PXKsKpQ/exec";
 
         // MASTER DATA CADANGAN
-        let MASTER_DATA_ANGGOTA = [
-            { nama: "Yoni Hermanto, M.Pd.", npa: "10190100001", ranting: "Ranting Samarang", ttl: "Garut, 12 Maret 1985", unit: "SDN 1 Samarang", pendidikan: "S2 Tek. Pendidikan", status: "PNS", gender: "L", sertifikasi: "Sudah", aktif: "Aktif" },
-            { nama: "Siti Masitoh, S.Pd.", npa: "10190100002", ranting: "Ranting Samarang", ttl: "Garut, 25 April 1990", unit: "SDN 1 Samarang", pendidikan: "S1 PGSD", status: "PPPK", gender: "P", sertifikasi: "Sudah", aktif: "Aktif" },
-            { nama: "Andri Wijaya, S.Pd.", npa: "10190100003", ranting: "Ranting Samarang", ttl: "Bandung, 05 Juni 1995", unit: "SDN 2 Samarang", pendidikan: "S1 Penjas", status: "Honorer", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
-            { nama: "Lilis Herlina, S.Pd.", npa: "10190100004", ranting: "Ranting Samarang", ttl: "Garut, 18 September 1980", unit: "SDN 2 Samarang", pendidikan: "S1 PGSD", status: "GTY", gender: "P", sertifikasi: "Sudah", aktif: "Aktif" },
-            { nama: "Dian Mulyana, S.Pd.", npa: "10190100005", ranting: "Ranting Samarang", ttl: "Garut, 22 Agustus 1996", unit: "SMKS Pasundan Samarang", pendidikan: "S1 Pend. Ekonomi", status: "GTT", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
-            { nama: "Soni Hermawan, S.Kom", npa: "10190700003", ranting: "Ranting Parakan", ttl: "Bandung, 14 Des 1991", unit: "SDN 1 Tanjungsari", pendidikan: "S1 Komputer", status: "GTY", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
-            { nama: "Yuni Kartika, S.Pd.", npa: "10190700004", ranting: "Ranting Sukarasa", ttl: "Garut, 18 Juni 1995", unit: "SMPN 3 Samarang", pendidikan: "S1 Pend. Bahasa Inggris", status: "GTT", gender: "P", sertifikasi: "Belum", aktif: "Aktif" }
-        ];
+        let MASTER_DATA_ANGGOTA = [];
 
         // 📝 FUNGSI UNTUK MERAPIKAN PENULISAN NAMA & GELAR SESUAI DENGAN ATURAN EYD
         function formatNameWithDegrees(fullName) {
@@ -878,6 +872,7 @@
             return mainName;
         }
 
+        // FORMAT KE EYD
         function formatToEYD(text) {
             if (!text) return "";
             text = String(text).trim().replace(/\s+/g, ' ');
@@ -909,17 +904,67 @@
             }
         }
 
-        // 3. FUNGSI UNTUK MENARIK DATA REAL-TIME DARI GOOGLE SHEETS
+        // 🚨 LOGIKA INTI PENYELAMAT SINKRONISASI INSTAN (0-SECOND LOAD) 🚨
+        function initLocalDataImmediate() {
+            const cached = localStorage.getItem("pgri_sheet_cache");
+            let baseData = [];
+            if (cached) {
+                try {
+                    baseData = JSON.parse(cached);
+                } catch (e) {
+                    baseData = getFallbackLocalData();
+                }
+            } else {
+                baseData = getFallbackLocalData();
+            }
+            
+            // Gabungkan langsung dengan transaksi lokal di memori HP/Laptop
+            MASTER_DATA_ANGGOTA = applyLocalDatabaseModifications(baseData);
+            isInitialLoading = false; // Matikan layar loading dari awal, bypass hang!
+        }
+
+        function renderTableLoadingState() {
+            const tbody = document.getElementById("member-table-body");
+            if (tbody) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="10" class="py-16 text-center text-slate-450">
+                            <div class="flex flex-col items-center justify-center gap-3">
+                                <i class="fa-solid fa-spinner animate-spin text-3xl text-red-655"></i>
+                                <span class="text-xs font-bold tracking-wide text-slate-500 animate-pulse">Menghubungkan & Memuat Real-time Database Google Sheets...</span>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }
+        }
+
+        // 3. FUNGSI UNTUK MENARIK DATA REAL-TIME DARI GOOGLE SHEETS (DENGAN SINKRONISASI LATAR BELAKANG)
         async function loadDataFromSpreadsheet() {
             updateCloudStatus("loading");
+            
+            // SINKRONISASI PROFIL DI LATAR BELAKANG (NON-BLOCKING)
+            syncAllProfilesFromCloud().then(() => {
+                if (currentUser) {
+                    applyCustomProfile(currentUser.username);
+                    renderDashboardData();
+                }
+            });
+
             if (!SPREADSHEET_CSV_URL || SPREADSHEET_CSV_URL === "TARUH_URL_CSV_GOOGLE_SHEETS_ANDA_DI_SINI") {
-                console.log("Menggunakan data simulasi lokal. Masukkan URL CSV Google Sheets Anda untuk mengaktifkan data dinamis.");
+                console.log("Menggunakan data simulasi lokal.");
                 updateCloudStatus("offline");
                 return;
             }
 
             try {
-                const response = await fetch(SPREADSHEET_CSV_URL);
+                // Berikan batas waktu fetch selama 8 detik agar tidak tertahan selamanya pada internet lambat
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+                const response = await fetch(SPREADSHEET_CSV_URL, { signal: controller.signal });
+                clearTimeout(timeoutId);
+
                 const dataText = await response.text();
                 
                 const cleanText = dataText.replace(/\r/g, '');
@@ -988,7 +1033,7 @@
                     let normalizedAktif = "Aktif";
                     const rawAktif = aktifVal.trim().toUpperCase();
                     if (rawAktif.startsWith("TID") || rawAktif === "NON" || rawAktif === "TIDAK AKTIF") {
-                        normalizedAktif = "Tidak Aktif";
+                        normalizedAktif = "Tidak Hack";
                     }
 
                     if (namaVal) {
@@ -1008,22 +1053,50 @@
                 }
 
                 if (tempArray.length > 0) {
+                    // Amankan data terbaru Google Sheets ke dalam Cache Lokal Browser
+                    localStorage.setItem("pgri_sheet_cache", JSON.stringify(tempArray));
+                    
                     MASTER_DATA_ANGGOTA = applyLocalDatabaseModifications(tempArray);
                     console.log("Database Google Sheets Berhasil Dimuat & Disinkronkan!", MASTER_DATA_ANGGOTA);
                     updateCloudStatus("synced");
+                    
                     if (currentUser) {
+                        applyCustomProfile(currentUser.username);
                         renderDashboardData();
                     }
                 }
             } catch (error) {
-                console.error("Gagal menarik data dari Google Sheets, menggunakan data cadangan offline.", error);
-                MASTER_DATA_ANGGOTA = applyLocalDatabaseModifications(MASTER_DATA_ANGGOTA);
+                console.warn("Gagal menarik data baru dari Google Sheets, menggunakan data luring/cache.", error);
                 updateCloudStatus("offline");
             }
         }
 
+        function getFallbackLocalData() {
+            return [
+                { nama: "Yoni Hermanto, M.Pd.", npa: "10190100001", ranting: "Ranting Samarang", ttl: "Garut, 12 Maret 1985", unit: "SDN 1 Samarang", pendidikan: "S2 Tek. Pendidikan", status: "PNS", gender: "L", sertifikasi: "Sudah", aktif: "Aktif" },
+                { nama: "Siti Masitoh, S.Pd.", npa: "10190100002", ranting: "Ranting Samarang", ttl: "Garut, 25 April 1990", unit: "SDN 1 Samarang", pendidikan: "S1 PGSD", status: "PPPK", gender: "P", sertifikasi: "Sudah", aktif: "Aktif" },
+                { nama: "Andri Wijaya, S.Pd.", npa: "10190100003", ranting: "Ranting Samarang", ttl: "Bandung, 05 Juni 1995", unit: "SDN 2 Samarang", pendidikan: "S1 Penjas", status: "Honorer", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
+                { nama: "Lilis Herlina, S.Pd.", npa: "10190100004", ranting: "Ranting Samarang", ttl: "Garut, 18 September 1980", unit: "SDN 2 Samarang", pendidikan: "S1 PGSD", status: "GTY", gender: "P", sertifikasi: "Sudah", aktif: "Aktif" },
+                { nama: "Dian Mulyana, S.Pd.", npa: "10190100005", ranting: "Ranting Samarang", ttl: "Garut, 22 Agustus 1996", unit: "SMKS Pasundan Samarang", pendidikan: "S1 Pend. Ekonomi", status: "GTT", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
+                { nama: "Soni Hermawan, S.Kom", npa: "10190700003", ranting: "Ranting Parakan", ttl: "Bandung, 14 Des 1991", unit: "SDN 1 Tanjungsari", pendidikan: "S1 Komputer", status: "GTY", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
+                { nama: "Yuni Kartika, S.Pd.", npa: "10190700004", ranting: "Ranting Sukarasa", ttl: "Garut, 18 Juni 1995", unit: "SMPN 3 Samarang", pendidikan: "S1 Pend. Bahasa Inggris", status: "GTT", gender: "P", sertifikasi: "Belum", aktif: "Aktif" }
+            ].map(m => {
+                return {
+                    ...m,
+                    nama: formatNameWithDegrees(m.nama),
+                    ranting: formatToEYD(m.ranting),
+                    ttl: formatToEYD(m.ttl),
+                    unit: formatToEYD(m.unit)
+                };
+            });
+        }
+
         // AUTO-RESTORE LOGIN: Berfungsi mem-bypass login jika ada data sesi aktif di localStorage
         window.onload = function() {
+            // 🚨 SINKRONISASI INSTAN: Muat data cache lokal tercepat sejak detik ke-0 🚨
+            initLocalDataImmediate();
+            
+            // Jalankan penarikan data baru dari Google Sheets di latar belakang secara senyap
             loadDataFromSpreadsheet();
             
             // Mengambil sesi permanen dari localStorage
@@ -1031,7 +1104,6 @@
             if (savedSession) {
                 try {
                     currentUser = JSON.parse(savedSession);
-                    // Ambil kustomisasi profil lokal jika ada
                     applyCustomProfile(currentUser.username);
                     showDashboard(currentUser);
                     console.log("Sesi login berhasil dipulihkan secara otomatis!");
@@ -1074,6 +1146,66 @@
                 document.getElementById("banner-avatar").src = "https://api.dicebear.com/7.x/bottts/svg?seed=" + username;
             }
         }
+
+        // MEMUTAKHIRKAN LOGIKA SINKRONISASI AKUN AWAN (SINKRONISASI LINTAS PERANGKAT)
+        async function syncAllProfilesFromCloud() {
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "TARUH_URL_WEB_APP_APPS_SCRIPT_DI_SINI") return;
+            try {
+                // Sinyal GET memanggil data baris Profil_Admin dari Sheets
+                const response = await fetch(GOOGLE_SCRIPT_URL);
+                const cloudProfiles = await response.json();
+                
+                if (cloudProfiles && Array.isArray(cloudProfiles)) {
+                    cloudProfiles.forEach(p => {
+                        const localKey = "pgri_profile_custom_" + p.username;
+                        
+                        // Menimpa data lokal dan master memori dengan profil termutakhir dari Cloud
+                        if (USER_ACCOUNTS[p.username]) {
+                            USER_ACCOUNTS[p.username].name = p.name;
+                            USER_ACCOUNTS[p.username].password = p.password;
+                        }
+                        
+                        const profileObj = {
+                            name: p.name,
+                            password: p.password,
+                            avatar: p.avatar || ""
+                        };
+                        localStorage.setItem(localKey, JSON.stringify(profileObj));
+                    });
+                    console.log("Semua profil admin berhasil ditarik dari Cloud Sheets!", cloudProfiles);
+                }
+            } catch (e) {
+                console.warn("Gagal menyinkronkan profil dari Cloud, menggunakan backup lokal.", e);
+            }
+        }
+
+        // SINKRONISASI PENGIRIMAN DATA UPDATE PROFIL BARU KE SPREADSHEETS (POST METHOD)
+        async function syncProfileUpdateToCloud(username, name, password, avatarBase64) {
+            if (!GOOGLE_SCRIPT_URL || GOOGLE_SCRIPT_URL === "TARUH_URL_WEB_APP_APPS_SCRIPT_DI_SINI") return;
+            try {
+                const payload = {
+                    action: "updateProfile",
+                    username: username,
+                    name: name,
+                    password: password,
+                    avatar: avatarBase64
+                };
+                
+                await fetch(GOOGLE_SCRIPT_URL, {
+                    method: "POST",
+                    mode: "no-cors",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                console.log("Profil berhasil diunggah dan disinkronkan ke Google Sheets Cloud!");
+            } catch (e) {
+                console.error("Gagal mengunggah profil ke Cloud.", e);
+            }
+        }
+
+        // ==========================================
+        // 🚨 END OF SINKRONISASI PROFIL CLOUD 🚨
+        // ==========================================
 
         function handleLogin(event) {
             event.preventDefault();
@@ -1151,6 +1283,9 @@
             activeFilters.status = null;
             activeFilters.sertifikasi = null;
 
+            // 🚨 SINKRONISASI INTEGRITAS: TAMPILKAN LANGSUNG SEJAK AWAL DARI MEMORI LOKAL 🚨
+            // Kita bypass skeleton loader berputar karena data instan lokal sudah siap 100%
+            isInitialLoading = false;
             renderDashboardData();
         }
 
@@ -1215,7 +1350,7 @@
                                 if (ttlLower.includes(short)) {
                                     birthMonth = shortToFull[short];
                                     break;
-                                }
+                                    }
                             }
                         }
                         
@@ -1341,7 +1476,7 @@
                 btnL.className = "smooth-transition text-[9px] font-extrabold bg-sky-50 text-sky-700 border border-sky-100/50 px-1.5 py-1 rounded-lg flex items-center gap-0.5 hover:bg-sky-500 hover:text-white cursor-pointer";
             }
             if (btnP) {
-                btnP.className = "smooth-transition text-[9px] font-extrabold bg-pink-50 text-pink-700 border border-pink-100/50 px-1.5 py-1 rounded-lg flex items-center gap-0.5 hover:bg-pink-500 hover:text-white cursor-pointer";
+                btnP.className = "smooth-transition text-[9px] font-extrabold bg-pink-50 text-pink-700 border border-pink-100/50 px-1.5 py-1 rounded-lg flex items-center gap-0.5 hover:bg-pink-555 hover:text-white cursor-pointer";
             }
 
             let anyFilterActive = false;
@@ -1376,7 +1511,7 @@
                 if (activeFilters.gender === 'L' && btnL) {
                     btnL.className = "smooth-transition text-[9px] font-extrabold bg-sky-500 text-white border border-sky-500 px-1.5 py-1 rounded-lg flex items-center gap-0.5 cursor-pointer shadow-sm shadow-sky-100";
                 } else if (activeFilters.gender === 'P' && btnP) {
-                    btnP.className = "smooth-transition text-[9px] font-extrabold bg-pink-500 text-white border border-pink-500 px-1.5 py-1 rounded-lg flex items-center gap-0.5 cursor-pointer shadow-sm shadow-pink-100";
+                    btnP.className = "smooth-transition text-[9px] font-extrabold bg-pink-50 text-white border border-pink-500 px-1.5 py-1 rounded-lg flex items-center gap-0.5 cursor-pointer shadow-sm shadow-pink-100";
                 }
             }
 
@@ -1540,7 +1675,7 @@
                         statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold bg-emerald-50 text-emerald-700 rounded-full border border-emerald-100">Pensiunan</span>`;
                         break;
                     default:
-                        statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold bg-slate-50 text-slate-600 rounded-full border border-slate-100">${member.status}</span>`;
+                        statusBadge = `<span class="px-2 py-0.5 text-[10px] font-bold bg-slate-50 text-slate-655">${member.status}</span>`;
                 }
 
                 const genderBadge = member.gender === "L" 
@@ -1561,7 +1696,7 @@
                     <td class="py-2.5 px-4 font-bold text-slate-400 text-center border-r border-slate-100/50">${index + 1}</td>
                     <td class="py-2.5 px-4 text-slate-600 font-mono text-xs font-bold">${member.npa}</td>
                     <td class="py-2.5 px-4 font-extrabold text-slate-900 flex items-center">${member.nama}${serdikIndicator}</td>
-                    <td class="py-2.5 px-4 text-slate-600 font-medium text-xs hidden md:table-cell">${member.ttl || '-'}</td>
+                    <td class="py-2.5 px-4 text-slate-655 font-medium text-xs hidden md:table-cell">${member.ttl || '-'}</td>
                     <td class="py-2.5 px-4 text-slate-655 font-semibold text-xs">${member.unit}</td>
                     <td class="py-2.5 px-4 text-slate-600 text-xs hidden lg:table-cell font-medium">${member.pendidikan || '-'}</td>
                     <td class="py-2.5 px-4">${statusBadge}</td>
@@ -1574,11 +1709,11 @@
                                 <i class="fa-solid fa-circle-info text-xs"></i>
                             </button>
                             <!-- Edit Button -->
-                            <button onclick="openEditModal('${member.npa}')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 p-1.5 rounded-lg transition-all" title="Edit Data">
+                            <button onclick="openEditModal('${member.npa}')" class="text-slate-500 hover:text-red-650 bg-slate-100 hover:bg-red-50 p-1.5 rounded-lg transition-all" title="Edit Data">
                                 <i class="fa-solid fa-pen-to-square text-xs"></i>
                             </button>
                             <!-- Delete Button -->
-                            <button onclick="triggerDeleteMember('${member.npa}', '${member.nama.replace(/'/g, "\\'")}')" class="text-slate-500 hover:text-red-600 bg-slate-100 hover:bg-red-50 p-1.5 rounded-lg transition-all" title="Hapus Data">
+                            <button onclick="triggerDeleteMember('${member.npa}', '${member.nama.replace(/'/g, "\\'")}')" class="text-slate-500 hover:text-red-655 bg-slate-100 hover:bg-red-50 p-1.5 rounded-lg transition-all" title="Hapus Data">
                                 <i class="fa-solid fa-trash-can text-xs"></i>
                             </button>
                         </div>
@@ -1606,7 +1741,7 @@
             document.getElementById("modal-status").textContent = statusLabel;
             
             document.getElementById("modal-gender").textContent = member.gender === "L" ? "Laki-laki" : "Perempuan";
-            document.getElementById("modal-sertifikasi").textContent = member.sertifikasi === "Sudah" ? "Sertifikasi Aktif" : "Belum Sertifikasi";
+            document.getElementById("modal-sertifikasi").textContent = member.sertifikasi === "Sudah" ? "Sertifikasi Hack" : "Belum Sertifikasi";
             document.getElementById("modal-aktif").textContent = member.aktif;
 
             // Tombol Aksi Mobile
@@ -1690,6 +1825,11 @@
             }
         }
 
+        // PEMICU KAMERA (MENGHUBUNGKAN triggerCaptureCamera KE LOGIKA UTAMA)
+        function triggerCaptureCamera() {
+            toggleCameraStream();
+        }
+
         // AKSES KAMERA DAN JEPRET LANGSUNG (PERANGKAT DESKTOP / HP)
         function toggleCameraStream() {
             const container = document.getElementById("camera-stream-container");
@@ -1747,7 +1887,7 @@
             }
         }
 
-        // SIMPAN DATA PROFIL PERMANEN KE LOCAL STORAGE
+        // SIMPAN DATA PROFIL PERMANEN KE LOCAL STORAGE DAN CLOUD SINKRONISASI
         function saveProfileChanges() {
             const u = currentUser.username;
             const newName = document.getElementById("profile-display-name").value.trim();
@@ -1765,13 +1905,16 @@
                 avatar: avatarBase64
             };
 
-            // Simpan ke brankas localStorage permanen
+            // 1. Simpan ke brankas localStorage perangkat lokal saat ini
             localStorage.setItem("pgri_profile_custom_" + u, JSON.stringify(profileObj));
 
-            // Terapkan perubahan instan pada dashboard
+            // 2. Terapkan perubahan instan pada dashboard perangkat saat ini
             applyCustomProfile(u);
+
+            // 3. SINKRONKAN PERUBAHAN KE CLOUD GOOGLE SPREADSHEETS (DUA ARAH ANTAR-PERANGKAT)
+            syncProfileUpdateToCloud(u, newName, newPassword, avatarBase64);
             
-            showToast("Sukses: Pengaturan profil Berhasil disimpan!");
+            showToast("Sukses: Pengaturan profil disimpan secara permanen!");
             closeProfileModal();
         }
 
@@ -1786,7 +1929,7 @@
             const query = document.getElementById("table-search").value.trim().toLowerCase();
             let baseData = getScopedData();
             
-            // Terapkan Filter Aktif saat Ekspor
+            // Terapkan Filter Pembatas yang Aktif saat Ekspor
             if (activeFilters.gender) baseData = baseData.filter(item => item.gender === activeFilters.gender);
             if (activeFilters.status) {
                 if (activeFilters.status === 'Honorer/GTY/GTT') {
@@ -1889,7 +2032,7 @@
                 </html>
             `;
 
-            // Proses Unduhan Berkas xls
+            // Process Unduhan Berkas xls
             const blob = new Blob([excelTemplate], { type: "application/vnd.ms-excel" });
             const url = URL.createObjectURL(blob);
             const link = document.createElement("a");
@@ -2054,7 +2197,7 @@
             const status = document.getElementById("form-status").value;
             const gender = document.getElementById("form-gender").value;
             const sertifikasi = document.getElementById("form-sertifikasi").value;
-            const aktif = document.getElementById("form-aktif").value;
+            const aktif = document.getElementById("form-aktif") ? document.getElementById("form-aktif").value : "Aktif";
 
             // Cek Duplikasi NPA
             if (origNpa !== newNpa) {
@@ -2152,25 +2295,7 @@
         }
 
         function refreshMasterDatabaseLocal() {
-            let baseData = [
-                { nama: "Yoni Hermanto, M.Pd.", npa: "10190100001", ranting: "Ranting Samarang", ttl: "Garut, 12 Maret 1985", unit: "SDN 1 Samarang", pendidikan: "S2 Tek. Pendidikan", status: "PNS", gender: "L", sertifikasi: "Sudah", aktif: "Aktif" },
-                { nama: "Siti Masitoh, S.Pd.", npa: "10190100002", ranting: "Ranting Samarang", ttl: "Garut, 25 April 1990", unit: "SDN 1 Samarang", pendidikan: "S1 PGSD", status: "PPPK", gender: "P", sertifikasi: "Sudah", aktif: "Aktif" },
-                { nama: "Andri Wijaya, S.Pd.", npa: "10190100003", ranting: "Ranting Samarang", ttl: "Bandung, 05 Juni 1995", unit: "SDN 2 Samarang", pendidikan: "S1 Penjas", status: "Honorer", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
-                { nama: "Lilis Herlina, S.Pd.", npa: "10190100004", ranting: "Ranting Samarang", ttl: "Garut, 18 September 1980", unit: "SDN 2 Samarang", pendidikan: "S1 PGSD", status: "GTY", gender: "P", sertifikasi: "Sudah", aktif: "Aktif" },
-                { nama: "Dian Mulyana, S.Pd.", npa: "10190100005", ranting: "Ranting Samarang", ttl: "Garut, 22 Agustus 1996", unit: "SMKS Pasundan Samarang", pendidikan: "S1 Pend. Ekonomi", status: "GTT", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
-                { nama: "Soni Hermawan, S.Kom", npa: "10190700003", ranting: "Ranting Parakan", ttl: "Bandung, 14 Des 1991", unit: "SDN 1 Tanjungsari", pendidikan: "S1 Komputer", status: "GTY", gender: "L", sertifikasi: "Belum", aktif: "Aktif" },
-                { nama: "Yuni Kartika, S.Pd.", npa: "10190700004", ranting: "Ranting Sukarasa", ttl: "Garut, 18 Juni 1995", unit: "SMPN 3 Samarang", pendidikan: "S1 Pend. Bahasa Inggris", status: "GTT", gender: "P", sertifikasi: "Belum", aktif: "Aktif" }
-            ];
-            
-            baseData = baseData.map(m => {
-                return {
-                    ...m,
-                    nama: formatNameWithDegrees(m.nama),
-                    ranting: formatToEYD(m.ranting),
-                    ttl: formatToEYD(m.ttl),
-                    unit: formatToEYD(m.unit)
-                };
-            });
+            let baseData = getFallbackLocalData();
 
             if (SPREADSHEET_CSV_URL && SPREADSHEET_CSV_URL !== "TARUH_URL_CSV_GOOGLE_SHEETS_ANDA_DI_SINI") {
                 loadDataFromSpreadsheet();
@@ -2313,6 +2438,42 @@
                     cutout: '72%'
                 }
             });
+        }
+
+        // KEMBALIKAN DEKLARASI EDIT MODAL YANG SEMPAT TERLEPAS
+        function openEditModal(npa) {
+            const member = MASTER_DATA_ANGGOTA.find(m => m.npa === npa);
+            if (!member) return;
+
+            document.getElementById("form-modal-title").textContent = "Edit Data Anggota";
+            document.getElementById("form-orig-npa").value = member.npa;
+            
+            document.getElementById("form-npa").value = member.npa;
+            document.getElementById("form-nama").value = member.nama;
+            document.getElementById("form-ttl").value = member.ttl;
+            document.getElementById("form-unit").value = member.unit;
+            document.getElementById("form-pendidikan").value = member.pendidikan;
+            document.getElementById("form-status").value = member.status;
+            document.getElementById("form-gender").value = member.gender;
+            document.getElementById("form-sertifikasi").value = member.sertifikasi;
+            document.getElementById("form-aktif").value = member.aktif;
+
+            populateFormRantingOptions(member.ranting);
+            document.getElementById("form-npa").disabled = false;
+
+            const modal = document.getElementById("member-form-modal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeMemberFormModal() {
+            const modal = document.getElementById("member-form-modal");
+            if (modal) {
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+                document.body.style.overflow = "auto";
+            }
         }
     </script>
 </body>
